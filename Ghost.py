@@ -39,7 +39,7 @@ class Ghost(object):
 
     @property
     def posts(self):
-        return self.get_posts()
+        return self.get_posts(fields='id,title')
 
     def _login(self):
         '''
@@ -148,10 +148,10 @@ class Ghost(object):
         Response Body:
         If success, the body shows a json string descripting a post object
         '''
-        assert isinstance(title, (str, unicode))
-        assert isinstance(body, (str, unicode))
-        assert status is not None and isinstance(status, (str, unicode))
-        assert status in ['published', 'draft']
+        assert isinstance(title, (str, unicode)), title
+        assert isinstance(body, (str, unicode)), body
+        assert status is not None and isinstance(status, (str, unicode)), status
+        assert status in ['published', 'draft'], status
 
         h = httplib2.Http()
 
@@ -175,7 +175,7 @@ class Ghost(object):
             body=json.dumps(post_data))
 
         if res_headers.status / 100 != 2:
-            print res_headers
+            print (res_headers, content)
             return None
 
         res = json.loads(content)
@@ -186,12 +186,13 @@ class Ghost(object):
         '''
         GET https://covertsan.ghost.io/ghost/api/v0.1/posts/
         '''
-        assert isinstance(limit, (int, str, unicode))
-        assert (isinstance(limit, int) and limit >= 0) or (limit == 'all')
-        assert isinstance(page, int) and page >= 1
-        assert status is not None and isinstance(status, (str, unicode))
-        assert status in ['published', 'draft', 'all']
-        assert fields is None or isinstance(fields, (str, unicode))
+        assert isinstance(limit, (int, str, unicode)), limit
+        assert (isinstance(limit, int) and limit >= 0) or limit == 'all', limit
+        assert isinstance(page, int) and page >= 1, page
+        assert (status is not None and
+                isinstance(status, (str, unicode))), status
+        assert status in ['published', 'draft', 'all'], status
+        assert fields is None or isinstance(fields, (str, unicode)), fields
 
         h = httplib2.Http()
 
@@ -213,7 +214,7 @@ class Ghost(object):
             headers=headers)
 
         if res_headers.status / 100 != 2:
-            print res_headers
+            print (res_headers, content)
             return None
 
         res = json.loads(content)
@@ -225,7 +226,7 @@ class Ghost(object):
         '''
         GET https://covertsan.ghost.io/ghost/api/v0.1/posts/:id/?status=all
         '''
-        assert isinstance(id, int) and id >= 1
+        assert isinstance(id, int) and id >= 1, id
 
         h = httplib2.Http()
 
@@ -242,7 +243,7 @@ class Ghost(object):
             headers=headers)
 
         if res_headers.status / 100 != 2:
-            print res_headers
+            print (res_headers, content)
             return None
 
         res = json.loads(content)
@@ -254,7 +255,7 @@ class Ghost(object):
         '''
         DELETE https://covertsan.ghost.io/ghost/api/v0.1/posts/:id
         '''
-        assert isinstance(id, int) and id >= 1
+        assert isinstance(id, int) and id >= 1, id
 
         h = httplib2.Http()
 
@@ -268,4 +269,4 @@ class Ghost(object):
             headers=headers)
 
         if res_headers.status / 100 != 2:
-            print res_headers
+            print (res_headers, content)
