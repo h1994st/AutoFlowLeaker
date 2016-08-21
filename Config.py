@@ -25,6 +25,7 @@ Facebook = partial(_config.get, 'Facebook')
 Wordpress = partial(_config.get, 'Wordpress')
 Evernote = partial(_config.get, 'Evernote')
 Twitter = partial(_config.get, 'Twitter')
+Gmail = partial(_config.get, 'Gmail')
 IFTTT = partial(_config.get, 'IFTTT')
 
 del partial
