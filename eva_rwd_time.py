@@ -13,6 +13,9 @@ from Ghost import Ghost
 from Github import Github
 from Yinxiang import Yinxiang
 
+from Evernote import Evernote
+from Wordpress import Wordpress
+
 
 def test_email(data):
     e = Email()
@@ -135,6 +138,80 @@ def test_yinxiang(data):
     begin = time.time()
     try:
         y.delete_note(note)
+    except Exception:
+        return (read, write, -1)
+    end = time.time()
+    delete = end - begin
+
+    return (read, write, delete)
+
+
+def test_wordoress(data):
+    try:
+        w = Wordpress()
+        print 'Wordpress'
+
+        # Write
+        print 'Write'
+        begin = time.time()
+        post = w.create_post('from py %s' % time.time(), data)
+    except Exception:
+        return (-1, -1, -1)
+    end = time.time()
+    write = end - begin
+
+    # Read
+    print 'Read'
+    begin = time.time()
+    try:
+        w.get_post(post['ID'])
+    except Exception:
+        return (-1, write, -1)
+    end = time.time()
+    read = end - begin
+
+    # Delete
+    print 'Delete'
+    begin = time.time()
+    try:
+        w.delete_post(post['ID'])
+    except Exception:
+        return (read, write, -1)
+    end = time.time()
+    delete = end - begin
+
+    return (read, write, delete)
+
+
+def test_evernote(data):
+    try:
+        e = Evernote()
+        print 'Evernote'
+
+        # Write
+        print 'Write'
+        begin = time.time()
+        note = e.create_note('from py %s' % time.time(), data)
+    except Exception:
+        return (-1, -1, -1)
+    end = time.time()
+    write = end - begin
+
+    # Read
+    print 'Read'
+    begin = time.time()
+    try:
+        e.get_note(note.guid)
+    except Exception:
+        return (-1, write, -1)
+    end = time.time()
+    read = end - begin
+
+    # Delete
+    print 'Delete'
+    begin = time.time()
+    try:
+        e.delete_note(note)
     except Exception:
         return (read, write, -1)
     end = time.time()
