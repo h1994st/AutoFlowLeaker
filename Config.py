@@ -21,6 +21,7 @@ Github = partial(_config.get, 'Github')
 Yinxiang = partial(_config.get, 'Yinxiang')
 Email = partial(_config.get, 'Email')
 Ghost = partial(_config.get, 'Ghost')
+
 Facebook = partial(_config.get, 'Facebook')
 Wordpress = partial(_config.get, 'Wordpress')
 Evernote = partial(_config.get, 'Evernote')
