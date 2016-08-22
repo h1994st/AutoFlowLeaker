@@ -122,7 +122,7 @@ def main():
     githubs = []
     yinxiangs = []
 
-    with open('temp.dat.2', 'r') as fp:
+    with open('data/eva_time_data_2.in', 'r') as fp:
         data = fp.read().strip()
 
         for i in xrange(1000):
@@ -171,17 +171,23 @@ def main():
                 print 'Yinxiang:', temp
 
     # Save
+    print 'Save results...'
     # with open('email_r_time.txt', 'w') as fp:
+    #     print 'Email...'
     #     json.dump(emails, fp)
 
     with open('data/ghost_rwd_time.txt', 'w') as fp:
+        print 'Ghost...'
         json.dump(ghosts, fp)
 
     with open('data/github_rwc_time.txt', 'w') as fp:
+        print 'Github...'
         json.dump(githubs, fp)
 
     with open('data/yinxiang_rwd_time.txt', 'w') as fp:
+        print 'Yinxiang...'
         json.dump(yinxiangs, fp)
+    print 'Done!'
 
 
 if __name__ == '__main__':
