@@ -5,6 +5,7 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+import sys
 import json
 import time
 
@@ -332,4 +333,15 @@ def hongkong():
 
 
 if __name__ == '__main__':
-    mainland()
+    if (len(sys.argv) != 2 or
+            sys.argv[1] not in ['china', 'hk']):
+        print 'Options: china, hk'
+        sys.exit(-1)
+
+    opt = sys.argv[1]
+    print opt
+
+    if opt == 'china':
+        mainland()
+    else:
+        hongkong()
