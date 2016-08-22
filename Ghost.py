@@ -179,8 +179,7 @@ class Ghost(object):
             body=json.dumps(post_data))
 
         if res_headers.status / 100 != 2:
-            print (res_headers, content)
-            return None
+            raise Exception((res_headers, content))
 
         res = json.loads(content)
 
@@ -219,8 +218,7 @@ class Ghost(object):
             headers=headers)
 
         if res_headers.status / 100 != 2:
-            print (res_headers, content)
-            return None
+            raise Exception((res_headers, content))
 
         res = json.loads(content)
 
@@ -245,8 +243,7 @@ class Ghost(object):
             headers=headers)
 
         if res_headers.status / 100 != 2:
-            print (res_headers, content)
-            return None
+            raise Exception((res_headers, content))
 
         res = json.loads(content)
 

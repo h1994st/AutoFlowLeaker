@@ -39,7 +39,12 @@ class Wordpress(object):
 
         h = httplib2.Http()
 
+        post_data = {
+            'title': title,
+            'content': body
+        }
         headers = {
+            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'Authorization': '%s %s' % (
                 Config.Wordpress('token_type'),
                 Config.Wordpress('access_token'))
@@ -53,11 +58,11 @@ class Wordpress(object):
             self._api_url('/sites/%s/posts/new/?%s' % (
                 Config.Wordpress('site'), urlencode(parameters))),
             method='POST',
-            headers=headers)
+            headers=headers,
+            body=urlencode(post_data))
 
         if res_headers.status / 100 != 2:
-            print (res_headers, content)
-            return None
+            raise Exception((res_headers, content))
 
         res = json.loads(content)
 
@@ -100,8 +105,7 @@ class Wordpress(object):
             headers=headers)
 
         if res_headers.status / 100 != 2:
-            print (res_headers, content)
-            return None
+            raise Exception((res_headers, content))
 
         res = json.loads(content)
 
@@ -134,8 +138,7 @@ class Wordpress(object):
             headers=headers)
 
         if res_headers.status / 100 != 2:
-            print (res_headers, content)
-            return None
+            raise Exception((res_headers, content))
 
         res = json.loads(content)
 
@@ -168,8 +171,7 @@ class Wordpress(object):
             headers=headers)
 
         if res_headers.status / 100 != 2:
-            print (res_headers, content)
-            return None
+            raise Exception((res_headers, content))
 
         res = json.loads(content)
 
