@@ -33,27 +33,36 @@ def test_email(data):
 
 
 def test_ghost(data):
-    g = Ghost()
-    print 'Ghost'
+    try:
+        g = Ghost()
+        print 'Ghost'
 
-    # Write
-    print 'Write'
-    begin = time.time()
-    post = g.create_post('from py %s' % time.time(), data)
+        # Write
+        print 'Write'
+        begin = time.time()
+        post = g.create_post('from py %s' % time.time(), data)
+    except Exception:
+        return (-1, -1, -1)
     end = time.time()
     write = end - begin
 
     # Read
     print 'Read'
     begin = time.time()
-    g.get_post(post['id'])
+    try:
+        g.get_post(post['id'])
+    except Exception:
+        return (-1, write, -1)
     end = time.time()
     read = end - begin
 
     # Delete
     print 'Delete'
     begin = time.time()
-    g.delete_post(post['id'])
+    try:
+        g.delete_post(post['id'])
+    except Exception:
+        return (read, write, -1)
     end = time.time()
     delete = end - begin
 
@@ -61,27 +70,36 @@ def test_ghost(data):
 
 
 def test_github(data):
-    g = Github()
-    print 'Github'
+    try:
+        g = Github()
+        print 'Github'
 
-    # Write
-    print 'Write'
-    begin = time.time()
-    issue = g.create_issue('from py %s' % time.time(), data)
+        # Write
+        print 'Write'
+        begin = time.time()
+        issue = g.create_issue('from py %s' % time.time(), data)
+    except Exception:
+        return (-1, -1, -1)
     end = time.time()
     write = end - begin
 
     # Read
     print 'Read'
     begin = time.time()
-    g.get_issue(issue.number)
+    try:
+        g.get_issue(issue.number)
+    except Exception:
+        return (-1, write, -1)
     end = time.time()
     read = end - begin
 
     # Close
     print 'Close'
     begin = time.time()
-    g.close_issue(issue.number)
+    try:
+        g.close_issue(issue.number)
+    except Exception:
+        return (read, write, -1)
     end = time.time()
     delete = end - begin
 
@@ -89,27 +107,36 @@ def test_github(data):
 
 
 def test_yinxiang(data):
-    y = Yinxiang()
-    print 'Yinxiang'
+    try:
+        y = Yinxiang()
+        print 'Yinxiang'
 
-    # Write
-    print 'Write'
-    begin = time.time()
-    note = y.create_note('from py %s' % time.time(), data)
+        # Write
+        print 'Write'
+        begin = time.time()
+        note = y.create_note('from py %s' % time.time(), data)
+    except Exception:
+        return (-1, -1, -1)
     end = time.time()
     write = end - begin
 
     # Read
     print 'Read'
     begin = time.time()
-    y.get_note(note.guid)
+    try:
+        y.get_note(note.guid)
+    except Exception:
+        return (-1, write, -1)
     end = time.time()
     read = end - begin
 
     # Delete
     print 'Delete'
     begin = time.time()
-    y.delete_note(note)
+    try:
+        y.delete_note(note)
+    except Exception:
+        return (read, write, -1)
     end = time.time()
     delete = end - begin
 
@@ -122,10 +149,12 @@ def main():
     githubs = []
     yinxiangs = []
 
+    print 'Input file: ./data/eva_time_data_2.in'
     with open('data/eva_time_data_2.in', 'r') as fp:
         data = fp.read().strip()
 
         for i in xrange(1000):
+            print '%d rounds' % i
             # try:
             #     temp = test_email(data)
             # except KeyboardInterrupt:
@@ -142,8 +171,6 @@ def main():
             except KeyboardInterrupt:
                 temp = (-1, -1, -1)
                 break
-            except:
-                temp = (-1, -1, -1)
             finally:
                 ghosts.append(temp)
                 print 'Ghost:', temp
@@ -153,8 +180,6 @@ def main():
             except KeyboardInterrupt:
                 temp = (-1, -1, -1)
                 break
-            except:
-                temp = (-1, -1, -1)
             finally:
                 githubs.append(temp)
                 print 'Github:', temp
@@ -164,8 +189,6 @@ def main():
             except KeyboardInterrupt:
                 temp = (-1, -1, -1)
                 break
-            except:
-                temp = (-1, -1, -1)
             finally:
                 yinxiangs.append(temp)
                 print 'Yinxiang:', temp
