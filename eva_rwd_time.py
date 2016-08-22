@@ -122,13 +122,14 @@ def main():
     githubs = []
     yinxiangs = []
 
-    with open('temp.dat', 'r') as fp:
+    with open('temp.dat.2', 'r') as fp:
         data = fp.read().strip()
 
-        for i in xrange(1):
+        for i in xrange(1000):
             # try:
             #     temp = test_email(data)
             # except KeyboardInterrupt:
+            #     temp = (-1, -1, -1)
             #     break
             # except:
             #     temp = (-1, -1, -1)
@@ -139,6 +140,7 @@ def main():
             try:
                 temp = test_ghost(data)
             except KeyboardInterrupt:
+                temp = (-1, -1, -1)
                 break
             except:
                 temp = (-1, -1, -1)
@@ -149,6 +151,7 @@ def main():
             try:
                 temp = test_github(data)
             except KeyboardInterrupt:
+                temp = (-1, -1, -1)
                 break
             except:
                 temp = (-1, -1, -1)
@@ -159,6 +162,7 @@ def main():
             try:
                 temp = test_yinxiang(data)
             except KeyboardInterrupt:
+                temp = (-1, -1, -1)
                 break
             except:
                 temp = (-1, -1, -1)
@@ -167,16 +171,16 @@ def main():
                 print 'Yinxiang:', temp
 
     # Save
-    # with open('emails.log', 'w') as fp:
+    # with open('email_r_time.txt', 'w') as fp:
     #     json.dump(emails, fp)
 
-    with open('ghosts.log', 'w') as fp:
+    with open('data/ghost_rwd_time.txt', 'w') as fp:
         json.dump(ghosts, fp)
 
-    with open('githubs.log', 'w') as fp:
+    with open('data/github_rwc_time.txt', 'w') as fp:
         json.dump(githubs, fp)
 
-    with open('yinxiangs.log', 'w') as fp:
+    with open('data/yinxiang_rwd_time.txt', 'w') as fp:
         json.dump(yinxiangs, fp)
 
 
