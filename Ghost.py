@@ -224,7 +224,7 @@ class Ghost(object):
     # Read
     def get_post(self, id):
         '''
-        GET https://covertsan.ghost.io/ghost/api/v0.1/posts/:id/?status=all
+        GET https://covertsan.ghost.io/ghost/api/v0.1/posts/:id
         '''
         assert isinstance(id, int) and id >= 1, id
 
@@ -233,13 +233,9 @@ class Ghost(object):
         headers = {
             'Authorization': '%s %s' % (self.token_type, self.access_token)
         }
-        parameters = {
-            'status': 'all'
-        }
 
         (res_headers, content) = h.request(
-            'https://covertsan.ghost.io/ghost/api/v0.1/posts/%d?%s' % (
-                id, urlencode(parameters)),
+            'https://covertsan.ghost.io/ghost/api/v0.1/posts/%d/' % id,
             headers=headers)
 
         if res_headers.status / 100 != 2:
@@ -264,7 +260,7 @@ class Ghost(object):
         }
 
         (res_headers, content) = h.request(
-            'https://covertsan.ghost.io/ghost/api/v0.1/posts/%d' % id,
+            'https://covertsan.ghost.io/ghost/api/v0.1/posts/%d/' % id,
             method='DELETE',
             headers=headers)
 

@@ -137,7 +137,7 @@ class Evernote(EvernoteClient):
         return notes_meta_list.notes
 
     # Write
-    def create_note(self, title, body, resources=[], parent_notebook=None):
+    def create_note(self, title, body, resources=[], notebook=None):
         """
         Create a Note instance with title and body
         Send Note object to user's account
@@ -165,8 +165,8 @@ class Evernote(EvernoteClient):
         ourNote.content = nBody
 
         # parentNotebook is optional; if omitted, default notebook is used
-        if parent_notebook and hasattr(parent_notebook, 'guid'):
-            ourNote.notebookGuid = parent_notebook.guid
+        if notebook and hasattr(notebook, 'guid'):
+            ourNote.notebookGuid = notebook.guid
 
         # Attempt to create note in Evernote account
         try:
@@ -211,10 +211,8 @@ class Evernote(EvernoteClient):
 
         note = self.note_store.getNote(
             self.token, guid,
-            withContent=withContent,
-            withResourcesData=withResourcesData,
-            withResourcesRecognition=withResourcesRecognition,
-            withResourcesAlternateData=withResourcesAlternateData)
+            withContent, withResourcesData,
+            withResourcesRecognition, withResourcesAlternateData)
 
         assert isinstance(note, Types.Note)
 
