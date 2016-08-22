@@ -8,6 +8,9 @@
 import github
 
 import Config
+from timeout import timeout
+
+TIMEOUT = int(Config.Global('timeout'))
 
 
 class Github(github.Github):
@@ -25,7 +28,7 @@ class Github(github.Github):
 
         self._user = self.get_user()
 
-        self._repo = self._user.get_repo(repo)
+        self._repo = self.user.get_repo(repo)
 
     @property
     def user(self):
@@ -47,6 +50,7 @@ class Github(github.Github):
             'body': issue.body
         }
 
+    @timeout(TIMEOUT)
     def get_issues(self, readable=False):
         issues = self.repo.get_issues()
         if readable:
@@ -54,10 +58,12 @@ class Github(github.Github):
         return issues
 
     # Write
+    @timeout(TIMEOUT)
     def create_issue(self, title, body=github.GithubObject.NotSet):
         return self.repo.create_issue(title, body=body)
 
     # Read
+    @timeout(TIMEOUT)
     def get_issue(self, number, readable=False):
         issue = self.repo.get_issue(number)
         if readable:
@@ -69,5 +75,6 @@ class Github(github.Github):
         assert False, 'Impossible'
 
     # Close
+    @timeout(TIMEOUT)
     def close_issue(self, number):
         self.get_issue(number).edit(state='closed')

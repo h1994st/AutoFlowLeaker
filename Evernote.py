@@ -13,6 +13,10 @@ from evernote.edam.notestore import NoteStore
 from evernote.api.client import EvernoteClient
 
 import Config
+from timeout import timeout
+
+
+TIMEOUT = int(Config.Global('timeout'))
 
 
 class Evernote(EvernoteClient):
@@ -64,6 +68,7 @@ class Evernote(EvernoteClient):
 
         return ret
 
+    @timeout(TIMEOUT)
     def get_notebooks(self, readable=False):
         assert isinstance(readable, bool)
 
@@ -72,6 +77,7 @@ class Evernote(EvernoteClient):
             return map(self._notebook_to_dict, notebooks)
         return notebooks
 
+    @timeout(TIMEOUT)
     def get_notebook(self, guid=None, name=None, readable=False):
         assert guid is None or isinstance(guid, (str, unicode)), guid
         assert name is None or isinstance(name, (str, unicode)), name
@@ -100,6 +106,7 @@ class Evernote(EvernoteClient):
             return self._notebook_to_dict(notebook)
         return notebook
 
+    @timeout(TIMEOUT)
     def get_notes(self, notebook=None, notebook_guid=None, readable=False):
         assert (notebook is None or
                 isinstance(notebook, Types.Notebook)), notebook
@@ -137,6 +144,7 @@ class Evernote(EvernoteClient):
         return notes_meta_list.notes
 
     # Write
+    @timeout(TIMEOUT)
     def create_note(self, title, body, resources=[], notebook=None):
         """
         Create a Note instance with title and body
@@ -187,6 +195,7 @@ class Evernote(EvernoteClient):
         return note
 
     # Delete
+    @timeout(TIMEOUT)
     def delete_note(self, note=None, guid=None):
         assert note is None or isinstance(note, Types.Note), note
         assert guid is None or isinstance(guid, (str, unicode)), guid
@@ -201,6 +210,7 @@ class Evernote(EvernoteClient):
             self.note_store.deleteNote(self.token, guid)
 
     # Read
+    @timeout(TIMEOUT)
     def get_note(self, guid,
                  withContent=True,
                  withResourcesData=False,

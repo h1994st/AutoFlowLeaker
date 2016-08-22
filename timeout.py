@@ -5,16 +5,17 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
-import KThread
+from KThread import KThread
 
 
-class Timeout(Exception):
+class TimeoutException(Exception):
     """function run timeout"""
 
 
 def timeout(seconds):
     """超时装饰器，指定超时时间
-    若被装饰的方法在指定的时间内未返回，则抛出Timeout异常"""
+    若被装饰的方法在指定的时间内未返回，则抛出TimeoutException异常"""
+
     def timeout_decorator(func):
         """真正的装饰器"""
 
@@ -37,11 +38,13 @@ def timeout(seconds):
             alive = thd.isAlive()
             thd.kill()  # kill the child thread
             if alive:
-                raise Timeout(
-                    u'function run too long, timeout %d seconds.' % seconds)
+                raise TimeoutException(
+                    'function run too long, timeout %d seconds.' % seconds)
             else:
                 return result[0]
+
         _.__name__ = func.__name__
         _.__doc__ = func.__doc__
         return _
+
     return timeout_decorator

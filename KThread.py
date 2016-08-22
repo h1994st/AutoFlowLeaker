@@ -6,10 +6,10 @@
 # @Version : 1.0
 
 import sys
-import threading
+from threading import Thread
 
 
-class KThread(threading.Thread):
+class KThread(Thread):
     """A subclass of threading.Thread, with a kill()
     method.
 
@@ -18,14 +18,14 @@ class KThread(threading.Thread):
     http://mail.python.org/pipermail/python-list/2004-May/260937.html
     """
     def __init__(self, *args, **kwargs):
-        threading.Thread.__init__(self, *args, **kwargs)
+        super(KThread, self).__init__(*args, **kwargs)
         self.killed = False
 
     def start(self):
         """Start the thread."""
         self.__run_backup = self.run
         self.run = self.__run  # Force the Thread to install our trace.
-        threading.Thread.start(self)
+        super(KThread, self).start()
 
     def __run(self):
         """Hacked run function, which installs the

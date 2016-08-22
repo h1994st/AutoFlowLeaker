@@ -11,6 +11,9 @@ from urllib import urlencode
 import httplib2
 
 import Config
+from timeout import timeout
+
+TIMEOUT = int(Config.Global('timeout'))
 
 
 class Ghost(object):
@@ -122,6 +125,7 @@ class Ghost(object):
         self._access_token = res['access_token']
 
     # Write
+    @timeout(TIMEOUT)
     def create_post(self, title, body, status='published'):
         '''
         POST https://covertsan.ghost.io/ghost/api/v0.1/posts/
@@ -182,6 +186,7 @@ class Ghost(object):
 
         return res['posts'][0]
 
+    @timeout(TIMEOUT)
     def get_posts(self, limit='all', page=1, status='all', fields=None):
         '''
         GET https://covertsan.ghost.io/ghost/api/v0.1/posts/
@@ -222,6 +227,7 @@ class Ghost(object):
         return res['posts']
 
     # Read
+    @timeout(TIMEOUT)
     def get_post(self, id):
         '''
         GET https://covertsan.ghost.io/ghost/api/v0.1/posts/:id
@@ -247,6 +253,7 @@ class Ghost(object):
         return res['posts'][0]
 
     # Delete
+    @timeout(TIMEOUT)
     def delete_post(self, id):
         '''
         DELETE https://covertsan.ghost.io/ghost/api/v0.1/posts/:id
