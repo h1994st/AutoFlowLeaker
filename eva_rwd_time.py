@@ -221,7 +221,7 @@ def test_evernote(data):
     return (read, write, delete)
 
 
-def mainland():
+def mainland(rounds):
     # emails = []
     ghosts = []
     githubs = []
@@ -231,8 +231,8 @@ def mainland():
     with open('data/eva_time_data_2.in', 'r') as fp:
         data = fp.read().strip()
 
-        for i in xrange(1000):
-            print '%d rounds' % i
+        for i in xrange(rounds):
+            print 'Round %d' % i
             # try:
             #     temp = test_email(data)
             # except KeyboardInterrupt:
@@ -291,7 +291,7 @@ def mainland():
     print 'Done!'
 
 
-def hongkong():
+def hongkong(rounds):
     wordpresses = []
     evernotes = []
 
@@ -299,7 +299,7 @@ def hongkong():
     with open('data/eva_time_data_2.in', 'r') as fp:
         data = fp.read().strip()
 
-        for i in xrange(1000):
+        for i in xrange(rounds):
             print 'Round %d' % i
 
             try:
@@ -333,15 +333,25 @@ def hongkong():
 
 
 if __name__ == '__main__':
-    if (len(sys.argv) != 2 or
-            sys.argv[1] not in ['china', 'hk']):
-        print 'Options: china, hk'
+    def usage():
+        print 'Usage: python %s [china|hk|all] <rounds>' % sys.argv[0]
+
+    if len(sys.argv) != 3:
+        usage()
+        sys.exit(-1)
+
+    if sys.argv[1] not in ['china', 'hk', 'all']:
+        usage()
         sys.exit(-1)
 
     opt = sys.argv[1]
+    rounds = int(sys.argv[2])
     print opt
 
     if opt == 'china':
-        mainland()
+        mainland(rounds)
+    elif opt == 'hk':
+        hongkong(rounds)
     else:
-        hongkong()
+        mainland(rounds)
+        hongkong(rounds)
