@@ -220,7 +220,7 @@ def test_evernote(data):
     return (read, write, delete)
 
 
-def main():
+def mainland():
     # emails = []
     ghosts = []
     githubs = []
@@ -290,5 +290,46 @@ def main():
     print 'Done!'
 
 
+def hongkong():
+    wordpresses = []
+    evernotes = []
+
+    print 'Input file: ./data/eva_time_data_2.in'
+    with open('data/eva_time_data_2.in', 'r') as fp:
+        data = fp.read().strip()
+
+        for i in xrange(1000):
+            print 'Round %d' % i
+
+            try:
+                temp = test_wordoress(data)
+            except KeyboardInterrupt:
+                temp = (-1, -1, -1)
+                break
+            finally:
+                wordpresses.append(temp)
+                print 'Wordpress:', temp
+
+            try:
+                temp = test_evernote(data)
+            except KeyboardInterrupt:
+                temp = (-1, -1, -1)
+                break
+            finally:
+                evernotes.append(temp)
+                print 'Evernote:', temp
+
+    # Save
+    print 'Save results...'
+    with open('data/wordpress_rwd_time.txt', 'w') as fp:
+        print 'Wordpress...'
+        json.dump(wordpresses, fp)
+
+    with open('data/evernote_rwd_time.txt', 'w') as fp:
+        print 'Evernote...'
+        json.dump(evernotes, fp)
+    print 'Done!'
+
+
 if __name__ == '__main__':
-    main()
+    mainland()
