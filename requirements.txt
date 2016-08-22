@@ -1,0 +1,6 @@
+PyGitHub
+evernote
+facebook-sdk
+envelopes
+httplib2
+python-twitter
