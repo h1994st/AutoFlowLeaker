@@ -17,6 +17,8 @@ getboolean = _config.getboolean
 getint = _config.getint
 getfloat = _config.getfloat
 
+Global = partial(_config.get, 'Global')
+
 Github = partial(_config.get, 'Github')
 Yinxiang = partial(_config.get, 'Yinxiang')
 Email = partial(_config.get, 'Email')
