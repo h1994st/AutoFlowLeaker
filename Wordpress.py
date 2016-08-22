@@ -29,8 +29,39 @@ class Wordpress(object):
         return self.get_posts(fields='ID,title')
 
     # Write
-    def create_post(self):
-        pass
+    def create_post(self, title, body, fields=None):
+        '''
+        POST /sites/$site/posts/new
+        '''
+        assert isinstance(title, (str, unicode)), title
+        assert isinstance(body, (str, unicode)), body
+        assert fields is None or isinstance(fields, (str, unicode)), fields
+
+        h = httplib2.Http()
+
+        headers = {
+            'Authorization': '%s %s' % (
+                Config.Wordpress('token_type'),
+                Config.Wordpress('access_token'))
+        }
+        parameters = dict()
+
+        if fields is not None:
+            parameters['fields'] = fields
+
+        (res_headers, content) = h.request(
+            self._api_url('/sites/%s/posts/new/?%s' % (
+                Config.Wordpress('site'), urlencode(parameters))),
+            method='POST',
+            headers=headers)
+
+        if res_headers.status / 100 != 2:
+            print (res_headers, content)
+            return None
+
+        res = json.loads(content)
+
+        return res
 
     def get_posts(self, number=100, fields=None, status='publish'):
         '''
