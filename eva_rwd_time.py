@@ -8,6 +8,7 @@
 import sys
 import json
 import time
+import argparse
 
 from Email import Email
 from Ghost import Ghost
@@ -333,25 +334,38 @@ def hongkong(rounds):
 
 
 if __name__ == '__main__':
-    def usage():
-        print 'Usage: python %s [china|hk|all] <rounds>' % sys.argv[0]
+    # Argument parser
+    parser = argparse.ArgumentParser(
+        description='Experiment: measure R/W/D time for each channels')
 
-    if len(sys.argv) != 3:
-        usage()
-        sys.exit(-1)
+    # Version
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+    # Options
+    parser.add_argument(
+        '-t', '--region',
+        choices=['china', 'hk', 'all'],
+        help='region',
+        required=True)
+    # Rounds
+    parser.add_argument(
+        '-r', '--round',
+        type=int,
+        help='the number of rounds',
+        required=True)
 
-    if sys.argv[1] not in ['china', 'hk', 'all']:
-        usage()
-        sys.exit(-1)
+    (args, _) = parser.parse_known_args()
+    print 'Starting program...'
 
-    opt = sys.argv[1]
-    rounds = int(sys.argv[2])
-    print opt
+    region = args.region
+    rounds = args.round
+    print region, rounds
 
-    if opt == 'china':
+    if region == 'china':
         mainland(rounds)
-    elif opt == 'hk':
+    elif region == 'hk':
         hongkong(rounds)
     else:
         mainland(rounds)
         hongkong(rounds)
+
+    print 'Done!'
