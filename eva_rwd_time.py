@@ -339,7 +339,8 @@ if __name__ == '__main__':
         description='Experiment: measure R/W/D time for each channels')
 
     # Version
-    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+    parser.add_argument(
+        '--version', action='version', version='%(prog)s 1.0')
     # Options
     parser.add_argument(
         '-t', '--region',
