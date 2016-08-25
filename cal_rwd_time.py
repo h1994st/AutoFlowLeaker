@@ -6,7 +6,6 @@
 # @Version : 1.0
 
 import json
-from pprint import pprint
 
 
 def cal_rwd_time(data):
