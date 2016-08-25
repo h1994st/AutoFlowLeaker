@@ -66,11 +66,13 @@ def mainland():
 
     with open('data/bak/github_rwc_time.txt', 'r') as fp:
         print 'Github...'
-        print cal_rwd_time(data)
+        data = json.load(fp)
+        pprint(cal_rwd_time(data))
 
     with open('data/bak/yinxiang_rwd_time.txt', 'r') as fp:
         print 'Yinxiang...'
-        print cal_rwd_time(data)
+        data = json.load(fp)
+        pprint(cal_rwd_time(data))
 
 
 def hongkong():
