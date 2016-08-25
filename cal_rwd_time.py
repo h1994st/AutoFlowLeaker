@@ -62,7 +62,7 @@ def mainland():
     with open('data/bak/ghost_rwd_time.txt', 'r') as fp:
         print 'Ghost...'
         data = json.load(fp)
-        print cal_rwd_time(data)
+        pprint(cal_rwd_time(data))
 
     with open('data/bak/github_rwc_time.txt', 'r') as fp:
         print 'Github...'
