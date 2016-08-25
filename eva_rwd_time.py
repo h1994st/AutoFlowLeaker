@@ -5,7 +5,6 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
-import sys
 import json
 import time
 import argparse
