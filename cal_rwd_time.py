@@ -116,15 +116,6 @@ def hongkong():
         print '%10s  %.6f, %.6f, %.6f' % (
             'Yinxiang', read_average, write_average, delete_average)
 
-    with open('data/wordpress_rwd_time.txt', 'r') as fp:
-        data = json.load(fp)
-        result = cal_rwd_time(data)
-        read_average = result["read"] / result["read_count"]
-        write_average = result["write"] / result["write_count"]
-        delete_average = result["delete"] / result["delete_count"]
-        print '%10s  %.6f, %.6f, %.6f' % (
-            'Wordpress', read_average, write_average, delete_average)
-
     with open('data/evernote_rwd_time.txt', 'r') as fp:
         data = json.load(fp)
         result = cal_rwd_time(data)
@@ -133,6 +124,15 @@ def hongkong():
         delete_average = result["delete"] / result["delete_count"]
         print '%10s  %.6f, %.6f, %.6f' % (
             'Evernote', read_average, write_average, delete_average)
+
+    with open('data/wordpress_rwd_time.txt', 'r') as fp:
+        data = json.load(fp)
+        result = cal_rwd_time(data)
+        read_average = result["read"] / result["read_count"]
+        write_average = result["write"] / result["write_count"]
+        delete_average = result["delete"] / result["delete_count"]
+        print '%10s  %.6f, %.6f, %.6f' % (
+            'Wordpress', read_average, write_average, delete_average)
 
 if __name__ == '__main__':
     print 'China'

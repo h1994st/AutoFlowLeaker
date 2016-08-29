@@ -5,6 +5,8 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+from functools import wraps
+
 from KThread import KThread
 
 
@@ -22,6 +24,7 @@ def timeout(seconds):
         def _new_func(oldfunc, result, oldfunc_args, oldfunc_kwargs):
             result.append(oldfunc(*oldfunc_args, **oldfunc_kwargs))
 
+        @wraps(func)
         def _(*args, **kwargs):
             result = []
             # create new args for _new_func, because we want to get
@@ -42,9 +45,5 @@ def timeout(seconds):
                     'function run too long, timeout %d seconds.' % seconds)
             else:
                 return result[0]
-
-        _.__name__ = func.__name__
-        _.__doc__ = func.__doc__
         return _
-
     return timeout_decorator
