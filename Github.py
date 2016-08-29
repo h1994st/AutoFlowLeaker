@@ -59,8 +59,9 @@ class Github(github.Github):
 
     # Write
     @timeout(TIMEOUT)
-    def create_issue(self, title, body=github.GithubObject.NotSet):
-        return self.repo.create_issue(title, body=body)
+    def create_issue(self, title, body=github.GithubObject.NotSet,
+                     assignee=github.NamedUser.NamedUser):
+        return self.repo.create_issue(title, body=body, assignee=assignee)
 
     # Read
     @timeout(TIMEOUT)
