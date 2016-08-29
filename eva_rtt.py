@@ -64,6 +64,11 @@ def github_to_wordpress(n):
                 continue
 
             w_post = w_posts[0]
+
+            if w_post['title'] != title:
+                print 'Sleep 5 seconds'
+                time.sleep(5)
+                continue
         else:
             w_created_at = w_post['date']
 
@@ -72,6 +77,7 @@ def github_to_wordpress(n):
 
         # Save results
         print 'Save results'
+        print (created_at, w_created_at)
         results.append((created_at, w_created_at))
 
         # Clear
@@ -121,6 +127,11 @@ def ghost_to_wordpress(n):
                 continue
 
             w_post = w_posts[0]
+
+            if w_post['title'] != title:
+                print 'Sleep 5 seconds'
+                time.sleep(5)
+                continue
         else:
             w_created_at = w_post['date']
 
@@ -129,6 +140,7 @@ def ghost_to_wordpress(n):
 
         # Save results
         print 'Save results'
+        print (created_at, w_created_at)
         results.append((created_at, w_created_at))
 
         # Clear
