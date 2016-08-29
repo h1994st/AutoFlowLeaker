@@ -37,7 +37,7 @@ def github_to_wordpress(n):
     issues = github.issues
     posts = wordpress.posts
 
-    if len(w_posts) != 0:
+    if len(issues) != 0:
         print 'Clear Github issues'
         github.delete_all_issues()
 
@@ -95,11 +95,11 @@ def ghost_to_wordpress(n):
     posts = ghost.posts
     w_posts = wordpress.posts
 
-    if len(w_posts) != 0:
+    if len(posts) != 0:
         print 'Clear Ghost posts'
         ghost.delete_all_posts()
 
-    if len(posts) != 0:
+    if len(w_posts) != 0:
         print 'Clear Wordpress posts'
         wordpress.delete_all_posts()
 
