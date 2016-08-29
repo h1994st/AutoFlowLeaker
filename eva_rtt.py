@@ -155,7 +155,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '-c', '--channel',
         choices=['ghost_to_wordpress', 'github_to_wordpress'],
-        help='region',
+        help='channel',
         required=True)
     # Rounds
     parser.add_argument(
@@ -167,7 +167,7 @@ if __name__ == '__main__':
     (args, _) = parser.parse_known_args()
     print 'Starting program...'
 
-    channel = args.region
+    channel = args.channel
     rounds = args.round
     print channel, rounds
 
