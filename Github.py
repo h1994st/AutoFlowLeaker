@@ -78,3 +78,26 @@ class Github(github.Github):
     @timeout(TIMEOUT)
     def close_issue(self, number):
         self.get_issue(number).edit(state='closed')
+
+    # Create a new repository
+    def create_repo(self, name='Test-Py'):
+        assert self.repo is None, self.repo
+
+        self._repo = self.user.create_repo(
+            name, description='HEHEH', has_issues=True,
+            has_wiki=False, has_downloads=False, auto_init=True)
+
+    # Delete a repository
+    def delete_repo(self):
+        assert self.repo is not None, self.repo
+
+        self.repo.delete()
+        self._repo = None
+
+    # Delete all issues
+    def delete_all_issues(self):
+        # Delete repo
+        self.delete_repo()
+
+        # Create new repo
+        self.create_repo()

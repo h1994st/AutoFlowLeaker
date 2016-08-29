@@ -229,3 +229,6 @@ class Evernote(EvernoteClient):
         if readable:
             return self._note_to_dict(note)
         return note
+
+    def delete_notes(self, notebook=None, notebook_guid=None):
+        pass

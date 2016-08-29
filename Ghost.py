@@ -11,7 +11,6 @@ from urllib import urlencode
 import httplib2
 
 import Config
-from timeout import timeout
 
 TIMEOUT = int(Config.Global('timeout'))
 
@@ -125,7 +124,6 @@ class Ghost(object):
         self._access_token = res['access_token']
 
     # Write
-    @timeout(TIMEOUT)
     def create_post(self, title, body, status='published'):
         '''
         POST https://covertsan.ghost.io/ghost/api/v0.1/posts/
@@ -154,10 +152,11 @@ class Ghost(object):
         '''
         assert isinstance(title, (str, unicode)), title
         assert isinstance(body, (str, unicode)), body
-        assert status is not None and isinstance(status, (str, unicode)), status
+        assert status is not None, status
+        assert isinstance(status, (str, unicode)), status
         assert status in ['published', 'draft'], status
 
-        h = httplib2.Http()
+        h = httplib2.Http(timeout=TIMEOUT)
 
         post_data = {
             'posts': [{
@@ -185,7 +184,6 @@ class Ghost(object):
 
         return res['posts'][0]
 
-    @timeout(TIMEOUT)
     def get_posts(self, limit='all', page=1, status='all', fields=None):
         '''
         GET https://covertsan.ghost.io/ghost/api/v0.1/posts/
@@ -198,7 +196,7 @@ class Ghost(object):
         assert status in ['published', 'draft', 'all'], status
         assert fields is None or isinstance(fields, (str, unicode)), fields
 
-        h = httplib2.Http()
+        h = httplib2.Http(timeout=TIMEOUT)
 
         headers = {
             'Authorization': '%s %s' % (self.token_type, self.access_token)
@@ -225,14 +223,13 @@ class Ghost(object):
         return res['posts']
 
     # Read
-    @timeout(TIMEOUT)
     def get_post(self, id):
         '''
         GET https://covertsan.ghost.io/ghost/api/v0.1/posts/:id
         '''
         assert isinstance(id, int) and id >= 1, id
 
-        h = httplib2.Http()
+        h = httplib2.Http(timeout=TIMEOUT)
 
         headers = {
             'Authorization': '%s %s' % (self.token_type, self.access_token)
@@ -250,14 +247,13 @@ class Ghost(object):
         return res['posts'][0]
 
     # Delete
-    @timeout(TIMEOUT)
     def delete_post(self, id):
         '''
         DELETE https://covertsan.ghost.io/ghost/api/v0.1/posts/:id
         '''
         assert isinstance(id, int) and id >= 1, id
 
-        h = httplib2.Http()
+        h = httplib2.Http(timeout=TIMEOUT)
 
         headers = {
             'Authorization': '%s %s' % (self.token_type, self.access_token)
@@ -269,4 +265,14 @@ class Ghost(object):
             headers=headers)
 
         if res_headers.status / 100 != 2:
-            print (res_headers, content)
+            raise Exception((res_headers, content))
+
+    def delete_all_posts(self):
+        '''
+        Delete all the posts
+        '''
+        posts = self.get_posts(fields='id')
+
+        for post in posts:
+            print 'Delete %d' % post['id']
+            self.delete_post(post['id'])

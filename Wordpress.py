@@ -12,6 +12,8 @@ import httplib2
 
 import Config
 
+TIMEOUT = int(Config.Global('timeout'))
+
 
 class Wordpress(object):
     """
@@ -37,7 +39,7 @@ class Wordpress(object):
         assert isinstance(body, (str, unicode)), body
         assert fields is None or isinstance(fields, (str, unicode)), fields
 
-        h = httplib2.Http()
+        h = httplib2.Http(timeout=TIMEOUT)
 
         post_data = {
             'title': title,
@@ -83,7 +85,7 @@ class Wordpress(object):
             'pending', 'future', 'trash',
             'any'], status
 
-        h = httplib2.Http()
+        h = httplib2.Http(timeout=TIMEOUT)
 
         headers = {
             'Authorization': '%s %s' % (
@@ -119,7 +121,7 @@ class Wordpress(object):
         assert isinstance(id, int) and id >= 1, id
         assert fields is None or isinstance(fields, (str, unicode)), fields
 
-        h = httplib2.Http()
+        h = httplib2.Http(timeout=TIMEOUT)
 
         headers = {
             'Authorization': '%s %s' % (
@@ -152,7 +154,7 @@ class Wordpress(object):
         assert isinstance(id, int) and id >= 1, id
         assert fields is None or isinstance(fields, (str, unicode)), fields
 
-        h = httplib2.Http()
+        h = httplib2.Http(timeout=TIMEOUT)
 
         headers = {
             'Authorization': '%s %s' % (
@@ -176,3 +178,23 @@ class Wordpress(object):
         res = json.loads(content)
 
         return res
+
+    def delete_all_posts(self):
+        '''
+        Delete all the posts
+        '''
+        posts = self.get_posts(fields='ID,status', status='publish')
+        while len(posts) > 0:
+            for post in posts:
+                print 'Delete %d (%s)' % (post['ID'], post['status'])
+                self.delete_post(post['ID'])
+            posts = self.get_posts(fields='ID,status', status='publish')
+
+        posts = self.get_posts(fields='ID,status', status='trash')
+        while len(posts) > 0:
+            for post in posts:
+                print 'Delete %d (%s)' % (post['ID'], post['status'])
+                self.delete_post(post['ID'])
+            posts = self.get_posts(fields='ID,status', status='trash')
+
+        print 'Done!'
