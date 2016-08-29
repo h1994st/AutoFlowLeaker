@@ -46,7 +46,7 @@ def github_to_wordpress(n):
         wordpress.delete_all_posts()
 
     for i in xrange(n):
-        title = 'From Github %d' % i
+        title = 'Github to Wordpress %d' % i
 
         # New issue
         print 'Create a new issue on Github'
@@ -110,7 +110,7 @@ def ghost_to_wordpress(n):
         wordpress.delete_all_posts()
 
     for i in xrange(n):
-        title = 'Wordpress %d' % i
+        title = 'Ghost to Wordpress %d' % i
 
         # New post
         print 'Create a new post on Ghost Blog'
