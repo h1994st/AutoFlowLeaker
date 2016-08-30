@@ -69,6 +69,8 @@ def github_to_wordpress(n):
                 print 'Sleep 5 seconds'
                 time.sleep(5)
                 continue
+            else:
+                break
         else:
             w_created_at = w_post['date']
 
@@ -132,6 +134,8 @@ def ghost_to_wordpress(n):
                 print 'Sleep 5 seconds'
                 time.sleep(5)
                 continue
+            else:
+                break
         else:
             w_created_at = w_post['date']
 
