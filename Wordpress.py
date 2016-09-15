@@ -188,6 +188,7 @@ class Wordpress(object):
             for post in posts:
                 print 'Delete %d (%s)' % (post['ID'], post['status'])
                 self.delete_post(post['ID'])
+                self.delete_post(post['ID'])
             posts = self.get_posts(fields='ID,status', status='publish')
 
         posts = self.get_posts(fields='ID,status', status='trash')

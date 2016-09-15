@@ -65,14 +65,10 @@ def github_to_wordpress(n):
 
             w_post = w_posts[0]
 
-            if w_post['title'] != title:
-                print 'Sleep 5 seconds'
-                time.sleep(5)
-                continue
-            else:
+            if w_post['title'].lower() == title.lower():
                 break
-        else:
-            w_created_at = w_post['date']
+
+        w_created_at = w_post['date']
 
         # Done!
         print 'Done!'
@@ -100,19 +96,20 @@ def ghost_to_wordpress(n):
     ghost = Ghost()
     wordpress = Wordpress()
 
-    posts = ghost.posts
-    w_posts = wordpress.posts
+    # 0. Clear Ghost & Wordpress
+    print 'Clear Ghost posts'
+    ghost.delete_all_posts()
 
-    if len(posts) != 0:
-        print 'Clear Ghost posts'
-        ghost.delete_all_posts()
+    print 'Clear Wordpress posts'
+    wordpress.delete_all_posts()
 
-    if len(w_posts) != 0:
-        print 'Clear Wordpress posts'
-        wordpress.delete_all_posts()
+    # 1. Generate content:
+    #    title
+    #    timestamp
+    #    content
 
     for i in xrange(n):
-        title = 'Ghost to Wordpress %d' % i
+        title = 'Ghost2222222WordPress %d' % i
 
         # New post
         print 'Create a new post on Ghost Blog'
@@ -130,14 +127,10 @@ def ghost_to_wordpress(n):
 
             w_post = w_posts[0]
 
-            if w_post['title'] != title:
-                print 'Sleep 5 seconds'
-                time.sleep(5)
-                continue
-            else:
+            if w_post['title'].lower() == title.lower():
                 break
-        else:
-            w_created_at = w_post['date']
+
+        w_created_at = w_post['date']
 
         # Done!
         print 'Done!'
