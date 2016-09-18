@@ -440,7 +440,7 @@ def rank(aArrangement, aRK):
     i -= 1
 
     # T5
-    while i >= nK - aRK:
+    while i > aRK:
         count /= t5
 
         # extract current batches
@@ -494,23 +494,26 @@ def unrank(aI, aK, aMsg):
     # ret = []
     ret = [[i] for i in xrange(aI)]
 
-    n = aK - 1
+    i = aK - 1
     count /= aK
-    assert t9 * (t5 ** n) == count
+    assert t9 * (t5 ** i) == count
 
     r = aMsg
     rK = int(math.floor(r / count))  # for k
     r %= count
 
+    print 'k =', rK
+
     # ret.append(rK)
 
-    # bottom to top
+    # top to bottom
     # T5
-    for i in xrange(rK):
+    while i > rK:
         count /= t5
-        n -= 1
         r5 = int(math.floor(r / count))  # for T5
         r %= count
+
+        print 'R5 =', r5
 
         # unrank T5
         # ret.append(unrank5(r5, aI))
@@ -525,10 +528,14 @@ def unrank(aI, aK, aMsg):
                 item = spIB[j][k]
                 ret[item].insert(0, pB[j])
 
+        i -= 1
+
     # T9
     count /= t9
     r9 = int(math.floor(r / count))  # for T9
     r %= count
+
+    print 'R9 =', r9
 
     # unrank T9
     # ret.append(unrank9(r9, aI))
@@ -542,16 +549,20 @@ def unrank(aI, aK, aMsg):
 
     # attach labels
     split = [-1] + cIB + [len(pI) - 1]
-    for i in xrange(len(pB)):
-        for j in xrange(split[i] + 1, split[i + 1] + 1):
-            item = pI[j]
-            ret[item].insert(0, pB[i])
+    for j in xrange(len(pB)):
+        for k in xrange(split[j] + 1, split[j + 1] + 1):
+            item = pI[k]
+            ret[item].insert(0, pB[j])
+
+    i -= 1
 
     # T5
-    for i in xrange(n):
+    while i >= 0:
         count /= t5
         r5 = int(math.floor(r / count))  # for T5
         r %= count
+
+        print 'R5 =', r5
 
         # unrank T5
         # ret.append(unrank5(r5, aI))
@@ -566,6 +577,8 @@ def unrank(aI, aK, aMsg):
                 item = spIB[j][k]
                 ret[item].insert(0, pB[j])
 
+        i -= 1
+
     # sort to pI
     ret.sort(key=lambda e: pI.index(e[-1]))
 
@@ -573,8 +586,13 @@ def unrank(aI, aK, aMsg):
 
 
 if __name__ == '__main__':
-    cap, count, t9, t5 = capacity(3, 2)
+    print capacity(3, 3)
 
-    for r in xrange(2 ** cap):
-        arrangement, rK = unrank(3, 2, r)
-        print r, r == rank(arrangement, rK)
+    # for r in xrange(2 ** cap):
+    #     arrangement, _ = unrank(3, 3, r)
+    #     print r, arrangement
+
+    print 238, bin(238)
+    arrangement, rK = unrank(3, 3, 238)
+    print rK
+    print arrangement
