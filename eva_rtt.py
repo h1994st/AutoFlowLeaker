@@ -780,14 +780,14 @@ if __name__ == '__main__':
 
     ret = None
     if trigger == 'evernote' and action == 'github':
-        if action == 'Zapier':
+        if auto == 'Zapier':
             ret = evernote_to_github_zapier(rounds)
-        elif action == 'IFTTT':
+        elif auto == 'IFTTT':
             ret = evernote_to_github(rounds)
     elif trigger == 'ghost' and action == 'wordpress':
-        if action == 'Zapier':
+        if auto == 'Zapier':
             ret = ghost_to_wordpress_zapier(rounds)
-        elif action == 'IFTTT':
+        elif auto == 'IFTTT':
             ret = ghost_to_wordpress(rounds)
     else:
         print 'Automation flow (%s -> %s) does not exist.' % (trigger, action)
