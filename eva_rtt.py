@@ -6,7 +6,8 @@
 # @Version : 1.0
 
 # Automation flows:
-# Ghost (matches "Wordpress") -> Wordpress ("Ghost" #Inside): Zapier
+# Ghost (matches "Ghost to Wordpress") -> Wordpress ("Ghost" #Inside): IFTTT
+# Ghost (matches "Ghost to Wordpress via Zapier") -> Wordpress ("Ghost_Zapier" #Inside): Zapier
 # Ghost (matches "Evernote") -> Evernote (#Inside)
 # Ghost (matches "Yinxiang") -> Yinxiang (notebook "Outside" #Ghost)
 # Github (assigned to self) -> Wordpress (#Inside): Zapier
@@ -14,7 +15,8 @@
 # Yinxiang (notebook "Wordpress") -> Wordpress ("Yinxiang" with #Inside)
 # Yinxiang (notebook "Github") -> Github (create issue in "covertsan/Yinxiang")
 #
-# Evernote (notebook "Github") -> Github (create issue in "covertsan/Evernote"): Zapier
+# Evernote (notebook "Github") -> Github (create issue in "covertsan/Evernote"): IFTTT
+# Evernote (notebook "Zapier_Github") -> Github (create issue in "covertsan/Evernote_Zapier"): Zapier
 # Wordpress (#Github) -> Github: Zapier
 # Wordpress (#Yinxiang) -> Yinxiang (notebook "Outside")
 
@@ -38,7 +40,7 @@ def ghost_to_wordpress(rounds):
     Action Channel: Wordpress
 
     Description:
-    Ghost (matches "Wordpress") -> Wordpress ("Ghost" #Inside): Zapier
+    Ghost (matches "Ghost to Wordpress") -> Wordpress ("Ghost" #Inside): IFTTT
     '''
     print 'Ghost (matches "Wordpress") -> Wordpress ("Ghost" #Inside): Zapier'
 
@@ -137,14 +139,120 @@ def ghost_to_wordpress(rounds):
     return ret
 
 
+def ghost_to_wordpress_zapier(rounds):
+    '''
+    Trigger Channel: Ghost
+    Action Channel: Wordpress
+
+    Description:
+    Ghost (matches "Ghost to Wordpress via Zapier") -> Wordpress ("Ghost_Zapier" #Inside): Zapier
+    '''
+    print 'Ghost (matches "Ghost to Wordpress via Zapier") -> Wordpress ("Ghost_Zapier" #Inside): Zapier'
+
+    # Init
+    ret = []
+    ghost = Ghost()  # Trigger
+    wordpress = Wordpress()  # Action
+
+    # Preparation
+    # Clear action channel
+    print 'Deleting all posts on Wordpress...'
+    wordpress.delete_all_posts()
+    print 'Done!'
+
+    # Loop
+    for i in xrange(rounds):
+        print 'Round %d' % i
+
+        try:
+            timestamp_pair = [-1, -1]
+            title = 'Ghost to Wordpress via Zapier: Evaluate Delay %d %f' % (
+                i, time.time())  # attach timestamp: send time
+
+            # Create note in notebook 'Github'
+            print 'Publishing a new post on Ghost...'
+            ghost_post = ghost.create_post(title, 'body')
+            print 'Done!'
+
+            # ISO 8601 datetime string to datetime object, then to unix epoch
+            # time zone: UTC
+            # real creation time
+            timestamp_pair[0] = (
+                dateutil.parser.parse(
+                    ghost_post['created_at']) - datetime.datetime(
+                    1970, 1, 1, 0, 0, 0, 0, pytz.UTC)).total_seconds()
+
+            # Check action
+            # 1. Get posts
+            posts = wordpress.get_posts(
+                fields='ID,date,title', category='Ghost_Zapier', tag='Inside')
+
+            # 2. Check
+            while len(posts) == 0:
+                # no posts
+                print 'Sleep 30 seconds'
+                time.sleep(30)
+
+                # Get posts
+                posts = wordpress.get_posts(
+                    fields='ID,date,title',
+                    category='Ghost_Zapier', tag='Inside')
+            else:
+                # new post
+                assert len(posts) == 1, posts
+
+                print 'A new post is published on Wordpress'
+                post = posts[0]
+
+                # ISO 8601 datetime string to datetime object, then to unix epoch
+                # with time zone
+                timestamp = (
+                    dateutil.parser.parse(post['date']) - datetime.datetime(
+                        1970, 1, 1, 0, 0, 0, 0, pytz.UTC)).total_seconds()
+
+                timestamp_pair[1] = timestamp
+
+                print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
+                ret.append(timestamp_pair)
+
+                # Close post
+                print 'Deleting this post...'
+                wordpress.delete_post(post['ID'])
+                print 'Done!'
+        except Exception:
+            pass
+        else:
+            pass
+        finally:
+            pass
+
+    # End
+    print 'End.'
+
+    # Clear
+    print 'Clearing...'
+    # Clear trigger channel
+    print 'Deleting all posts on Ghost...'
+    ghost.delete_all_posts()
+    print 'Done!'
+
+    # Clear action channel
+    print 'Deleting all posts on Wordpress...'
+    wordpress.delete_all_posts()
+    print 'Done!'
+    print 'Done!'
+
+    return ret
+
+
 def evernote_to_github(rounds):
     '''
     Trigger Channel: Evernote
     Action Channel: Github
 
-    Description: Evernote (notebook "Github") -> Github (create issue in "covertsan/Evernote"): Zapier
+    Description: Evernote (notebook "Github") -> Github (create issue in "covertsan/Evernote"): IFTTT
     '''
-    print 'Evernote (notebook "Github") -> Github (create issue in "covertsan/Evernote"): Zapier'
+    print 'Evernote (notebook "Github") -> Github (create issue in "covertsan/Evernote"): IFTTT'
 
     # Init
     ret = []
@@ -232,6 +340,108 @@ def evernote_to_github(rounds):
 
     # Clear action channel
     print 'Closing all issues in repository "covertsan/Evernote"...'
+    github.delete_all_issues()
+    print 'Done!'
+    print 'Done!'
+
+    return ret
+
+
+def evernote_to_github_zapier(rounds):
+    '''
+    Trigger Channel: Evernote
+    Action Channel: Github
+
+    Description: Evernote (notebook "Zapier_Github") -> Github (create issue in "covertsan/Evernote_Zapier"): Zapier
+    '''
+    print 'Evernote (notebook "Zapier_Github") -> Github (create issue in "covertsan/Evernote_Zapier"): Zapier'
+
+    # Init
+    ret = []
+    evernote = Evernote()  # Trigger
+    github = Github()  # Action
+
+    # Preparation
+    # Get notebook
+    notebook = evernote.get_notebook(name='Zapier_Github')  # Write
+
+    # Change repository
+    github.change_repo(name='Evernote_Zapier')  # Read, Close
+
+    # Clear action channel
+    print 'Closing all issues in repository "covertsan/Evernote"...'
+    github.delete_all_issues()
+    print 'Done!'
+
+    # Loop
+    for i in xrange(rounds):
+        print 'Round %d' % i
+
+        try:
+            timestamp_pair = [-1, -1]
+            title = 'Evaluate Delay %d %f' % (i, time.time())
+
+            # Create note in notebook 'Zapier_Github'
+            print 'Creating a new note in notebook "Zapier_Github"...'
+            evernote_note = evernote.create_note(
+                title, 'body', notebook=notebook)
+            print 'Done!'
+
+            # Time stamp, unit: ms
+            timestamp_pair[0] = evernote_note.created / 1000
+
+            # Check action channel
+            # 1. Get issues
+            issues = github.issues
+
+            # 2. Check
+            while len(issues) == 0:
+                # no posts
+                print 'Sleep 30 seconds'
+                time.sleep(30)
+
+                # Get issues
+                issues = github.issues
+            else:
+                # new post
+                assert len(issues) == 1, issues
+
+                print 'A new issue is posted in Github repository "covertsan/Evernote_Zapier"'
+                issue = issues[0]
+
+                # datetime object, without time zone
+                timestamp = (
+                    issue['created_at'] - datetime.datetime(
+                        1970, 1, 1)).total_seconds()
+
+                timestamp_pair[1] = timestamp
+
+                print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
+                ret.append(timestamp_pair)
+
+                # Close issue
+                print 'Closing this issue...'
+                github.close_issue(number=issue['number'])
+                print 'Done!'
+        except Exception:
+            pass
+        else:
+            pass
+        finally:
+            pass
+
+    # End
+    print 'End.'
+
+    # Clear
+    print 'Clearing...'
+    # Clear trigger channel
+    print 'Deleting all notes in notebook "Zapier_Github"...'
+    evernote.delete_notes(notebook=notebook)
+    print 'Done!'
+
+    # Clear action channel
+    print 'Closing all issues in repository "covertsan/Evernote_Zapier"...'
     github.delete_all_issues()
     print 'Done!'
     print 'Done!'
@@ -570,9 +780,15 @@ if __name__ == '__main__':
 
     ret = None
     if trigger == 'evernote' and action == 'github':
-        ret = evernote_to_github(rounds)
+        if action == 'Zapier':
+            ret = evernote_to_github_zapier(rounds)
+        elif action == 'IFTTT':
+            ret = evernote_to_github(rounds)
     elif trigger == 'ghost' and action == 'wordpress':
-        ret = ghost_to_wordpress(rounds)
+        if action == 'Zapier':
+            ret = ghost_to_wordpress_zapier(rounds)
+        elif action == 'IFTTT':
+            ret = ghost_to_wordpress(rounds)
     else:
         print 'Automation flow (%s -> %s) does not exist.' % (trigger, action)
 
