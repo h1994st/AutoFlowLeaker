@@ -105,7 +105,7 @@ def ghost_to_wordpress(rounds):
                 timestamp_pair[1] = timestamp
 
                 print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
-                ret.append(timestamp_pair[1] - timestamp_pair[0])
+                ret.append(timestamp_pair)
 
                 # Close post
                 print 'Deleting this post...'
@@ -207,7 +207,7 @@ def evernote_to_github(rounds):
                 timestamp_pair[1] = timestamp
 
                 print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
-                ret.append(timestamp_pair[1] - timestamp_pair[0])
+                ret.append(timestamp_pair)
 
                 # Close issue
                 print 'Closing this issue...'
@@ -308,7 +308,7 @@ def yinxiang_to_wordpress(rounds):
                 timestamp_pair[1] = timestamp
 
                 print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
-                ret.append(timestamp_pair[1] - timestamp_pair[0])
+                ret.append(timestamp_pair)
 
                 # Close post
                 print 'Deleting this post...'
@@ -407,7 +407,7 @@ def ghost_to_yinxiang(rounds):
                 timestamp_pair[1] = note.created / 1000
 
                 print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
-                ret.append(timestamp_pair[1] - timestamp_pair[0])
+                ret.append(timestamp_pair)
 
                 # Delete this note
                 print 'Deleting this note...'
