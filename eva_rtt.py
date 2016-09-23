@@ -199,12 +199,10 @@ def evernote_to_github(rounds):
                 print 'A new issue is posted in Github repository "covertsan/Evernote"'
                 issue = issues[0]
 
-                # ISO 8601 datetime string to datetime object, then to unix epoch
-                # with time zone
+                # datetime object, without time zone
                 timestamp = (
-                    dateutil.parser.parse(
-                        issue['created_at']) - datetime.datetime(
-                            1970, 1, 1, 0, 0, 0, 0, pytz.UTC)).total_seconds()
+                    issue['created_at'] - datetime.datetime(
+                        1970, 1, 1)).total_seconds()
 
                 timestamp_pair[1] = timestamp
 
@@ -496,12 +494,10 @@ def yinxiang_to_github(rounds):
                 print 'A new issue is posted in Github repository "covertsan/Yinxiang"'
                 issue = issues[0]
 
-                # ISO 8601 datetime string to datetime object, then to unix epoch
-                # with time zone
+                # datetime object, without time zone
                 timestamp = (
-                    dateutil.parser.parse(
-                        issue['created_at']) - datetime.datetime(
-                            1970, 1, 1, 0, 0, 0, 0, pytz.UTC)).total_seconds()
+                    issue['created_at'] - datetime.datetime(
+                        1970, 1, 1)).total_seconds()
 
                 timestamp_pair[1] = timestamp
 
