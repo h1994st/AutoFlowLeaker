@@ -543,12 +543,12 @@ if __name__ == '__main__':
     # Options
     parser.add_argument(
         '-t', '--trigger',
-        choices=['yinxiang', 'ghost'],
+        choices=['evernote', 'ghost'],
         help='trigger channel',
         required=True)
     parser.add_argument(
         '-a', '--action',
-        choices=['wordpress', 'yinxiang'],
+        choices=['wordpress', 'github'],
         help='action channel',
         required=True)
     # Rounds
@@ -573,10 +573,10 @@ if __name__ == '__main__':
     auto = args.auto
 
     ret = None
-    if trigger == 'yinxiang' and action == 'wordpress':
-        ret = yinxiang_to_wordpress(rounds)
-    elif trigger == 'ghost' and action == 'yinxiang':
-        ret = ghost_to_yinxiang(rounds)
+    if trigger == 'evernote' and action == 'github':
+        ret = evernote_to_github(rounds)
+    elif trigger == 'ghost' and action == 'wordpress':
+        ret = ghost_to_wordpress(rounds)
     else:
         print 'Automation flow (%s -> %s) does not exist.' % (trigger, action)
 
