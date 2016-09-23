@@ -48,7 +48,7 @@ class Github(github.Github):
             'number': issue.number,
             'title': issue.title,
             'body': issue.body,
-            'date': issue.created_at
+            'created_at': issue.created_at
         }
 
     def get_issues(self, readable=False):
