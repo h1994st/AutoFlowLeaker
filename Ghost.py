@@ -79,6 +79,9 @@ class Ghost(object):
             headers=headers,
             body=urlencode(post_data))
 
+        if res_headers.status / 100 != 2:
+            raise Exception((res_headers, content))
+
         res = json.loads(content)
 
         self._token_type = res['token_type']
@@ -117,6 +120,9 @@ class Ghost(object):
             method='POST',
             headers=headers,
             body=urlencode(post_data))
+
+        if res_headers.status / 100 != 2:
+            raise Exception((res_headers, content))
 
         res = json.loads(content)
 
@@ -172,7 +178,7 @@ class Ghost(object):
         }
 
         (res_headers, content) = h.request(
-            'https://covertsan.ghost.io/ghost/api/v0.1/posts/',
+            'https://%s/ghost/api/v0.1/posts/' % Config.Ghost('site'),
             method='POST',
             headers=headers,
             body=json.dumps(post_data))
@@ -211,8 +217,8 @@ class Ghost(object):
             parameters['fields'] = fields
 
         (res_headers, content) = h.request(
-            'https://covertsan.ghost.io/ghost/api/v0.1/posts/?%s' % urlencode(
-                parameters),
+            'https://%s/ghost/api/v0.1/posts/?%s' % (
+                Config.Ghost('site'), urlencode(parameters)),
             headers=headers)
 
         if res_headers.status / 100 != 2:
@@ -236,7 +242,7 @@ class Ghost(object):
         }
 
         (res_headers, content) = h.request(
-            'https://covertsan.ghost.io/ghost/api/v0.1/posts/%d/' % id,
+            'https://%s/ghost/api/v0.1/posts/%d/' % (Config.Ghost('site'), id),
             headers=headers)
 
         if res_headers.status / 100 != 2:
@@ -260,7 +266,7 @@ class Ghost(object):
         }
 
         (res_headers, content) = h.request(
-            'https://covertsan.ghost.io/ghost/api/v0.1/posts/%d/' % id,
+            'https://%s/ghost/api/v0.1/posts/%d/' % (Config.Ghost('site'), id),
             method='DELETE',
             headers=headers)
 

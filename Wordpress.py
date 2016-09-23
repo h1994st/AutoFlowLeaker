@@ -72,7 +72,8 @@ class Wordpress(object):
 
         return res
 
-    def get_posts(self, number=100, fields=None, status='publish'):
+    def get_posts(self, number=100, fields=None,
+                  category=None, tag=None, status='publish'):
         '''
         GET /sites/:site/posts/
         '''
@@ -86,6 +87,10 @@ class Wordpress(object):
             'publish', 'private', 'draft',
             'pending', 'future', 'trash',
             'any'], status
+        assert (category is None or
+                isinstance(category, (str, unicode))), category
+        assert (tag is None or
+                isinstance(tag, (str, unicode))), tag
 
         h = httplib2.Http(timeout=TIMEOUT)
 
@@ -101,6 +106,10 @@ class Wordpress(object):
 
         if fields is not None:
             parameters['fields'] = fields
+        if category is not None:
+            parameters['category'] = category
+        if tag is not None:
+            parameters['tag'] = tag
 
         (res_headers, content) = h.request(
             self._api_url('/sites/%s/posts/?%s' % (

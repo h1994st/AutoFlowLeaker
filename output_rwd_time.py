@@ -74,7 +74,7 @@ def main():
     # Wordpress R
     # Wordpress W
     # Wordpress D
-    print 'Wordpress', cal_rwd('data/wordpress_rwd_time.txt')
+    print 'Wordpress', cal_rwd('data/wordpress_rwd_time_2.txt')
 
     # Yinxiang R
     # Yinxiang W

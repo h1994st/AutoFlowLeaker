@@ -59,7 +59,8 @@ class Evernote(EvernoteClient):
             'guid': note.guid,
             'title': note.title,
             'length': note.contentLength,
-            'notebook_guid': note.notebookGuid
+            'created': note.created,  # Unix Epoch
+            'notebook_guid': note.notebookGuid,
         }
 
         if isinstance(note, Types.Note):
@@ -130,6 +131,7 @@ class Evernote(EvernoteClient):
 
         spec = NoteStore.NotesMetadataResultSpec(
             includeTitle=True,
+            includeCreated=True,
             includeNotebookGuid=True,
             includeContentLength=True)
 
@@ -197,7 +199,8 @@ class Evernote(EvernoteClient):
     # Delete
     @timeout(TIMEOUT)
     def delete_note(self, note=None, guid=None):
-        assert note is None or isinstance(note, Types.Note, NoteStore.NoteMetadata), note
+        assert (note is None or
+                isinstance(note, (Types.Note, NoteStore.NoteMetadata))), note
         assert guid is None or isinstance(guid, (str, unicode)), guid
 
         if note is None and guid is None:
