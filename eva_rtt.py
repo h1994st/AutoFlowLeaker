@@ -800,7 +800,7 @@ if __name__ == '__main__':
         # Saving results
         print 'Saving results...'
         filename = '%s_%s_%s_%d.json' % (
-            trigger, action, auto, int(time.time()))
+            trigger, auto, action, int(time.time()))
         with open('data/rtt/%s' % filename, 'w') as fp:
             json.dump(ret, fp)
         print 'Done!'
