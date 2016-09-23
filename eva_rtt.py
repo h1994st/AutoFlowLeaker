@@ -102,22 +102,22 @@ def yinxiang_to_wordpress(rounds):
             print 'Deleting this post...'
             wordpress.delete_post(post['ID'])
             print 'Done!'
-    else:
-        # End
-        print 'End.'
 
-        # Clear
-        print 'Clearing...'
-        # Clear trigger channel
-        print 'Deleting all notes in notebook "Wordpress"...'
-        yinxiang.delete_notes(notebook=notebook)
-        print 'Done!'
+    # End
+    print 'End.'
 
-        # Clear action channel
-        print 'Deleting all posts on Wordpress...'
-        wordpress.delete_all_posts()
-        print 'Done!'
-        print 'Done!'
+    # Clear
+    print 'Clearing...'
+    # Clear trigger channel
+    print 'Deleting all notes in notebook "Wordpress"...'
+    yinxiang.delete_notes(notebook=notebook)
+    print 'Done!'
+
+    # Clear action channel
+    print 'Deleting all posts on Wordpress...'
+    wordpress.delete_all_posts()
+    print 'Done!'
+    print 'Done!'
 
 
 def ghost_to_yinxiang(rounds):
@@ -130,6 +130,7 @@ def ghost_to_yinxiang(rounds):
     print 'Ghost (matches "Yinxiang") -> Yinxiang (notebook "Outside" #Ghost)'
 
     # Init
+    ret = []
     ghost = Ghost()  # Trigger
     yinxiang = Yinxiang()  # Action
 
@@ -146,57 +147,68 @@ def ghost_to_yinxiang(rounds):
     for i in xrange(rounds):
         print 'Round %d' % i
 
-        timestamp_pair = [time.time(), -1]
-        title = 'To Yinxiang: Evaluate Delay %d %f' % (i, timestamp_pair[0])
+        try:
+            timestamp_pair = [time.time(), -1]
+            title = 'To Yinxiang: Evaluate Delay %d %f' % (
+                i, timestamp_pair[0])
 
-        # Create note in notebook 'Github'
-        print 'Publishing a new post on Ghost...'
-        ghost.create_post(title, 'body')
-        print 'Done!'
-
-        # Check
-        # 1. Get notes
-        notes = yinxiang.get_notes(notebook=notebook)
-
-        # 2. Check
-        while len(notes) == 0:
-            # no notes
-            print 'Sleep 30 seconds'
-            time.sleep(30)
-
-            # Get posts
-            notes = yinxiang.get_notes(notebook=notebook)
-        else:
-            # new note
-            assert len(notes) == 1, notes
-
-            print 'A new note is created in notebook "Outside"'
-            note = notes[0]
-
-            timestamp_pair[1] = note.created / 1000
-
-            print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
-
-            # Delete this note
-            print 'Deleting this note...'
-            yinxiang.delete_note(note=note)
+            # Create note in notebook 'Github'
+            print 'Publishing a new post on Ghost...'
+            ghost.create_post(title, 'body')
             print 'Done!'
-    else:
-        # End
-        print 'End.'
 
-        # Clear
-        print 'Clearing...'
-        # Clear trigger channel
-        print 'Deleting all posts on Ghost...'
-        ghost.delete_all_posts()
-        print 'Done!'
+            # Check
+            # 1. Get notes
+            notes = yinxiang.get_notes(notebook=notebook)
 
-        # Clear action channel
-        print 'Deleting all notes in notebook "Outside"...'
-        yinxiang.delete_notes(notebook=notebook)
-        print 'Done!'
-        print 'Done!'
+            # 2. Check
+            while len(notes) == 0:
+                # no notes
+                print 'Sleep 30 seconds'
+                time.sleep(30)
+
+                # Get posts
+                notes = yinxiang.get_notes(notebook=notebook)
+            else:
+                # new note
+                assert len(notes) == 1, notes
+
+                print 'A new note is created in notebook "Outside"'
+                note = notes[0]
+
+                timestamp_pair[1] = note.created / 1000
+
+                print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
+                ret.append(timestamp_pair[1] - timestamp_pair[0])
+
+                # Delete this note
+                print 'Deleting this note...'
+                yinxiang.delete_note(note=note)
+                print 'Done!'
+        except Exception:
+            pass
+        else:
+            pass
+        finally:
+            pass
+
+    # End
+    print 'End.'
+
+    # Clear
+    print 'Clearing...'
+    # Clear trigger channel
+    print 'Deleting all posts on Ghost...'
+    ghost.delete_all_posts()
+    print 'Done!'
+
+    # Clear action channel
+    print 'Deleting all notes in notebook "Outside"...'
+    yinxiang.delete_notes(notebook=notebook)
+    print 'Done!'
+    print 'Done!'
+
+    return ret
 
 
 def yinxiang_to_github(rounds):
@@ -221,58 +233,65 @@ def yinxiang_to_github(rounds):
     for i in xrange(rounds):
         print 'Round %d' % i
 
-        timestamp_pair = [time.time(), -1]
-        title = 'Evaluate Delay %d %f' % (i, timestamp_pair[0])
+        try:
+            timestamp_pair = [time.time(), -1]
+            title = 'Evaluate Delay %d %f' % (i, timestamp_pair[0])
 
-        # Create note in notebook 'Github'
-        print 'Creating a new note in notebook "Github"...'
-        yinxiang.create_note(title, 'body', notebook=notebook)
-        print 'Done!'
-
-        # Check
-        # 1. Get issues
-        issues = github.issues
-
-        # 2. Check
-        while len(issues) == 0:
-            # no issues
-            print 'Sleep 30 seconds'
-            time.sleep(30)
-
-            # Get issues
-            issues = github.issues
-        else:
-            # new issue
-            assert len(issues) == 1, issues
-
-            print 'A new issue is posted in Github repository "covertsan/Yinxiang"'
-            issue = issues[0]
-
-            timestamp = (
-                issue['date'] - datetime.datetime(
-                    1970, 1, 1)).total_seconds()
-
-            timestamp_pair[1] = timestamp
-
-            print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
-
-            # Close issue
-            print 'Closing this issue...'
-            github.close_issue(number=issue['number'])
+            # Create note in notebook 'Github'
+            print 'Creating a new note in notebook "Github"...'
+            yinxiang.create_note(title, 'body', notebook=notebook)
             print 'Done!'
-    else:
-        # End
-        print 'End.'
 
-        # Clear
-        print 'Clearing...'
-        # print 'Deleting all notes in notebook "Github"...'
-        # yinxiang.delete_notes(notebook=notebook)
-        # print 'Done!'
-        print 'Deleting all issues in repository "covertsan/Yinxiang"'
-        github.delete_all_issues()
-        print 'Done!'
-        print 'Done!'
+            # Check
+            # 1. Get issues
+            issues = github.issues
+
+            # 2. Check
+            while len(issues) == 0:
+                # no issues
+                print 'Sleep 30 seconds'
+                time.sleep(30)
+
+                # Get issues
+                issues = github.issues
+            else:
+                # new issue
+                assert len(issues) == 1, issues
+
+                print 'A new issue is posted in Github repository "covertsan/Yinxiang"'
+                issue = issues[0]
+
+                timestamp = (
+                    issue['date'] - datetime.datetime(
+                        1970, 1, 1)).total_seconds()
+
+                timestamp_pair[1] = timestamp
+
+                print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
+
+                # Close issue
+                print 'Closing this issue...'
+                github.close_issue(number=issue['number'])
+                print 'Done!'
+        except Exception:
+            pass
+        else:
+            pass
+        finally:
+            pass
+
+    # End
+    print 'End.'
+
+    # Clear
+    print 'Clearing...'
+    # print 'Deleting all notes in notebook "Github"...'
+    # yinxiang.delete_notes(notebook=notebook)
+    # print 'Done!'
+    print 'Deleting all issues in repository "covertsan/Yinxiang"'
+    github.delete_all_issues()
+    print 'Done!'
+    print 'Done!'
 
 
 def wordpress_to_yinxiang(rounds):
@@ -386,6 +405,12 @@ if __name__ == '__main__':
         type=int,
         help='the number of rounds',
         required=True)
+    # Automation service name
+    parser.add_argument(
+        '--auto',
+        choices=['IFTTT', 'Zapier'],
+        help='the name of automation service',
+        required='True')
 
     (args, _) = parser.parse_known_args()
     print 'Starting program...'
@@ -393,10 +418,20 @@ if __name__ == '__main__':
     trigger = args.trigger
     action = args.action
     rounds = args.round
+    auto = args.auto
 
+    ret = None
     if trigger == 'yinxiang' and action == 'wordpress':
-        yinxiang_to_wordpress(rounds)
+        ret = yinxiang_to_wordpress(rounds)
     elif trigger == 'ghost' and action == 'yinxiang':
-        ghost_to_yinxiang(round)
+        ret = ghost_to_yinxiang(round)
     else:
         print 'Automation flow (%s -> %s) does not exist.' % (trigger, action)
+
+    if ret is not None:
+        # Saving results
+        print 'Saving results...'
+        filename = '%s_to_%s_%s.json' % (trigger, action, auto)
+        with open('data/rtt/%s' % filename, 'w') as fp:
+            json.dump(ret, fp)
+        print 'Done!'
