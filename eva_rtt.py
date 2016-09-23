@@ -424,7 +424,7 @@ if __name__ == '__main__':
     if trigger == 'yinxiang' and action == 'wordpress':
         ret = yinxiang_to_wordpress(rounds)
     elif trigger == 'ghost' and action == 'yinxiang':
-        ret = ghost_to_yinxiang(round)
+        ret = ghost_to_yinxiang(rounds)
     else:
         print 'Automation flow (%s -> %s) does not exist.' % (trigger, action)
 
