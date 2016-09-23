@@ -118,7 +118,10 @@ def ghost_to_wordpress(rounds):
         else:
             pass
         finally:
-            pass
+            # Refresh token
+            print 'Refreshing token...'
+            ghost._get_new_token()
+            print 'Done!'
 
     # End
     print 'End.'
@@ -369,7 +372,7 @@ def evernote_to_github_zapier(rounds):
     github.change_repo(name='Evernote_Zapier')  # Read, Close
 
     # Clear action channel
-    print 'Closing all issues in repository "covertsan/Evernote"...'
+    print 'Closing all issues in repository "covertsan/Evernote_Zapier"...'
     github.delete_all_issues()
     print 'Done!'
 
