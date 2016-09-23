@@ -78,7 +78,7 @@ def ghost_to_wordpress(rounds):
             # Check action
             # 1. Get posts
             posts = wordpress.get_posts(
-                fields='ID,date,title', category='Yinxiang', tag='Inside')
+                fields='ID,date,title', category='Ghost', tag='Inside')
 
             # 2. Check
             while len(posts) == 0:
@@ -88,7 +88,7 @@ def ghost_to_wordpress(rounds):
 
                 # Get posts
                 posts = wordpress.get_posts(
-                    fields='ID,date,title', category='Yinxiang', tag='Inside')
+                    fields='ID,date,title', category='Ghost', tag='Inside')
             else:
                 # new post
                 assert len(posts) == 1, posts
