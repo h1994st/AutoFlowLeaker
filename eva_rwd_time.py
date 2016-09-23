@@ -101,7 +101,7 @@ def test_github(data):
     print 'Close'
     begin = time.time()
     try:
-        g.close_issue(issue.number)
+        g.close_issue(issue=issue)
     except Exception:
         return (read, write, -1)
     end = time.time()

@@ -69,7 +69,7 @@ def main():
     # Github R
     # Github W
     # Github D
-    print 'Github', cal_rwd('data/github_rwc_time.txt')
+    print 'Github', cal_rwd('data/github_rwc_time_2.txt')
 
     # Wordpress R
     # Wordpress W

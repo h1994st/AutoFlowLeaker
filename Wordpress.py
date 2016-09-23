@@ -19,7 +19,7 @@ class Wordpress(object):
     """
     Default user: covertsan (covert.san@gmail.com)
 
-    Common fields: ID, date, status, title
+    Common fields: ID, date, status, title, content
     """
     def __init__(self):
         super(Wordpress, self).__init__()

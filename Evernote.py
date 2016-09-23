@@ -197,7 +197,7 @@ class Evernote(EvernoteClient):
     # Delete
     @timeout(TIMEOUT)
     def delete_note(self, note=None, guid=None):
-        assert note is None or isinstance(note, Types.Note), note
+        assert note is None or isinstance(note, Types.Note, NoteStore.NoteMetadata), note
         assert guid is None or isinstance(guid, (str, unicode)), guid
 
         if note is None and guid is None:
@@ -249,5 +249,3 @@ class Evernote(EvernoteClient):
         for note in notes:
             print 'Delete %s (%s)' % (note.title, note.guid)
             self.delete_note(note=note)
-
-        print 'Done!'

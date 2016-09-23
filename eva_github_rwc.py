@@ -69,7 +69,6 @@ def main(rounds):
 
     # Save
     print 'Save results...'
-
     with open('data/github_rwc_time_2.txt', 'w') as fp:
         print 'Github...'
         json.dump(githubs, fp)

@@ -11,6 +11,7 @@
 # Github (assigned to self) -> Wordpress (#Inside): Zapier
 # Github (new closed issue) -> Evernote (notebook "Inside")
 # Yinxiang (notebook "Wordpress") -> Wordpress (#Inside)
+# Yinxiang (notebook "Github") -> Github (create issue in "covertsan/Yinxiang")
 #
 # Evernote (notebook "Github") -> Github: Zapier
 # Wordpress (#Github) -> Github: Zapier
@@ -18,138 +19,177 @@
 
 import json
 import time
+import datetime
 import argparse
 
-import Config
-from Ghost import Ghost
 from Github import Github
 from Wordpress import Wordpress
+from Yinxiang import Yinxiang
 
 N = 30
+CHANNELS = ['evernote', 'ghost', 'github', 'wordpress', 'yinxiang']
 
 
-def github_to_wordpress(n):
-    results = []
+def yinxiang_to_github(rounds):
+    print 'Yinxiang (notebook "Github") -> Github (create issue in "covertsan/Yinxiang")'
 
-    github = Github()
-    wordpress = Wordpress()
+    # Init
+    yinxiang = Yinxiang()  # Trigger
+    github = Github()  # Action
 
-    issues = github.issues
-    posts = wordpress.posts
+    # Get notebook
+    notebook = yinxiang.get_notebook(name='Github')  # Write
 
-    if len(issues) != 0:
-        print 'Clear Github issues'
-        github.delete_all_issues()
+    # Change repository
+    github.change_repo(name='Yinxiang')  # Read, Close
 
-    if len(posts) != 0:
-        print 'Clear Wordpress posts'
-        wordpress.delete_all_posts()
-
-    for i in xrange(n):
-        title = 'Github to Wordpress %d' % i
-
-        # New issue
-        print 'Create a new issue on Github'
-        issue = github.create_issue(
-            title, body=title, assignee=Config.Github('username'))
-
-        # Wait for trigger
-        created_at = issue.created_at  # Timestamp
-
-        while True:
-            w_posts = wordpress.get_posts(fields='ID,title,date')
-            if len(w_posts) == 0:
-                print 'Sleep 5 seconds'
-                time.sleep(5)
-                continue
-
-            w_post = w_posts[0]
-
-            if w_post['title'].lower() == title.lower():
-                break
-
-        w_created_at = w_post['date']
-
-        # Done!
-        print 'Done!'
-
-        # Save results
-        print 'Save results'
-        print (created_at, w_created_at)
-        results.append((created_at, w_created_at))
-
-        # Clear
-        print 'Delete posts'
-        github.close_issue(issue.number)
-        wordpress.delete_post(w_post['ID'])
-
-    print 'Save results...'
-    with open('data/github_to_wordpress_rtt_time.json', 'w') as fp:
-        print 'Github to Wordpress...'
-        json.dump(results, fp)
+    # Clear
+    print 'Deleting all notes in notebook "Github"...'
+    yinxiang.delete_notes(notebook=notebook)
     print 'Done!'
 
+    # Loop
+    for i in xrange(rounds):
+        print 'Round %d' % i
 
-def ghost_to_wordpress(n):
-    results = []
+        timestamp_pair = (time.time(), -1)
+        title = 'Evaluate Delay %d %f' % (i, timestamp_pair[0])
 
-    ghost = Ghost()
+        # Create note in notebook 'Github'
+        print 'Creating a new note in notebook "Github"...'
+        yinxiang.create_note(title, '', notebook=notebook)
+        print 'Done!'
+
+        # Check
+        # 1. Get issues
+        issues = github.issues
+
+        # 2. Check
+        while len(issues) == 0:
+            # no issues
+            print 'Sleep 30 seconds'
+            time.sleep(30)
+
+            # Get issues
+            issues = github.issues
+        else:
+            # new issue
+            assert len(issues) == 1, issues
+
+            print 'A new issue is posted in Github repository "covertsan/Yinxiang"'
+            issue = issues[0]
+
+            timestamp = (
+                issue['date'] - datetime.datetime(
+                    1970, 1, 1)).total_seconds()
+
+            timestamp_pair[1] = timestamp
+
+            print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
+
+            # Close issue
+            print 'Closing this issue...'
+            github.close_issue(number=issue['number'])
+            print 'Done!'
+    else:
+        # End
+        print 'End.'
+
+        # Clear
+        print 'Clearing...'
+        print 'Deleting all notes in notebook "Github"...'
+        yinxiang.delete_notes(notebook=notebook)
+        print 'Done!'
+        print 'Deleting all issues in repository "covertsan/Yinxiang"'
+        github.delete_all_issues()
+        print 'Done!'
+        print 'Done!'
+
+
+def wordpress_to_yinxiang(rounds):
+    print 'Wordpress (#Yinxiang) -> Yinxiang (notebook "Outside")'
+
+    # Init
+    wordpress = Wordpress()  # Trigger
+    yinxiang = Yinxiang()  # Action
+
+    # Get notebook
+    notebook = yinxiang.get_notebook(name='Outside')  # Write
+
+    # Clear
+    print 'Deleting all posts on Wordpress...'
+    wordpress.delete_all_posts()
+    print 'Done!'
+    print 'Deleting all notes in notebook "Outside"...'
+    yinxiang.delete_notes(notebook=notebook)
+    print 'Done!'
+
+    # Loop
+    for i in xrange(rounds):
+        print 'Round %d' % i
+
+        timestamp_pair = (time.time(), -1)
+        title = 'Evaluate Delay %d %f' % (i, timestamp_pair[0])
+
+        # Create note in notebook 'Github'
+        print 'Creating a new note in notebook "Github"...'
+        yinxiang.create_note(title, '', notebook=notebook)
+        print 'Done!'
+
+        # Check
+        # 1. Get posts
+        posts = wordpress.get_posts(fields='')
+
+        # 2. Check
+        while len(posts) == 0:
+            # no issues
+            print 'Sleep 30 seconds'
+            time.sleep(30)
+
+            # Get posts
+            posts = wordpress.get_posts(fields='')
+        else:
+            # new issue
+            assert len(posts) == 1, posts
+
+            print 'A new post is published on Wordpress'
+
+            timestamp = -1
+
+            timestamp_pair[1] = timestamp
+
+            print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
+    else:
+        # End
+        print 'End.'
+
+        # Clear
+        print 'Clearing...'
+        print 'Deleting all posts on Wordpress...'
+        wordpress.delete_all_posts()
+        print 'Done!'
+        print 'Deleting all notes in notebook "Outside"...'
+        yinxiang.delete_notes(notebook=notebook)
+        print 'Done!'
+        print 'Done!'
+
+
+def evaluate_rtt(trigger, action, rounds):
+    yinxiang = Yinxiang()
     wordpress = Wordpress()
 
-    # 0. Clear Ghost & Wordpress
-    print 'Clear Ghost posts'
-    ghost.delete_all_posts()
+    # Get notebook
+    notebook = yinxiang.get_notebook(name='Outside')
 
-    print 'Clear Wordpress posts'
+    # Clear
+    yinxiang.delete_notes()
     wordpress.delete_all_posts()
 
-    # 1. Generate content:
-    #    title
-    #    timestamp
-    #    content
-
-    for i in xrange(n):
-        title = 'Ghost2222222WordPress %d' % i
-
-        # New post
-        print 'Create a new post on Ghost Blog'
-        post = ghost.create_post(title, title)
-
-        # Wait for trigger
-        created_at = post['created_at']  # Timestamp
-
-        while True:
-            w_posts = wordpress.get_posts(fields='ID,title,date')
-            if len(w_posts) == 0:
-                print 'Sleep 5 seconds'
-                time.sleep(5)
-                continue
-
-            w_post = w_posts[0]
-
-            if w_post['title'].lower() == title.lower():
-                break
-
-        w_created_at = w_post['date']
-
-        # Done!
-        print 'Done!'
-
-        # Save results
-        print 'Save results'
-        print (created_at, w_created_at)
-        results.append((created_at, w_created_at))
-
-        # Clear
-        print 'Delete posts'
-        ghost.delete_post(post['id'])
-        wordpress.delete_post(w_post['ID'])
-
-    print 'Save results...'
-    with open('data/ghost_to_wordpress_rtt_time.json', 'w') as fp:
-        print 'Ghost to Wordpress...'
-        json.dump(results, fp)
-    print 'Done!'
+    for i in xrange(rounds):
+        title = 'Evaluate Delay %d' % i
+        timestamp = time.time()  # Unix Epoch Timestamp
+        note = yinxiang.create_note(title, str(timestamp))
+        note.guid  # GUID of created note
 
 
 if __name__ == '__main__':
@@ -162,9 +202,14 @@ if __name__ == '__main__':
         '--version', action='version', version='%(prog)s 1.0')
     # Options
     parser.add_argument(
-        '-c', '--channel',
-        choices=['ghost_to_wordpress', 'github_to_wordpress'],
-        help='channel',
+        '-t', '--trigger',
+        choices=CHANNELS,
+        help='trigger channel',
+        required=True)
+    parser.add_argument(
+        '-a', '--action',
+        choices=CHANNELS,
+        help='action channel',
         required=True)
     # Rounds
     parser.add_argument(
@@ -176,11 +221,8 @@ if __name__ == '__main__':
     (args, _) = parser.parse_known_args()
     print 'Starting program...'
 
-    channel = args.channel
+    trigger = args.trigger
+    action = args.action
     rounds = args.round
-    print channel, rounds
 
-    if channel == 'ghost_to_wordpress':
-        ghost_to_wordpress(rounds)
-    elif channel == 'github_to_wordpress':
-        github_to_wordpress(rounds)
+    yinxiang_to_github(rounds)

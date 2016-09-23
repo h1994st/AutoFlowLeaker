@@ -47,7 +47,8 @@ class Github(github.Github):
             'id': issue.id,
             'number': issue.number,
             'title': issue.title,
-            'body': issue.body
+            'body': issue.body,
+            'date': issue.created_at
         }
 
     def get_issues(self, readable=False):
@@ -129,18 +130,17 @@ class Github(github.Github):
         # Delete
         repo.delete()
 
-        # Change to default
-        self.change_repo()
+        if name is None or name == self.repo.name:
+            # Current repo
+            self._repo = None
 
     # Delete all issues
     def delete_all_issues(self, name=None):
         assert name is None or isinstance(name, (str, unicode)), name
 
-        # Delete repo
-        self.delete_repo(name=name)
-
-        # Create new repo
-        self.create_repo(name=name)
+        issues = self.get_issues()
+        for issue in issues:
+            self.delete_issue(issue=issue)
 
 
 if __name__ == '__main__':
