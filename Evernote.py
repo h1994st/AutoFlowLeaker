@@ -94,7 +94,7 @@ class Evernote(EvernoteClient):
             # Get notebooks at first
             notebooks = self.get_notebooks()
             candidate_notebooks = filter(
-                lambda notebook: notebook.name != name, notebooks)
+                lambda notebook: notebook.name == name, notebooks)
             assert len(candidate_notebooks) <= 1
             if len(candidate_notebooks) == 0:
                 return None
@@ -231,4 +231,23 @@ class Evernote(EvernoteClient):
         return note
 
     def delete_notes(self, notebook=None, notebook_guid=None):
-        pass
+        '''
+        Delete all the posts
+        '''
+        assert (notebook is None or
+                isinstance(notebook, Types.Notebook)), notebook
+        assert (notebook_guid is None or
+                isinstance(notebook_guid, (str, unicode))), notebook_guid
+
+        if notebook is None and notebook_guid is None:
+            # Set default notebook
+            notebook = self.note_store.getDefaultNotebook(self.token)
+
+        # Retrieve all notes in the notebook
+        notes = self.get_notes(notebook=notebook, notebook_guid=notebook_guid)
+
+        for note in notes:
+            print 'Delete %s (%s)' % (note.title, note.guid)
+            self.delete_note(note=note)
+
+        print 'Done!'

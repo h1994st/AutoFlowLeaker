@@ -58,81 +58,114 @@ def cal_rwd_time(data):
 
 
 def mainland():
-    print '%10s  %8s, %8s, %8s' % ('Service', 'Read', 'Write', 'Delete')
+    print '%14s  %8s, %8s, %8s' % ('Service', 'Read', 'Write', 'Delete')
     with open('data/bak/ghost_rwd_time.txt', 'r') as fp:
         data = json.load(fp)
-        result = cal_rwd_time(data)
-        read_average = result["read"] / result["read_count"]
-        write_average = result["write"] / result["write_count"]
-        delete_average = result["delete"] / result["delete_count"]
-        print '%10s  %.6f, %.6f, %.6f' % (
-            'Ghost', read_average, write_average, delete_average)
+        data = filter(lambda x: -1 not in x, data)
+        n = len(data)
+
+        for i in xrange(n / 30):
+            result = cal_rwd_time(data[30 * i:30 * (i + 1)])
+            read_average = result["read"] / result["read_count"]
+            write_average = result["write"] / result["write_count"]
+            delete_average = result["delete"] / result["delete_count"]
+            print '%10s %3d  %.6f, %.6f, %.6f' % (
+                'Ghost', i, read_average, write_average, delete_average)
 
     with open('data/bak/github_rwc_time.txt', 'r') as fp:
         data = json.load(fp)
-        result = cal_rwd_time(data)
-        read_average = result["read"] / result["read_count"]
-        write_average = result["write"] / result["write_count"]
-        delete_average = result["delete"] / result["delete_count"]
-        print '%10s  %.6f, %.6f, %.6f' % (
-            'Github', read_average, write_average, delete_average)
+        data = filter(lambda x: -1 not in x, data)
+        n = len(data)
+
+        for i in xrange(n / 30):
+            result = cal_rwd_time(data[30 * i:30 * (i + 1)])
+            read_average = result["read"] / result["read_count"]
+            write_average = result["write"] / result["write_count"]
+            delete_average = result["delete"] / result["delete_count"]
+            print '%10s %3d  %.6f, %.6f, %.6f' % (
+                'Github', i, read_average, write_average, delete_average)
 
     with open('data/bak/yinxiang_rwd_time.txt', 'r') as fp:
         data = json.load(fp)
-        result = cal_rwd_time(data)
-        read_average = result["read"] / result["read_count"]
-        write_average = result["write"] / result["write_count"]
-        delete_average = result["delete"] / result["delete_count"]
-        print '%10s  %.6f, %.6f, %.6f' % (
-            'Yinxiang', read_average, write_average, delete_average)
+        data = filter(lambda x: -1 not in x, data)
+        n = len(data)
+
+        for i in xrange(n / 30):
+            result = cal_rwd_time(data[30 * i:30 * (i + 1)])
+            read_average = result["read"] / result["read_count"]
+            write_average = result["write"] / result["write_count"]
+            delete_average = result["delete"] / result["delete_count"]
+            print '%10s %3d  %.6f, %.6f, %.6f' % (
+                'Yinxiang', i, read_average, write_average, delete_average)
 
 
 def hongkong():
-    print '%10s  %8s, %8s, %8s' % ('Service', 'Read', 'Write', 'Delete')
+    print '%14s  %8s, %8s, %8s' % ('Service', 'Read', 'Write', 'Delete')
     with open('data/ghost_rwd_time.txt', 'r') as fp:
         data = json.load(fp)
-        result = cal_rwd_time(data)
-        read_average = result["read"] / result["read_count"]
-        write_average = result["write"] / result["write_count"]
-        delete_average = result["delete"] / result["delete_count"]
-        print '%10s  %.6f, %.6f, %.6f' % (
-            'Ghost', read_average, write_average, delete_average)
+        data = filter(lambda x: -1 not in x, data)
+        n = len(data)
+
+        for i in xrange(n / 30):
+            result = cal_rwd_time(data[30 * i:30 * (i + 1)])
+            read_average = result["read"] / result["read_count"]
+            write_average = result["write"] / result["write_count"]
+            delete_average = result["delete"] / result["delete_count"]
+            print '%10s %3d  %.6f, %.6f, %.6f' % (
+                'Ghost', i, read_average, write_average, delete_average)
 
     with open('data/github_rwc_time.txt', 'r') as fp:
         data = json.load(fp)
-        result = cal_rwd_time(data)
-        read_average = result["read"] / result["read_count"]
-        write_average = result["write"] / result["write_count"]
-        delete_average = result["delete"] / result["delete_count"]
-        print '%10s  %.6f, %.6f, %.6f' % (
-            'Github', read_average, write_average, delete_average)
+        data = filter(lambda x: -1 not in x, data)
+        n = len(data)
+
+        for i in xrange(n / 30):
+            result = cal_rwd_time(data[30 * i:30 * (i + 1)])
+            read_average = result["read"] / result["read_count"]
+            write_average = result["write"] / result["write_count"]
+            delete_average = result["delete"] / result["delete_count"]
+            print '%10s %3d  %.6f, %.6f, %.6f' % (
+                'Github', i, read_average, write_average, delete_average)
 
     with open('data/yinxiang_rwd_time.txt', 'r') as fp:
         data = json.load(fp)
-        result = cal_rwd_time(data)
-        read_average = result["read"] / result["read_count"]
-        write_average = result["write"] / result["write_count"]
-        delete_average = result["delete"] / result["delete_count"]
-        print '%10s  %.6f, %.6f, %.6f' % (
-            'Yinxiang', read_average, write_average, delete_average)
+        data = filter(lambda x: -1 not in x, data)
+        n = len(data)
+
+        for i in xrange(n / 30):
+            result = cal_rwd_time(data[30 * i:30 * (i + 1)])
+            read_average = result["read"] / result["read_count"]
+            write_average = result["write"] / result["write_count"]
+            delete_average = result["delete"] / result["delete_count"]
+            print '%10s %3d  %.6f, %.6f, %.6f' % (
+                'Yinxiang', i, read_average, write_average, delete_average)
 
     with open('data/evernote_rwd_time.txt', 'r') as fp:
         data = json.load(fp)
-        result = cal_rwd_time(data)
-        read_average = result["read"] / result["read_count"]
-        write_average = result["write"] / result["write_count"]
-        delete_average = result["delete"] / result["delete_count"]
-        print '%10s  %.6f, %.6f, %.6f' % (
-            'Evernote', read_average, write_average, delete_average)
+        data = filter(lambda x: -1 not in x, data)
+        n = len(data)
+
+        for i in xrange(n / 30):
+            result = cal_rwd_time(data[30 * i:30 * (i + 1)])
+            read_average = result["read"] / result["read_count"]
+            write_average = result["write"] / result["write_count"]
+            delete_average = result["delete"] / result["delete_count"]
+            print '%10s %3d  %.6f, %.6f, %.6f' % (
+                'Evernote', i, read_average, write_average, delete_average)
 
     with open('data/wordpress_rwd_time.txt', 'r') as fp:
         data = json.load(fp)
-        result = cal_rwd_time(data)
-        read_average = result["read"] / result["read_count"]
-        write_average = result["write"] / result["write_count"]
-        delete_average = result["delete"] / result["delete_count"]
-        print '%10s  %.6f, %.6f, %.6f' % (
-            'Wordpress', read_average, write_average, delete_average)
+        data = filter(lambda x: -1 not in x, data)
+        n = len(data)
+
+        for i in xrange(n / 30):
+            result = cal_rwd_time(data[30 * i:30 * (i + 1)])
+            read_average = result["read"] / result["read_count"]
+            write_average = result["write"] / result["write_count"]
+            delete_average = result["delete"] / result["delete_count"]
+            print '%10s %3d  %.6f, %.6f, %.6f' % (
+                'Wordpress', i, read_average, write_average, delete_average)
+
 
 if __name__ == '__main__':
     print 'China'

@@ -18,6 +18,8 @@ TIMEOUT = int(Config.Global('timeout'))
 class Wordpress(object):
     """
     Default user: covertsan (covert.san@gmail.com)
+
+    Common fields: ID, date, status, title
     """
     def __init__(self):
         super(Wordpress, self).__init__()
@@ -187,7 +189,6 @@ class Wordpress(object):
         while len(posts) > 0:
             for post in posts:
                 print 'Delete %d (%s)' % (post['ID'], post['status'])
-                self.delete_post(post['ID'])
                 self.delete_post(post['ID'])
             posts = self.get_posts(fields='ID,status', status='publish')
 
