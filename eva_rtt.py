@@ -372,12 +372,12 @@ if __name__ == '__main__':
     # Options
     parser.add_argument(
         '-t', '--trigger',
-        choices=CHANNELS,
+        choices=['yinxiang', 'ghost'],
         help='trigger channel',
         required=True)
     parser.add_argument(
         '-a', '--action',
-        choices=CHANNELS,
+        choices=['wordpress', 'yinxiang'],
         help='action channel',
         required=True)
     # Rounds
@@ -394,5 +394,9 @@ if __name__ == '__main__':
     action = args.action
     rounds = args.round
 
-    # yinxiang_to_wordpress(rounds)
-    ghost_to_yinxiang(rounds)
+    if trigger == 'yinxiang' and action == 'wordpress':
+        yinxiang_to_wordpress(rounds)
+    elif trigger == 'ghost' and action == 'yinxiang':
+        ghost_to_yinxiang(round)
+    else:
+        print 'Automation flow (%s -> %s) does not exist.' % (trigger, action)
