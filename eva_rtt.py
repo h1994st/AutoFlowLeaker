@@ -793,12 +793,14 @@ if __name__ == '__main__':
         elif auto == 'IFTTT':
             ret = ghost_to_wordpress(rounds)
     else:
-        print 'Automation flow (%s -> %s) does not exist.' % (trigger, action)
+        print 'Automation flow (%s -(%s)-> %s) does not exist.' % (
+            trigger, auto, action)
 
     if ret is not None:
         # Saving results
         print 'Saving results...'
-        filename = '%s_to_%s_%s.json' % (trigger, action, auto)
+        filename = '%s_%s_%s_%d.json' % (
+            trigger, action, auto, int(time.time()))
         with open('data/rtt/%s' % filename, 'w') as fp:
             json.dump(ret, fp)
         print 'Done!'
