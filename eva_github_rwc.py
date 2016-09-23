@@ -77,4 +77,4 @@ def main(rounds):
 
 
 if __name__ == '__main__':
-    main()
+    main(1000)
