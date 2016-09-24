@@ -42,7 +42,7 @@ def ghost_to_wordpress(rounds):
     Description:
     Ghost (matches "Ghost to Wordpress") -> Wordpress ("Ghost" #Inside): IFTTT
     '''
-    print 'Ghost (matches "Wordpress") -> Wordpress ("Ghost" #Inside): Zapier'
+    print 'Ghost (matches "Wordpress") -> Wordpress ("Ghost" #Inside): IFTTT'
 
     # Init
     ret = []
@@ -227,7 +227,10 @@ def ghost_to_wordpress_zapier(rounds):
         else:
             pass
         finally:
-            pass
+            # Refresh token
+            print 'Refreshing token...'
+            ghost._get_new_token()
+            print 'Done!'
 
     # End
     print 'End.'

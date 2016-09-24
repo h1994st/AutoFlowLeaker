@@ -1,1 +1,59 @@
-[]
+{
+  "categories": ["Website", "Column", "Page"],
+  "structure": [
+    {
+      "name": "Sina",
+      "url": "http://english.sina.com/",
+      "children": [
+        {
+          "name": "",
+          "url": "",
+        },
+        {
+          "name": "",
+          "url": "",
+        },
+        {
+          "name": "",
+          "url": "",
+        }
+      ]
+    },
+    {
+      "name": "Yahoo",
+      "url": "https://us.yahoo.com/",
+      "children": [
+        {
+          "name": "",
+          "url": "",
+        },
+        {
+          "name": "",
+          "url": "",
+        },
+        {
+          "name": "",
+          "url": "",
+        }
+      ]
+    },
+    {
+      "name": "Reddit",
+      "url": "https://www.reddit.com/",
+      "children": [
+        {
+          "name": "",
+          "url": "",
+        },
+        {
+          "name": "",
+          "url": "",
+        },
+        {
+          "name": "",
+          "url": "",
+        }
+      ]
+    }
+  ]
+}
