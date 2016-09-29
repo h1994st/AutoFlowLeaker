@@ -402,8 +402,11 @@ def extract9(riders, carriers):
 
 
 def capacity(aI, aK):
-    assert aI >= 1, aI
-    assert aK >= 1, aK
+    assert aI >= 0, aI
+    assert aK >= 0, aK
+
+    if aI == 0 or aK == 0:
+        return 0, 0, 0, 0
 
     t9 = T9(aI)
     t5 = T5(aI)
@@ -596,3 +599,9 @@ if __name__ == '__main__':
     arrangement, rK = unrank(3, 3, 238)
     print rK
     print arrangement
+
+    for k in xrange(1, 11):
+        print 'K=%d' % k
+        for i in xrange(0, 101, 10):
+            print capacity(i, k)[0],
+        print ''

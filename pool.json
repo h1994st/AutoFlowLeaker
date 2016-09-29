@@ -6,16 +6,16 @@
       "url": "http://english.sina.com/",
       "children": [
         {
-          "name": "",
-          "url": "",
+          "name": "Basketball",
+          "url": "http://english.sina.com/news/sports/basketball.html",
         },
         {
-          "name": "",
-          "url": "",
+          "name": "Science & Tech",
+          "url": "http://english.sina.com/news/biz-tech/scitech.html",
         },
         {
-          "name": "",
-          "url": "",
+          "name": "Movie",
+          "url": "http://english.sina.com/news/entertainment/movie.html",
         }
       ]
     },
@@ -24,34 +24,34 @@
       "url": "https://us.yahoo.com/",
       "children": [
         {
-          "name": "",
-          "url": "",
+          "name": "News",
+          "url": "https://www.yahoo.com/news/",
         },
         {
-          "name": "",
-          "url": "",
+          "name": "Sports",
+          "url": "https://sports.yahoo.com/",
         },
         {
-          "name": "",
-          "url": "",
+          "name": "Movies",
+          "url": "https://www.yahoo.com/movies/",
         }
       ]
     },
     {
-      "name": "Reddit",
-      "url": "https://www.reddit.com/",
+      "name": "Google News",
+      "url": "https://news.google.com/news?cf=all&ned=us&edchanged=1&ict=lbe_jp",
       "children": [
         {
-          "name": "",
-          "url": "",
+          "name": "Sports",
+          "url": "https://news.google.com/news/section?cf=all&ned=us&topic=s",
         },
         {
-          "name": "",
-          "url": "",
+          "name": "Entertainment",
+          "url": "https://news.google.com/news/section?cf=all&ned=us&topic=e&siidp=bfd47e14edb7406b0ea8c65415ec09a8f44d&ict=ln",
         },
         {
-          "name": "",
-          "url": "",
+          "name": "Health",
+          "url": "https://news.google.com/news/section?cf=all&ned=us&topic=m",
         }
       ]
     }
