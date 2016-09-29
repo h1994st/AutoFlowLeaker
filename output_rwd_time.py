@@ -35,51 +35,51 @@ def cal_rwd(path):
 
 
 def main():
-    # data/bak/
+    # data/rwd/china/
     print 'China:'
 
     # Ghost R
     # Ghost W
     # Ghost D
-    print 'Ghost', cal_rwd('data/bak/ghost_rwd_time.txt')
+    print 'Ghost', cal_rwd('data/rwd/china/ghost_rwd_time.txt')
 
     # Github R
     # Github W
-    # Github C
-    print 'Github', cal_rwd('data/bak/github_rwc_time.txt')
+    # Github C - TODO: wrong data
+    print 'Github', cal_rwd('data/rwd/china/github_rwc_time.txt')
 
     # Yinxiang R
     # Yinxiang W
     # Yinxiang D
-    print 'Yinxiang', cal_rwd('data/bak/yinxiang_rwd_time.txt')
+    print 'Yinxiang', cal_rwd('data/rwd/china/yinxiang_rwd_time.txt')
 
-    # data/
+    # data/rwd/hk/
     print 'Hong Kong:'
 
     # Evernote R
     # Evernote W
     # Evernote D
-    print 'Evernote', cal_rwd('data/evernote_rwd_time.txt')
+    print 'Evernote', cal_rwd('data/rwd/hk/evernote_rwd_time.txt')
 
     # Ghost R
     # Ghost W
     # Ghost D
-    print 'Ghost', cal_rwd('data/ghost_rwd_time.txt')
+    print 'Ghost', cal_rwd('data/rwd/hk/ghost_rwd_time.txt')
 
     # Github R
     # Github W
     # Github D
-    print 'Github', cal_rwd('data/github_rwc_time_2.txt')
+    print 'Github', cal_rwd('data/rwd/hk/github_rwc_time_2.txt')
 
     # Wordpress R
     # Wordpress W
     # Wordpress D
-    print 'Wordpress', cal_rwd('data/wordpress_rwd_time_2.txt')
+    print 'Wordpress', cal_rwd('data/rwd/hk/wordpress_rwd_time_2.txt')
 
     # Yinxiang R
     # Yinxiang W
     # Yinxiang D
-    print 'Yinxiang', cal_rwd('data/yinxiang_rwd_time.txt')
+    print 'Yinxiang', cal_rwd('data/rwd/hk/yinxiang_rwd_time.txt')
 
 
 if __name__ == '__main__':
