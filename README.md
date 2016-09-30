@@ -57,6 +57,6 @@ $ sudo pip install -r requirements.txt
 - "eva\_rwd\_time": measure read/write/delete time of each channel
 - Github does not support delete operation, because the state of the issue can only be "open" or "closed"
 - "default.conf": configuration file, containing all the accounts, passwords and tokens
-- "OurSystem.py": encoding and decoding (i.e.., unranking and ranking) algorithm
+- "OurSystem.py": encoding and decoding (i.e., unranking and ranking) algorithm
 - "cal\_rwd\_time.py": deprecated
 - "capacity.py": deprecated
