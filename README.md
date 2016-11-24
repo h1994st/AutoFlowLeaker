@@ -51,17 +51,19 @@ $ sudo pip install --upgrade pip
 $ sudo pip install -r requirements.txt
 ```
 
-## Integrated Web Services
+## Web Services & Evaluation Status
 
-- [x] Dropbox
-- [x] Evernote
-- [x] Facebook
-- [x] Ghost
-- [x] Github
-- [x] Twitter
-- [x] Wordpress
-- [x] Yinxiang
-- [ ] Weibo
+| Service Name | Integrated? | Read | Write | Delete |
+|:------------:|:-----------:|:----:|:-----:|:------:|
+|Dropbox       |&#10003;     |      |       |        |
+|Evernote      |&#10003;     |      |       |        |
+|Facebook      |&#10003;     |      |       |        |
+|RSS (Ghost)   |&#10003;     |      |       |        |
+|Github        |&#10003;     |      |       |        |
+|Twitter       |&#10003;     |      |       |        |
+|Wordpress     |&#10003;     |      |       |        |
+|Yinxiang      |&#10003;     |      |       |        |
+|Weibo         |             |      |       |        |
 
 ## Notes
 
