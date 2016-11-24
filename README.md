@@ -53,17 +53,17 @@ $ sudo pip install -r requirements.txt
 
 ## Web Services & Evaluation Status
 
-| Service Name | Integrated? | Read | Write | Delete |
-|:------------:|:-----------:|:----:|:-----:|:------:|
-|Dropbox       |&#10003;     |      |       |        |
-|Evernote      |&#10003;     |      |       |        |
-|Facebook      |&#10003;     |      |       |        |
-|RSS (Ghost)   |&#10003;     |      |       |        |
-|Github        |&#10003;     |      |       |        |
-|Twitter       |&#10003;     |      |       |        |
-|Wordpress     |&#10003;     |      |       |        |
-|Yinxiang      |&#10003;     |      |       |        |
-|Weibo         |             |      |       |        |
+| Service Name | Integrated? | Read (s) | Write (s) | Delete (s) |
+|:------------:|:-----------:|:--------:|:---------:|:----------:|
+|Dropbox       |&#10003;     |          |           |            |
+|Evernote      |&#10003;     |1.118     |1.150      |1.184       |
+|Facebook      |&#10003;     |          |           |            |
+|RSS (Ghost)   |&#10003;     |0.386     |0.483      |0.378       |
+|Github        |&#10003;     |1.091     |1.165      |1.143 (close)|
+|Twitter       |&#10003;     |          |           |            |
+|Wordpress     |&#10003;     |0.286     |4.855      |3.629       |
+|Yinxiang      |&#10003;     |0.319     |0.407      |0.412       |
+|Weibo         |             |          |           |            |
 
 ## Notes
 
