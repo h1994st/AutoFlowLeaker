@@ -51,6 +51,18 @@ $ sudo pip install --upgrade pip
 $ sudo pip install -r requirements.txt
 ```
 
+## Integrated Web Services
+
+- [x] Dropbox
+- [x] Evernote
+- [x] Facebook
+- [x] Ghost
+- [x] Github
+- [x] Twitter
+- [x] Wordpress
+- [x] Yinxiang
+- [ ] Weibo
+
 ## Notes
 
 - "eva_rtt.py": measure the delay time of each automation service (e.g., IFTTT, Zapier)
