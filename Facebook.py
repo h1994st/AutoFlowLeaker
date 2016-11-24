@@ -89,6 +89,19 @@ def test_fb_message_max():
         pprint(fb.posts)
 
 
+def test_fb_write():
+    fb = Facebook()
+
+    # Read all
+    pprint(fb.posts)
+
+    # Write
+    fb.create_post('from python auto flow')
+
+    # Read all
+    pprint(fb.posts)
+
+
 def main():
     fb = Facebook()
 
@@ -109,4 +122,4 @@ def main():
 
 
 if __name__ == '__main__':
-    test_fb_message_max()
+    test_fb_write()
