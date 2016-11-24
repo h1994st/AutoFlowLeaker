@@ -30,5 +30,6 @@ Evernote = partial(_config.get, 'Evernote')
 Twitter = partial(_config.get, 'Twitter')
 Gmail = partial(_config.get, 'Gmail')
 IFTTT = partial(_config.get, 'IFTTT')
+Dropbox = partial(_config.get, 'Dropbox')
 
 del partial

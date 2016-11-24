@@ -4,3 +4,4 @@ facebook-sdk
 envelopes
 httplib2
 python-twitter
+dropbox
