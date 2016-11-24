@@ -94,5 +94,24 @@ def main():
     pprint(tw.tweets)
 
 
+def test_long_tweet():
+    tw = Twitter()
+
+    # Read all
+    pprint(tw.tweets)
+
+    try:
+        # Write
+        print 'Input file: ./data/eva_time_data_3.in'
+        with open('data/eva_time_data_3.in', 'r') as fp:
+            data = fp.read().strip()
+            tw.create_tweet(data)
+    except Exception as e:
+        print e
+    else:
+        # Read all
+        pprint(tw.tweets)
+
+
 if __name__ == '__main__':
-    test_tw_delete()
+    test_long_tweet()
