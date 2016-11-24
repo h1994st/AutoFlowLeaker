@@ -65,6 +65,19 @@ class Facebook(object):
             print 'Something went wrong:', e.type, e.message
             raise e
 
+    def delete_all_posts(self):
+        '''
+        Delete all the posts
+        '''
+        posts = self.posts
+        try:
+            for post in posts:
+                print 'Delete %d' % post['id']
+                self.delete_post(post['id'])
+        except facebook.GraphAPIError as e:
+            print 'Something went wrong:', e.type, e.message
+            raise e
+
 
 def test_fb_message_max():
     fb = Facebook()

@@ -17,6 +17,10 @@ from Yinxiang import Yinxiang
 from Evernote import Evernote
 from Wordpress import Wordpress
 
+from Dropbox import Dropbox
+from Facebook import Facebook
+from Twitter import Twitter
+
 
 def test_email(data):
     e = Email()
@@ -221,6 +225,119 @@ def test_evernote(data):
     return (read, write, delete)
 
 
+def test_facebook(data):
+    try:
+        fb = Facebook()
+        print 'Facebook'
+
+        # Write
+        print 'Write'
+        begin = time.time()
+        post_id = fb.create_post(data)
+    except Exception:
+        return (-1, -1, -1)
+    end = time.time()
+    write = end - begin
+
+    # Read
+    print 'Read'
+    begin = time.time()
+    try:
+        fb.get_post(post_id)
+    except Exception:
+        return (-1, write, -1)
+    end = time.time()
+    read = end - begin
+
+    # Delete
+    print 'Delete'
+    begin = time.time()
+    try:
+        fb.delete_post(post_id)
+    except Exception:
+        return (read, write, -1)
+    end = time.time()
+    delete = end - begin
+
+    return (read, write, delete)
+
+
+def test_twitter(data):
+    _data = data[:140]
+
+    try:
+        tw = Twitter()
+        print 'Twitter'
+
+        # Write
+        print 'Write'
+        begin = time.time()
+        tweet = tw.create_tweet(_data)
+    except Exception:
+        return (-1, -1, -1)
+    end = time.time()
+    write = end - begin
+
+    # Read
+    print 'Read'
+    begin = time.time()
+    try:
+        tw.get_tweet(tweet.id)
+    except Exception:
+        return (-1, write, -1)
+    end = time.time()
+    read = end - begin
+
+    # Delete
+    print 'Delete'
+    begin = time.time()
+    try:
+        tw.delete_tweet(tweet.id)
+    except Exception:
+        return (read, write, -1)
+    end = time.time()
+    delete = end - begin
+
+    return (read, write, delete)
+
+
+def test_dropbox(data):
+    try:
+        dbx = Dropbox()
+        print 'Dropbox'
+
+        # Write
+        print 'Write'
+        begin = time.time()
+        md = dbx.create_file(data)
+    except Exception:
+        return (-1, -1, -1)
+    end = time.time()
+    write = end - begin
+
+    # Read
+    print 'Read'
+    begin = time.time()
+    try:
+        dbx.get_file(md.name)
+    except Exception:
+        return (-1, write, -1)
+    end = time.time()
+    read = end - begin
+
+    # Delete
+    print 'Delete'
+    begin = time.time()
+    try:
+        dbx.delete_file(md.name)
+    except Exception:
+        return (read, write, -1)
+    end = time.time()
+    delete = end - begin
+
+    return (read, write, delete)
+
+
 def mainland(rounds):
     # emails = []
     ghosts = []
@@ -332,6 +449,61 @@ def hongkong(rounds):
     print 'Done!'
 
 
+def others(rounds):
+    facebooks = []
+    twitters = []
+    dropboxs = []
+
+    print 'Input file: ./data/eva_time_data_2.in'
+    with open('data/eva_time_data_2.in', 'r') as fp:
+        data = fp.read().strip()
+
+        for i in xrange(rounds):
+            print 'Round %d' % i
+
+            try:
+                temp = test_facebook(data)
+            except KeyboardInterrupt:
+                temp = (-1, -1, -1)
+                break
+            finally:
+                facebooks.append(temp)
+                print 'Facebook:', temp
+
+            try:
+                temp = test_twitter(data)
+            except KeyboardInterrupt:
+                temp = (-1, -1, -1)
+                break
+            finally:
+                twitters.append(temp)
+                print 'Twitter:', temp
+
+            try:
+                temp = test_dropbox(data)
+            except KeyboardInterrupt:
+                temp = (-1, -1, -1)
+                break
+            finally:
+                dropboxs.append(temp)
+                print 'Dropbox:', temp
+
+    # Save
+    print 'Save results...'
+    with open('data/rwd/facebook_rwd_time.txt', 'w') as fp:
+        print 'Facebook...'
+        json.dump(facebooks, fp)
+
+    with open('data/rwd/twitter_rwd_time.txt', 'w') as fp:
+        print 'Twitter...'
+        json.dump(twitters, fp)
+
+    with open('data/rwd/dropbox_rwd_time.txt', 'w') as fp:
+        print 'Dropbox...'
+        json.dump(dropboxs, fp)
+    print 'Done!'
+
+
 if __name__ == '__main__':
     # Argument parser
     parser = argparse.ArgumentParser(
@@ -343,7 +515,7 @@ if __name__ == '__main__':
     # Options
     parser.add_argument(
         '-t', '--region',
-        choices=['china', 'hk', 'all'],
+        choices=['china', 'hk', 'others', 'all'],
         help='region',
         required=True)
     # Rounds
@@ -364,8 +536,11 @@ if __name__ == '__main__':
         mainland(rounds)
     elif region == 'hk':
         hongkong(rounds)
+    elif region == 'others':
+        others(rounds)
     else:
         mainland(rounds)
         hongkong(rounds)
+        others(rounds)
 
     print 'Done!'
