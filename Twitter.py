@@ -18,6 +18,7 @@ class Twitter(object):
     '''
 
     def __init__(self):
+        super(Twitter, self).__init__()
         self._api = twitter.Api(
             consumer_key=Config.Twitter('consumer_key'),
             consumer_secret=Config.Twitter('consumer_secret'),

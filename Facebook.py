@@ -21,6 +21,7 @@ class Facebook(object):
     '''
 
     def __init__(self):
+        super(Facebook, self).__init__()
         self._facebook_graph = facebook.GraphAPI(Config.Facebook('token'))
 
     @property
