@@ -121,5 +121,30 @@ def main():
     pprint(fb.posts)
 
 
+def test_long_post():
+    fb = Facebook()
+
+    # Read all
+    pprint(fb.posts)
+
+    try:
+        # Write
+        print 'Input file: ./data/eva_time_data_2.in'
+        with open('data/eva_time_data_2.in', 'r') as fp:
+            data = fp.read().strip()
+            post_id = fb.create_post(data)
+    except Exception as e:
+        print e
+    else:
+        # Read all
+        pprint(fb.posts)
+
+        # Delete
+        fb.delete_post(post_id)
+
+        # Read all
+        pprint(fb.posts)
+
+
 if __name__ == '__main__':
-    test_fb_write()
+    test_long_post()
