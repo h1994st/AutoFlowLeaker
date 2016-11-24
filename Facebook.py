@@ -72,7 +72,7 @@ class Facebook(object):
         posts = self.posts
         try:
             for post in posts:
-                print 'Delete %d' % post['id']
+                print 'Delete %s' % post['id']
                 self.delete_post(post['id'])
         except facebook.GraphAPIError as e:
             print 'Something went wrong:', e.type, e.message

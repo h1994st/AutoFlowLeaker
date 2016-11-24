@@ -226,13 +226,13 @@ def test_evernote(data):
 
 
 def test_facebook(data):
-    try:
-        fb = Facebook()
-        print 'Facebook'
+    fb = Facebook()
+    print 'Facebook'
 
-        # Write
-        print 'Write'
-        begin = time.time()
+    # Write
+    print 'Write'
+    begin = time.time()
+    try:
         post_id = fb.create_post(data)
     except Exception:
         return (-1, -1, -1)
@@ -265,15 +265,16 @@ def test_facebook(data):
 def test_twitter(data):
     _data = data[:140]
 
-    try:
-        tw = Twitter()
-        print 'Twitter'
+    tw = Twitter()
+    print 'Twitter'
 
-        # Write
-        print 'Write'
-        begin = time.time()
+    # Write
+    print 'Write'
+    begin = time.time()
+    try:
         tweet = tw.create_tweet(_data)
-    except Exception:
+    except Exception as e:
+        print e
         return (-1, -1, -1)
     end = time.time()
     write = end - begin
@@ -302,13 +303,13 @@ def test_twitter(data):
 
 
 def test_dropbox(data):
-    try:
-        dbx = Dropbox()
-        print 'Dropbox'
+    dbx = Dropbox()
+    print 'Dropbox'
 
-        # Write
-        print 'Write'
-        begin = time.time()
+    # Write
+    print 'Write'
+    begin = time.time()
+    try:
         md = dbx.create_file(data)
     except Exception:
         return (-1, -1, -1)
@@ -453,6 +454,11 @@ def others(rounds):
     facebooks = []
     twitters = []
     dropboxs = []
+
+    # Clean
+    # Facebook().delete_all_posts()
+    # Twitter().delete_all_tweets()
+    # Dropbox().delete_all_files()
 
     print 'Input file: ./data/eva_time_data_2.in'
     with open('data/eva_time_data_2.in', 'r') as fp:
