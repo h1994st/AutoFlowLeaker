@@ -30,6 +30,9 @@ class Twitter(object):
         return self.get_tweets()
 
     def create_tweet(self, content):
+        '''
+        Create a new tweet
+        '''
         if len(content) <= 140:
             ret = self._api.PostUpdate(content, trim_user=True)
         else:
@@ -38,19 +41,31 @@ class Twitter(object):
         return ret
 
     def get_tweet(self, id):
+        '''
+        Get a tweet
+        '''
         return self._api.GetStatus(
             id, trim_user=True,
             include_my_retweet=False, include_entities=False)
 
     def get_tweets(self):
+        '''
+        Get all the tweets
+        '''
         statuses = self._api.GetUserTimeline(
             trim_user=True, exclude_replies=True)
         return statuses
 
     def delete_tweet(self, id):
+        '''
+        Delete a tweet
+        '''
         return self._api.DestroyStatus(id, trim_user=True)
 
     def delete_all_tweets(self):
+        '''
+        Delete all the tweets
+        '''
         for tweet in self.tweets:
             print 'Delete %d' % tweet.id
             self.delete_tweet(tweet.id)

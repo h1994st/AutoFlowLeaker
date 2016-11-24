@@ -29,6 +29,9 @@ class Dropbox(object):
         return self.get_files()
 
     def create_file(self, content):
+        '''
+        Upload a new file
+        '''
         filename = '%s.txt' % str(int(time.time()))
         fullpath = os.path.join(Config.Dropbox('root_dir'), filename)
 
@@ -41,6 +44,9 @@ class Dropbox(object):
             return res
 
     def get_file(self, filename, save=False):
+        '''
+        Download a file in 'AutoFlow' folder
+        '''
         fullpath = os.path.join(Config.Dropbox('root_dir'), filename)
 
         try:
@@ -56,17 +62,25 @@ class Dropbox(object):
             return res
 
     def get_files(self):
-        '''list files'''
+        '''
+        Get the metadata of all files
+        '''
         res = self._dbx.files_list_folder(
             Config.Dropbox('root_dir'),
             recursive=False, include_deleted=False)
         return res.entries
 
     def delete_file(self, filename):
+        '''
+        Delete a file
+        '''
         fullpath = os.path.join(Config.Dropbox('root_dir'), filename)
         return self._dbx.files_delete(fullpath)
 
     def delete_all_files(self):
+        '''
+        Delete all the files
+        '''
         # Delete root dir
         self._dbx.files_delete(Config.Dropbox('root_dir'))
 

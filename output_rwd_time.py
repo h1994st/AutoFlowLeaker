@@ -81,6 +81,21 @@ def main():
     # Yinxiang D
     print 'Yinxiang', cal_rwd('data/rwd/hk/yinxiang_rwd_time.txt')
 
+    # Facebook R
+    # Facebook W
+    # Facebook D
+    print 'Facebook', cal_rwd('data/rwd/hk/facebook_rwd_time.txt')
+
+    # Twitter R
+    # Twitter W
+    # Twitter D
+    print 'Twitter', cal_rwd('data/rwd/hk/twitter_rwd_time.txt')
+
+    # Dropbox R
+    # Dropbox W
+    # Dropbox D
+    print 'Dropbox', cal_rwd('data/rwd/hk/dropbox_rwd_time.txt')
+
 
 if __name__ == '__main__':
     main()

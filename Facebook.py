@@ -29,6 +29,9 @@ class Facebook(object):
         return self.get_posts()
 
     def create_post(self, message):
+        '''
+        Create a new post (no longer than 63206 characters)
+        '''
         assert len(message) <= 63206, \
             'message cnnot be longer than 63206 characters'
         try:
@@ -41,6 +44,9 @@ class Facebook(object):
             return res['id']  # id of new post
 
     def get_post(self, id):
+        '''
+        Get a post
+        '''
         try:
             res = self._facebook_graph.get_object(id)
         except facebook.GraphAPIError as e:
@@ -50,6 +56,9 @@ class Facebook(object):
             return res
 
     def get_posts(self):
+        '''
+        Get all the posts
+        '''
         try:
             posts = self._facebook_graph.get_connections('me', 'posts')
         except facebook.GraphAPIError as e:
@@ -59,6 +68,9 @@ class Facebook(object):
             return posts['data']  # list of posts
 
     def delete_post(self, id):
+        '''
+        Delete a post
+        '''
         try:
             self._facebook_graph.delete_object(id)
         except facebook.GraphAPIError as e:
