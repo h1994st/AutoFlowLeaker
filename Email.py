@@ -16,7 +16,7 @@ import Config
 class Email(SMTP):
     '''
     Default email: covert_tom@163.com
-    IMAP SSL, Port 465
+    SMTP SSL, Port 465
     '''
 
     MAIL_163_SMTP_HOST = 'smtp.163.com'

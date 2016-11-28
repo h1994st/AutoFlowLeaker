@@ -56,14 +56,36 @@ $ sudo pip install -r requirements.txt
 | Service Name | Integrated? | Read (s) | Write (s) | Delete (s) |
 |:------------:|:-----------:|:--------:|:---------:|:----------:|
 |Dropbox       |&#10003;     |0.400     |1.213      |0.956       |
+|Email         |&#10003;     |          |           |            |
 |Evernote      |&#10003;     |1.118     |1.150      |1.184       |
 |Facebook      |&#10003;     |0.699     |1.479      |3.539       |
 |RSS (Ghost)   |&#10003;     |0.386     |0.483      |0.378       |
 |Github        |&#10003;     |1.091     |1.165      |1.143 (close)|
+|Gmail         |&#10003;     |          |           |            |
+|Google Drive  |             |          |           |            |
+|Medium        |             |          |           |            |
 |Twitter       |&#10003;     |0.828     |0.902      |0.784       |
+|Weibo         |             |          |           |            |
 |Wordpress     |&#10003;     |0.286     |4.855      |3.629       |
 |Yinxiang      |&#10003;     |0.319     |0.407      |0.412       |
-|Weibo         |             |          |           |            |
+
+## Web Service API Domain
+
+| Service Name | API Domain |
+|:------------:|:----------:|
+|Dropbox       |            |
+|Email         |(not applicable?)|
+|Evernote      |            |
+|Facebook      |            |
+|RSS (Ghost)   |            |
+|Github        |            |
+|Gmail         |(not applicable?)|
+|Google Drive  |            |
+|Medium        |            |
+|Twitter       |            |
+|Weibo         |            |
+|Wordpress     |            |
+|Yinxiang      |            |
 
 ## Notes
 

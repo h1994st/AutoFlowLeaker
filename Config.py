@@ -19,17 +19,24 @@ getfloat = _config.getfloat
 
 Global = partial(_config.get, 'Global')
 
-Github = partial(_config.get, 'Github')
-Yinxiang = partial(_config.get, 'Yinxiang')
-Email = partial(_config.get, 'Email')
-Ghost = partial(_config.get, 'Ghost')
-
-Facebook = partial(_config.get, 'Facebook')
-Wordpress = partial(_config.get, 'Wordpress')
-Evernote = partial(_config.get, 'Evernote')
-Twitter = partial(_config.get, 'Twitter')
-Gmail = partial(_config.get, 'Gmail')
-IFTTT = partial(_config.get, 'IFTTT')
 Dropbox = partial(_config.get, 'Dropbox')
+Email = partial(_config.get, 'Email')
+Evernote = partial(_config.get, 'Evernote')
+Facebook = partial(_config.get, 'Facebook')
+Ghost = partial(_config.get, 'Ghost')
+Github = partial(_config.get, 'Github')
+Gmail = partial(_config.get, 'Gmail')
+# https://developers.google.com/api-client-library/python/apis/drive/v2
+GoogleDrive = partial(_config.get, 'Google Drive')
+Medium = partial(_config.get, 'Medium')
+Twitter = partial(_config.get, 'Twitter')
+Weibo = partial(_config.get, 'Weibo')
+Wordpress = partial(_config.get, 'Wordpress')
+Yinxiang = partial(_config.get, 'Yinxiang')
+
+# TODO: messagebird, reddit, foursquare, onenote, pinterest
+
+IFTTT = partial(_config.get, 'IFTTT')
+
 
 del partial
