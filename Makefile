@@ -1,4 +1,4 @@
-DIRS = data
+DIRS = data tools
 CLEANDIRS = $(DIRS:%=clean-%)
 
 .PHONY: subdirs $(CLEANDIRS)

@@ -14,8 +14,12 @@ AutoFlowLeaker
 
 - python
 - pip
+- liberasurecode
+- isa-l: <https://github.com/01org/isa-l>
 
 ### Python Packages
+
+(see `requirements.txt`)
 
 - PyGitHub
 - evernote
@@ -23,6 +27,10 @@ AutoFlowLeaker
 - envelopes
 - httplib2
 - python-twitter
+- twitter
+- pyeclib
+
+Install `isa-l`, see <https://github.com/01org/isa-l#building-isa-l> for detail.
 
 On Mac OS X:
 
@@ -30,6 +38,9 @@ On Mac OS X:
 # install pip
 $ sudo easy_install pip
 $ sudo pip install --upgrade pip
+
+# install third-party libraries
+$ [sudo] brew install liberasurecode
 
 # install python third-party packages
 $ sudo pip install -r requirements.txt
@@ -40,12 +51,18 @@ On Ubuntu:
 ```bash
 # install pip
 # 1) for Ubuntu 10.10 Maverick and newer
-$ sudo apt-get install python-pip python-dev build-essential
-$ sudo pip install --upgrade pip
+$ sudo apt-get install python-pip
 # 2) for older versions of Ubuntu
-$ sudo apt-get install python-setuptools python-dev build-essential
+$ sudo apt-get install python-setuptools
 $ sudo easy_install pip
+
 $ sudo pip install --upgrade pip
+
+# install third-party libraries
+$ sudo apt-get install python-dev build-essential autoconf automake libtool
+
+# install liberasurecode
+$ sudo apt-get install liberasurecode-dev
 
 # install python third-party packages
 $ sudo pip install -r requirements.txt

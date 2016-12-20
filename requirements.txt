@@ -5,3 +5,4 @@ envelopes
 httplib2
 python-twitter
 dropbox
+pyeclib
