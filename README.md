@@ -14,7 +14,7 @@ AutoFlowLeaker
 
 - python
 - pip
-- liberasurecode
+- liberasurecode: <https://github.com/openstack/liberasurecode>
 - isa-l: <https://github.com/01org/isa-l>
 
 ### Python Packages
