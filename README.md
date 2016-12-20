@@ -16,6 +16,7 @@ AutoFlowLeaker
 - pip
 - liberasurecode: <https://github.com/openstack/liberasurecode>
 - isa-l: <https://github.com/01org/isa-l>
+- libarchive
 
 ### Python Packages
 
@@ -26,15 +27,15 @@ AutoFlowLeaker
 1. Install dependency libraries
 
   Install `isa-l`, see <https://github.com/01org/isa-l#building-isa-l> for detail.
-  
+
   On Mac OS X:
   ```bash
   $ [sudo] brew install liberasurecode
   ```
-  
+
   On Ubuntu:
   ```bash
-  $ sudo apt-get install liberasurecode-dev libjerasure-dev
+  $ sudo apt-get install liberasurecode-dev libjerasure-dev libarchive-dev
   ```
 
 2. Install dependency Python packages
