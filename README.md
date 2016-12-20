@@ -8,9 +8,9 @@ AutoFlowLeaker
 - Surround top-level function and class definitions with two blank lines.
 - ([read more](https://www.python.org/dev/peps/pep-0008/))
 
-## Requirements
+## Quick Start
 
-### System Dependency
+### System Dependencies
 
 - python
 - pip
@@ -21,52 +21,48 @@ AutoFlowLeaker
 
 (see `requirements.txt`)
 
-- PyGitHub
-- evernote
-- facebook-sdk
-- envelopes
-- httplib2
-- python-twitter
-- twitter
-- pyeclib
+### Install Pre-requisites
 
-Install `isa-l`, see <https://github.com/01org/isa-l#building-isa-l> for detail.
+1. Install dependency libraries
 
-On Mac OS X:
+  Install `isa-l`, see <https://github.com/01org/isa-l#building-isa-l> for detail.
+  
+  On Mac OS X:
+  ```bash
+  $ [sudo] brew install liberasurecode
+  ```
+  
+  On Ubuntu:
+  ```bash
+  $ sudo apt-get install liberasurecode-dev libjerasure-dev
+  ```
 
-```bash
-# install pip
-$ sudo easy_install pip
-$ sudo pip install --upgrade pip
+2. Install dependency Python packages
 
-# install third-party libraries
-$ [sudo] brew install liberasurecode
+  On Mac OS X:
 
-# install python third-party packages
-$ sudo pip install -r requirements.txt
-```
+  ```bash
+  # install pip
+  $ sudo easy_install pip
+  $ sudo pip install --upgrade pip
 
-On Ubuntu:
+  $ sudo pip install -r requirements.txt
+  ```
 
-```bash
-# install pip
-# 1) for Ubuntu 10.10 Maverick and newer
-$ sudo apt-get install python-pip
-# 2) for older versions of Ubuntu
-$ sudo apt-get install python-setuptools
-$ sudo easy_install pip
+  On Ubuntu:
 
-$ sudo pip install --upgrade pip
+  ```bash
+  # install pip
+  # 1) for Ubuntu 10.10 Maverick and newer
+  $ sudo apt-get install python-pip
+  # 2) for older versions of Ubuntu
+  $ sudo apt-get install python-setuptools
+  $ sudo easy_install pip
 
-# install third-party libraries
-$ sudo apt-get install python-dev build-essential autoconf automake libtool
-
-# install liberasurecode
-$ sudo apt-get install liberasurecode-dev
-
-# install python third-party packages
-$ sudo pip install -r requirements.txt
-```
+  $ sudo pip install --upgrade pip
+  $ sudo apt-get install python-dev build-essential autoconf automake libtool
+  $ sudo pip install -r requirements.txt
+  ```
 
 ## Web Services & Evaluation Status
 
