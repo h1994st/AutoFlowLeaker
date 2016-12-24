@@ -105,6 +105,40 @@ def main():
         print 'Interval Std.:', np.std(intervals)
     print ''
 
+    # Ghost -> Wordpress via Microsoft Flow
+    print 'Ghost -> Wordpress via Micro'
+    with open('data/rtt/ghost_Micro_wordpress_1480617920.json') as fp:
+        data = json.load(fp)
+        delays = [x[1] - x[0] for x in data]
+        action_performed_at = [x[1] for x in data]
+        intervals = []
+        for i in xrange(len(action_performed_at) - 1):
+            intervals.append(
+                action_performed_at[i + 1] - action_performed_at[i])
+
+        print 'Delay Avg.:', np.mean(delays),
+        print 'Delay Std.:', np.std(delays)
+        print 'Interval Avg.:', np.mean(intervals),
+        print 'Interval Std.:', np.std(intervals)
+    print ''
+
+    # Ghost -> Wordpress via APIAnt
+    print 'Ghost -> Wordpress via APIAnt'
+    with open('data/rtt/ghost_APIant_wordpress_1480872682.json') as fp:
+        data = json.load(fp)
+        delays = [x[1] - x[0] for x in data]
+        action_performed_at = [x[1] for x in data]
+        intervals = []
+        for i in xrange(len(action_performed_at) - 1):
+            intervals.append(
+                action_performed_at[i + 1] - action_performed_at[i])
+
+        print 'Delay Avg.:', np.mean(delays),
+        print 'Delay Std.:', np.std(delays)
+        print 'Interval Avg.:', np.mean(intervals),
+        print 'Interval Std.:', np.std(intervals)
+    print ''
+
 
 if __name__ == '__main__':
     main()
