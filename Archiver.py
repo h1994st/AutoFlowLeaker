@@ -16,7 +16,7 @@ from ArgParseActionExtension import ReadableFilePath
 
 
 def compress(input_files, output_file):
-    assert isinstance(input_files, str), input_files
+    assert isinstance(input_files, list), input_files
     for file in input_files:
         assert isinstance(file, str), file
         assert os.path.exists(file), file
