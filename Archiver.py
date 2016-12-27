@@ -25,14 +25,14 @@ def compress(input_files, output_file):
 
     print 'Compressing...'
     print 'Input files: %s' % input_files
+    print 'Output file: %s' % output_file
 
     # Compress
-    libarchive.public.create_file(
-        output_file,
-        libarchive.constants.ARCHIVE_FORMAT_7ZIP,
-        input_files)
-
-    print 'Output file: %s' % output_file
+    for entry in libarchive.public.create_file(
+            output_file,
+            libarchive.constants.ARCHIVE_FORMAT_7ZIP,
+            input_files):
+        print '  ' + str(entry)
 
 
 def decompress(input_file, output_dir):
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     compress_parser.add_argument(
         '-o', '--output',
         help='output file',
-        default='archiver.7z')
+        default=os.path.abspath('./archiver.7z'))
 
     # 'decompress' command
     decompress_parser = subparsers.add_parser('decompress', help='Decoder')
@@ -99,9 +99,9 @@ if __name__ == '__main__':
     print args
 
     if args.subcommand == 'compress':
-        compress(args.files, args.output)
+        compress(args.files, os.path.abspath(args.output))
     elif args.subcommand == 'decompress':
-        decompress(args.file, args.dest)
+        decompress(args.file, os.path.abspath(args.dest))
     else:
         raise Exception('Unknown subcommand.')
 
