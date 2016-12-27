@@ -71,7 +71,7 @@ def ec_decode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
     output_file.write(decoded_file)
     output_file.close()
 
-    print 'output file: %s' % os.path.abspath(output_file)
+    print 'output file: %s' % os.path.abspath(output_file.name)
 
 
 if __name__ == '__main__':
