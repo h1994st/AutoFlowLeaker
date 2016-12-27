@@ -22,7 +22,7 @@ class ReadableDir(argparse.Action):
                 'readable directory:{0} is not a valid path'.format(
                     prospectiveDir))
         if os.access(prospectiveDir, os.R_OK):
-            setattr(namespace, self.dest, os.path.abspath((prospectiveDir)))
+            setattr(namespace, self.dest, os.path.abspath(prospectiveDir))
         else:
             raise argparse.ArgumentTypeError(
                 'readable directory:{0} is not a readable dir'.format(

@@ -28,7 +28,7 @@ def ec_encode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
 
     # Save to files
     i = 0
-    origin_filename = input_file.name
+    origin_filename = os.path.basename(input_file.name)
     for fragment in fragments:
         with open(os.path.join(
                 output_dir, '%s.%d' % (origin_filename, i)), 'wb') as fp:
@@ -94,7 +94,7 @@ if __name__ == '__main__':
         '-d', '--dest',
         action=ReadableDir,
         help='directory to drop encoded fragments',
-        default='.')
+        default=os.path.abspath('.'))
 
     # 'decode' command
     decode_parser = subparsers.add_parser('decode', help='Decoder')
