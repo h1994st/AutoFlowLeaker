@@ -13,7 +13,7 @@ from pyeclib.ec_iface import ECDriver
 from ReadableDir import ReadableDir
 
 
-def ec_decode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
+def ec_encode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
     assert isinstance(k, int), k
     assert isinstance(m, int), m
     assert isinstance(input_file, file), input_file
@@ -36,7 +36,7 @@ def ec_decode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
         i += 1
 
 
-def ec_encode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
+def ec_decode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
     assert isinstance(k, int), k
     assert isinstance(m, int), m
     assert isinstance(input_fragments, list), input_fragments
@@ -95,7 +95,6 @@ if __name__ == '__main__':
         action=ReadableDir,
         help='directory to drop encoded fragments',
         default='.')
-    encode_parser.set_defaults(func=ec_encode)
 
     # 'decode' command
     decode_parser = subparsers.add_parser('decode', help='Decoder')
@@ -110,10 +109,14 @@ if __name__ == '__main__':
         type=argparse.FileType('w'),
         help='output file',
         default='output.tmp')
-    decode_parser.set_defaults(func=ec_decode)
 
     (args, _) = parser.parse_known_args()
     print 'Starting program...'
     print args
 
-    args.func(args)
+    if args.subcommand == 'encode':
+        ec_encode(args.k, args.m, args.file, args.dest)
+    elif args.subcommand == 'decode':
+        ec_decode(args.k, args.m, args.fragments, args.output)
+    else:
+        raise Exception('Unknown subcommand.')
