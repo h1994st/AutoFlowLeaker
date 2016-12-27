@@ -107,7 +107,9 @@ if __name__ == '__main__':
 
     print ifttt.applet_ids
 
-    for i in xrange(20):
+    i = 0
+    while True:
+        i += 1
         ifttt.force_check('xxx')
         print '%d: Sleep 2 seconds' % i
         time.sleep(2)
