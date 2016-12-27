@@ -74,7 +74,6 @@ if __name__ == '__main__':
     compress_parser = subparsers.add_parser('compress', help='Encoder')
     compress_parser.add_argument(
         '-f', '--files',
-        action=ReadableFilePath,
         nargs='+',
         help='files to compress',
         required=True)
