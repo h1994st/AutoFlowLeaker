@@ -21,7 +21,7 @@ def ec_encode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
     assert os.path.isdir(output_dir), output_dir
 
     print 'Encoding...'
-    print 'k = %d, m = %d', (k, m)
+    print 'k = %d, m = %d' % (k, m)
     print 'intput file: %s' % os.path.abspath(input_file.name)
     print 'output directory: %s' % output_dir
 
@@ -52,7 +52,7 @@ def ec_decode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
     assert isinstance(output_file, file), output_file
 
     print 'Decoding...'
-    print 'k = %d, m = %d', (k, m)
+    print 'k = %d, m = %d' % (k, m)
     print 'intput fragments: %s' % input_fragments
 
     ec_driver = ECDriver(k=k, m=m, ec_type=ec_type)
