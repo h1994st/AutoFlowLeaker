@@ -18,8 +18,7 @@ from ArgParseActionExtension import ReadableFilePath
 def compress(input_files, output_file):
     assert isinstance(input_files, list), input_files
     for file in input_files:
-        assert isinstance(file, str), file
-        assert os.path.exists(file), file
+        assert isinstance(file, str) and os.path.exists(file), file
     assert isinstance(output_file, str), output_file
     assert not os.path.isdir(output_file), output_file
     assert not os.path.islink(output_file), output_file
@@ -79,7 +78,6 @@ if __name__ == '__main__':
         required=True)
     compress_parser.add_argument(
         '-o', '--output',
-        action=ReadableFilePath,
         help='output file',
         default='archiver.7z')
 
