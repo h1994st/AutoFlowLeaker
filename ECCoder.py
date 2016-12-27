@@ -10,7 +10,7 @@ import argparse
 
 from pyeclib.ec_iface import ECDriver
 
-from ReadableDir import ReadableDir
+from ArgParseActionExtension import ReadableDirPath
 
 
 def ec_encode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
@@ -22,8 +22,8 @@ def ec_encode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
 
     print 'Encoding...'
     print 'k = %d, m = %d' % (k, m)
-    print 'intput file: %s' % os.path.abspath(input_file.name)
-    print 'output directory: %s' % output_dir
+    print 'Intput file: %s' % os.path.abspath(input_file.name)
+    print 'Output directory: %s' % output_dir
 
     ec_driver = ECDriver(k=k, m=m, ec_type=ec_type)
 
@@ -53,7 +53,7 @@ def ec_decode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
 
     print 'Decoding...'
     print 'k = %d, m = %d' % (k, m)
-    print 'intput fragments: %s' % map(
+    print 'Intput fragments: %s' % map(
         lambda x: os.path.abspath(x.name), input_fragments)
 
     ec_driver = ECDriver(k=k, m=m, ec_type=ec_type)
@@ -71,7 +71,7 @@ def ec_decode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
     output_file.write(decoded_file)
     output_file.close()
 
-    print 'output file: %s' % os.path.abspath(output_file.name)
+    print 'Output file: %s' % os.path.abspath(output_file.name)
 
 
 if __name__ == '__main__':
@@ -107,7 +107,7 @@ if __name__ == '__main__':
         required=True)
     encode_parser.add_argument(
         '-d', '--dest',
-        action=ReadableDir,
+        action=ReadableDirPath,
         help='directory to drop encoded fragments',
         default=os.path.abspath('.'))
 
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         '-f', '--fragments',
         type=argparse.FileType('r'),
         nargs='+',
-        help='',
+        help='fragments to decode',
         required=True)
     decode_parser.add_argument(
         '-o', '--output',
