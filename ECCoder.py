@@ -20,6 +20,11 @@ def ec_encode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
     assert isinstance(output_dir, str), output_dir
     assert os.path.isdir(output_dir), output_dir
 
+    print 'Encoding...'
+    print 'k = %d, m = %d', (k, m)
+    print 'intput file: %s' % os.path.abspath(input_file.name)
+    print 'output directory: %s' % output_dir
+
     ec_driver = ECDriver(k=k, m=m, ec_type=ec_type)
 
     # Encode
@@ -30,9 +35,11 @@ def ec_encode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
     i = 0
     origin_filename = os.path.basename(input_file.name)
     for fragment in fragments:
+        filename = '%s.%d' % (origin_filename, i)
         with open(os.path.join(
-                output_dir, '%s.%d' % (origin_filename, i)), 'wb') as fp:
+                output_dir, filename), 'wb') as fp:
             fp.write(fragment)
+        print '  ' + filename
         i += 1
 
 
@@ -44,10 +51,15 @@ def ec_decode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
         assert isinstance(input_fragment, file), input_fragment
     assert isinstance(output_file, file), output_file
 
+    print 'Decoding...'
+    print 'k = %d, m = %d', (k, m)
+    print 'intput fragments: %s' % input_fragments
+
     ec_driver = ECDriver(k=k, m=m, ec_type=ec_type)
 
     fragment_list = []
     for input_fragment in input_fragments:
+        print '  ' + os.path.basename(input_fragment.name)
         fragment_list.append(input_fragment.read())
         input_fragment.close()
 
@@ -57,6 +69,8 @@ def ec_decode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
     # Save to file
     output_file.write(decoded_file)
     output_file.close()
+
+    print 'output file: %s' % output_file
 
 
 if __name__ == '__main__':
@@ -120,3 +134,5 @@ if __name__ == '__main__':
         ec_decode(args.k, args.m, args.fragments, args.output)
     else:
         raise Exception('Unknown subcommand.')
+
+    print 'Done!'
