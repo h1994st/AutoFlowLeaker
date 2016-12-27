@@ -31,7 +31,7 @@ def ec_encode(k, m, input_file, output_dir, ec_type='isa_l_rs_vand'):
     origin_filename = input_file.name
     for fragment in fragments:
         with open(os.path.join(
-                output_dir, '%s.%d' % (origin_filename, i))) as fp:
+                output_dir, '%s.%d' % (origin_filename, i)), 'wb') as fp:
             fp.write(fragment)
         i += 1
 
