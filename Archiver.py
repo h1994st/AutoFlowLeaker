@@ -30,8 +30,8 @@ def compress(input_files, output_file):
     # Compress
     libarchive.public.create_file(
         output_file,
-        format_name=libarchive.constants.ARCHIVE_FORMAT_7ZIP,
-        files=input_files)
+        libarchive.constants.ARCHIVE_FORMAT_7ZIP,
+        input_files)
 
     print 'Output file: %s' % output_file
 
