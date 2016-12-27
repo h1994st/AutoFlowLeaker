@@ -53,7 +53,8 @@ def ec_decode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
 
     print 'Decoding...'
     print 'k = %d, m = %d' % (k, m)
-    print 'intput fragments: %s' % input_fragments
+    print 'intput fragments: %s' % map(
+        lambda x: os.path.abspath(x.name), input_fragments)
 
     ec_driver = ECDriver(k=k, m=m, ec_type=ec_type)
 
@@ -70,7 +71,7 @@ def ec_decode(k, m, input_fragments, output_file, ec_type='isa_l_rs_vand'):
     output_file.write(decoded_file)
     output_file.close()
 
-    print 'output file: %s' % output_file
+    print 'output file: %s' % os.path.abspath(output_file)
 
 
 if __name__ == '__main__':
