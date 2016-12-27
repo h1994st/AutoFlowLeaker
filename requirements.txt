@@ -7,3 +7,5 @@ python-twitter
 dropbox
 pyeclib
 libarchive
+lxml
+cssselect
