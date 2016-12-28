@@ -110,6 +110,10 @@ if __name__ == '__main__':
     i = 0
     while True:
         i += 1
-        ifttt.force_check_all()
-        print '%d: Sleep 2 seconds' % i
-        time.sleep(2)
+        try:
+            ifttt.force_check_all()
+        except Exception as e:
+            print e
+        finally:
+            print '%d: Sleep 2 seconds' % i
+            time.sleep(2)
