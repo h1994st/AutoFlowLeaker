@@ -28,6 +28,23 @@ def main():
         print 'Interval Std.:', np.std(intervals)
     print ''
 
+    # Ghost -> Wordpress via IFTTT with forcing check
+    print 'Ghost -> Wordpress via IFTTT with forcing check'
+    with open('data/rtt/ghost_IFTTT_wordpress_1482907187.json') as fp:
+        data = json.load(fp)
+        delays = [x[1] - x[0] for x in data]
+        action_performed_at = [x[1] for x in data]
+        intervals = []
+        for i in xrange(len(action_performed_at) - 1):
+            intervals.append(
+                action_performed_at[i + 1] - action_performed_at[i])
+
+        print 'Delay Avg.:', np.mean(delays),
+        print 'Delay Std.:', np.std(delays)
+        print 'Interval Avg.:', np.mean(intervals),
+        print 'Interval Std.:', np.std(intervals)
+    print ''
+
     # Evernote -> Github via IFTTT
     print 'Evernote -> Github via IFTTT'
     with open('data/rtt/evernote_to_github_IFTTT.json') as fp:
