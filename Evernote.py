@@ -5,7 +5,11 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+import time
+import pytz
 import binascii
+import datetime
+from pprint import pprint
 
 import evernote.edam.type.ttypes as Types
 import evernote.edam.error.ttypes as Errors
@@ -13,25 +17,99 @@ from evernote.edam.notestore import NoteStore
 from evernote.api.client import EvernoteClient
 
 import Config
+from Post import Post
+from Channel import Channel
 from timeout import timeout
 
 
 TIMEOUT = int(Config.Global('timeout'))
 
 
-class Evernote(EvernoteClient):
+class Evernote(EvernoteClient, Channel):
     '''
     Default user: ctom357 (covert.san@gmail.com)
     '''
 
     def __init__(self, **kwargs):
+        print 'Initializing Evernote/Yinxiang:'
+
         kwargs.setdefault('service_host', Config.Evernote('host'))
+        print '  Service host: %s' % Config.Evernote('host')
+
         kwargs.setdefault('token', Config.Evernote('token'))
+        print '  Access token: %s' % Config.Evernote('token')
+
         kwargs.setdefault('sandbox', False)
+        print '  Sandbox: False'
 
         super(Evernote, self).__init__(**kwargs)
 
         self._note_store = self.get_note_store()
+
+        self.default_notebook = kwargs.pop(
+            'default_notebook', self.note_store.getDefaultNotebook(self.token))
+        print '  Default notebook: %s' % self.default_notebook.name
+
+    def send(self, content, title=None):
+        '''
+        Default title: unix epoch
+        '''
+        try:
+            note = self.create_note(
+                (title or '%.6f.txt' % time.time()), content)
+        except Exception:
+            return None
+        else:
+            return Post(
+                id=note.guid,
+                title=note.title,
+                create_time=datetime.datetime.fromtimestamp(
+                    note.created / 1000, pytz.utc))
+
+    def receive_all(self):
+        def converter(note):
+            return Post(
+                id=note.guid,
+                title=note.title,
+                content=self.get_note(note.guid).content,
+                create_time=datetime.datetime.fromtimestamp(
+                    note.created / 1000, pytz.utc))
+
+        return sorted(
+            map(converter, self.get_notes()),
+            key=lambda x: x.create_time, reverse=True)
+
+    def delete(self, item):
+        self.delete_note(guid=item.id)
+
+    def delete_all(self):
+        self.delete_notes(notebook=self.default_notebook)
+
+    @property
+    def default_notebook(self):
+        '''
+        Default notebook for Evernote channel.
+
+        :rtype: evernote.edam.type.ttypes.Notebook
+        '''
+        if self._default_notebook_value is not None:
+            return self._default_notebook_value
+        else:
+            raise AttributeError('missing required field \'default_notebook\'')
+
+    @default_notebook.setter
+    def default_notebook(self, val):
+        if isinstance(val, str):
+            self._default_notebook_value = self.get_notebook(name=val)
+        elif isinstance(val, Types.Notebook):
+            self._default_notebook_value = val
+        else:
+            raise AttributeError('attribute \'default_notebook\' type error')
+
+    @default_notebook.deleter
+    def default_notebook(self):
+        self._default_folder_value = self.note_store.getDefaultNotebook(
+            self.token)
 
     @property
     def note_store(self):
@@ -148,10 +226,10 @@ class Evernote(EvernoteClient):
     # Write
     @timeout(TIMEOUT)
     def create_note(self, title, body, resources=[], notebook=None):
-        """
+        '''
         Create a Note instance with title and body
         Send Note object to user's account
-        """
+        '''
 
         assert isinstance(title, (str, unicode)), title
         assert isinstance(body, (str, unicode)), body
@@ -252,3 +330,29 @@ class Evernote(EvernoteClient):
         for note in notes:
             print 'Delete %s (%s)' % (note.title, note.guid)
             self.delete_note(note=note)
+
+
+def test_evernote():
+    e = Evernote()
+
+    # Read all
+    pprint(e.receive_all())
+
+    print 'Input file: ./data/eva_time_data_2.in'
+    with open('data/eva_time_data_2.in', 'r') as fp:
+        content = fp.read()
+        print e.send(content)
+
+    # time.sleep(3)
+
+    pprint(e.receive_all())
+
+    # Delete all
+    e.delete_all()
+
+    # Read all
+    pprint(e.receive_all())
+
+
+if __name__ == '__main__':
+    test_evernote()

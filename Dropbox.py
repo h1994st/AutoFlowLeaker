@@ -6,34 +6,97 @@
 # @Version : 1.0
 
 import os
+import pytz
 import time
 from pprint import pprint
 
 import dropbox
 
 import Config
+from Channel import Channel
+from Post import Post
 
 
-class Dropbox(object):
+class Dropbox(Channel):
     '''
     Default user: covert.san@gmail.com
     '''
 
-    def __init__(self):
+    def __init__(self, folder=None):
         super(Dropbox, self).__init__()
 
+        print 'Initialzing Dropbox channel:'
+
         self._dbx = dropbox.Dropbox(Config.Dropbox('access_token'))
+        print '  Access token: %s' % Config.Dropbox('access_token')
+
+        self.default_folder = folder
+        print '  Default folder: %s' % self.default_folder
+
+    def send(self, content, title=None):
+        '''
+        Default title: unix epoch
+        '''
+        try:
+            res = self.create_file(
+                content, filename=(title or '%.6f.txt' % time.time()))
+        except Exception:
+            return None
+        else:
+            return Post(
+                id=res.id,
+                title=res.name,
+                create_time=res.server_modified.replace(tzinfo=pytz.utc))
+
+    def receive_all(self):
+        def converter(file_meta):
+            return Post(
+                id=file_meta.id,
+                title=file_meta.name,
+                content=self.get_file(file_meta.name).content,
+                create_time=file_meta.server_modified.replace(tzinfo=pytz.utc))
+
+        return sorted(
+            map(converter, self.get_files()),
+            key=lambda x: x.create_time, reverse=True)
+
+    def delete(self, item):
+        self.delete_file(item.id)
+
+    def delete_all(self):
+        self.delete_all_files()
+
+    @property
+    def default_folder(self):
+        '''
+        Default folder for Dropbox channel.
+
+        :rtype: str
+        '''
+        if self._default_folder_value is not None:
+            return self._default_folder_value
+        else:
+            raise AttributeError('missing required field \'default_folder\'')
+
+    @default_folder.setter
+    def default_folder(self, val):
+        self._default_folder_value = val or Config.Dropbox('root_dir')
+
+    @default_folder.deleter
+    def default_folder(self):
+        self._default_folder_value = Config.Dropbox('root_dir')
 
     @property
     def files(self):
         return self.get_files()
 
-    def create_file(self, content):
+    def create_file(self, content, filename=None):
         '''
         Upload a new file
+
+        Default filename: unix epoch
         '''
-        filename = '%s.txt' % str(int(time.time()))
-        fullpath = os.path.join(Config.Dropbox('root_dir'), filename)
+        fullpath = os.path.join(self.default_folder, filename)
 
         try:
             res = self._dbx.files_upload(content, fullpath, autorename=True)
@@ -47,7 +110,7 @@ class Dropbox(object):
         '''
         Download a file in 'AutoFlow' folder
         '''
-        fullpath = os.path.join(Config.Dropbox('root_dir'), filename)
+        fullpath = os.path.join(self.default_folder, filename)
 
         try:
             if save:
@@ -74,18 +137,21 @@ class Dropbox(object):
         '''
         Delete a file
         '''
-        fullpath = os.path.join(Config.Dropbox('root_dir'), filename)
+        fullpath = os.path.join(self.default_folder, filename)
         return self._dbx.files_delete(fullpath)
 
     def delete_all_files(self):
         '''
         Delete all the files
         '''
+        print 'Delete all files in %s' % self.default_folder
         # Delete root dir
-        self._dbx.files_delete(Config.Dropbox('root_dir'))
+        print '  Delete default folder: %s' % self.default_folder
+        self._dbx.files_delete(self.default_folder)
 
         # Create new root dir
-        self._dbx.files_create_folder(Config.Dropbox('root_dir'))
+        print '  Create new default folder: %s' % self.default_folder
+        self._dbx.files_create_folder(self.default_folder)
 
 
 def test_dropbox():
@@ -99,6 +165,13 @@ def test_dropbox():
     with open('data/eva_time_data_2.in', 'r') as fp:
         md = dbx.create_file(fp.read())
 
+    # Read one
+    res = dbx.get_file(md.name)
+    print res
+    print type(res)
+    print dir(res)
+    print res.content
+
     # Read all
     pprint(dbx.files)
 
@@ -109,13 +182,44 @@ def test_dropbox():
     pprint(dbx.files)
 
 
-def test_file_upload():
+def test_upload_files():
     dbx = Dropbox()
+
+    # Read all
+    pprint(dbx.files)
 
     print 'Input file: ./data/eva_time_data_2.in'
     with open('data/eva_time_data_2.in', 'r') as fp:
-        dbx.create_file(fp.read())
+        content = fp.read()
+        print '1'
+        print dbx.send(content)
+        time.sleep(1)
+        print '2'
+        print dbx.send(content)
+        time.sleep(1)
+        print '3'
+        print dbx.send(content)
+        time.sleep(1)
+        print '4'
+        print dbx.send(content)
+        time.sleep(1)
+        print '5'
+        print dbx.send(content)
+        time.sleep(1)
+
+    # time.sleep(3)
+
+    pprint(dbx.receive_all())
+
+    # Read all
+    pprint(dbx.files)
+
+    # Delete all
+    dbx.delete_all_files()
+
+    # Read all
+    pprint(dbx.files)
 
 
 if __name__ == '__main__':
-    test_dropbox()
+    test_upload_files()
