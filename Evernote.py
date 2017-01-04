@@ -17,9 +17,9 @@ from evernote.edam.notestore import NoteStore
 from evernote.api.client import EvernoteClient
 
 import Config
-from Post import Post
-from Channel import Channel
 from timeout import timeout
+from auto_flow_leaker.auto_flow.post import Post
+from auto_flow_leaker.auto_flow.channel import Channel
 
 
 TIMEOUT = int(Config.Global('timeout'))
@@ -49,6 +49,10 @@ class Evernote(EvernoteClient, Channel):
         self.default_notebook = kwargs.pop(
             'default_notebook', self.note_store.getDefaultNotebook(self.token))
         print '  Default notebook: %s' % self.default_notebook.name
+
+    def description(self):
+        return 'server_host={!r}, token={!r}, sandbox={!r}'.format(
+            Config.Evernote('host'), Config.Evernote('token'), False)
 
     def send(self, content, title=None):
         '''
@@ -355,4 +359,5 @@ def test_evernote():
 
 
 if __name__ == '__main__':
-    test_evernote()
+    print Evernote()
+    # test_evernote()

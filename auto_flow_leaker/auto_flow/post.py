@@ -10,7 +10,9 @@ import datetime
 
 
 class Post(object):
-    '''Post object'''
+    '''
+    Post object that is published on the channel service.
+    '''
     def __init__(self,
                  content=None, title=None,
                  create_time=None, id=None):
@@ -113,5 +115,11 @@ class Post(object):
         if self.content is None:
             return 'PostMeta(id={!r}, title={!r}, create_time={!r})'.format(
                 self.id, self.title, self.create_time)
-        return 'Post(id={!r}, title={!r}, create_time={!r}, content=\'{!s}...\')'.format(
-            self.id, self.title, self.create_time, self.content[:16])
+
+        if len(self.content) > 16:
+            content = self.content[:16] + '...'
+        else:
+            content = self.content
+
+        return 'Post(id={!r}, title={!r}, create_time={!r}, content={!r})'.format(
+            self.id, self.title, self.create_time, content)

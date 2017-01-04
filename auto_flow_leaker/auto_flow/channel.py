@@ -7,9 +7,24 @@
 
 
 class Channel(object):
-    '''Base object of Channel service'''
+    '''
+    Base object of Channel service
+    '''
     def __init__(self):
         super(Channel, self).__init__()
+
+    def __repr__(self):
+        return (
+            '{type}({description})'
+        ).format(
+            type=type(self).__name__,
+            description=self.description()
+        )
+
+    def description(self):
+        raise NotImplementedError(
+            'Class %s doesn\'t implement description()' % (
+                self.__class__.__name__))
 
     def send(self, content, title=None):
         '''Post a new item to the channel'''

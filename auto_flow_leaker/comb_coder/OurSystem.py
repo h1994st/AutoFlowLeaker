@@ -600,8 +600,10 @@ if __name__ == '__main__':
     print rK
     print arrangement
 
-    for k in xrange(1, 11):
-        print 'K=%d' % k
-        for i in xrange(0, 101, 10):
-            print capacity(i, k)[0],
-        print ''
+    print rank(arrangement, rK)
+
+    # for k in xrange(1, 11):
+    #     print 'K=%d' % k
+    #     for i in xrange(0, 101, 10):
+    #         print capacity(i, k)[0],
+    #     print ''

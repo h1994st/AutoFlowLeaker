@@ -13,8 +13,8 @@ from pprint import pprint
 import dropbox
 
 import Config
-from Channel import Channel
-from Post import Post
+from auto_flow_leaker.auto_flow.post import Post
+from auto_flow_leaker.auto_flow.channel import Channel
 
 
 class Dropbox(Channel):
@@ -32,6 +32,10 @@ class Dropbox(Channel):
 
         self.default_folder = folder
         print '  Default folder: %s' % self.default_folder
+
+    def description(self):
+        return 'access_token={!r}, default_folder={!r}'.format(
+            Config.Dropbox('access_token'), self.default_folder)
 
     def send(self, content, title=None):
         '''
@@ -222,4 +226,5 @@ def test_upload_files():
 
 
 if __name__ == '__main__':
-    test_upload_files()
+    print Dropbox()
+    # test_upload_files()
