@@ -11,6 +11,40 @@ import numpy as np
 
 
 def main():
+    # Email -> Wordpress via IFTTT
+    print 'Email -> Wordpress via IFTTT'
+    with open('data/rtt/email_IFTTT_wordpress_1483893177.json') as fp:
+        data1 = json.load(fp)
+    with open('data/rtt/email_IFTTT_wordpress_1483893361.json') as fp:
+        data2 = json.load(fp)
+    with open('data/rtt/email_IFTTT_wordpress_1483893700.json') as fp:
+        data3 = json.load(fp)
+        action_performed_at = [x[1] for x in data3]
+        intervals = []
+        for i in xrange(len(action_performed_at) - 1):
+            intervals.append(
+                action_performed_at[i + 1] - action_performed_at[i])
+
+        print 'Interval Avg.:', np.mean(intervals),
+        print 'Interval Std.:', np.std(intervals)
+    with open('data/rtt/email_IFTTT_wordpress_1483894138.json') as fp:
+        data4 = json.load(fp)
+        action_performed_at = [x[1] for x in data4]
+        intervals = []
+        for i in xrange(len(action_performed_at) - 1):
+            intervals.append(
+                action_performed_at[i + 1] - action_performed_at[i])
+
+        print 'Interval Avg.:', np.mean(intervals),
+        print 'Interval Std.:', np.std(intervals)
+
+    data = data1 + data2 + data3 + data4
+    delays = [x[1] - x[0] for x in data]
+
+    print 'Delay Avg.:', np.mean(delays),
+    print 'Delay Std.:', np.std(delays)
+    print ''
+
     # Ghost -> Wordpress via IFTTT
     print 'Ghost -> Wordpress via IFTTT'
     with open('data/rtt/ghost_to_wordpress_IFTTT.json') as fp:
