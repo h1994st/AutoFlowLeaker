@@ -52,10 +52,7 @@ def email_to_wordpress(rounds):
             print 'Done!'
 
             # Change to sent box
-            email.imap_client.select(email.imap_client.get_sent_folder())
             email_post = email.receive()
-            # Change back
-            email.imap_client.select('inbox')
 
             # ISO 8601 datetime string to datetime object, then to unix epoch
             # time zone: UTC
@@ -113,7 +110,6 @@ def email_to_wordpress(rounds):
     # Clear trigger channel
     print 'Deleting all posts on Email %r...' % email
     # Change to sent box
-    email.imap_client.select(email.imap_client.get_sent_folder())
     email_post = email.delete_all_emails()
     print 'Done!'
 

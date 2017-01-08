@@ -64,7 +64,7 @@ class Email(Channel):
             host=MAIL_163_IMAP_HOST, port=imap_port,
             ssl=MAIL_163_IMAP_TLS)
 
-        self.imap_client.select('inbox')
+        self.imap_client.select(self.imap_client.get_sent_folder())
 
     def description(self):
         return 'email={!r}'.format(self.email)
