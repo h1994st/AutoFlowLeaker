@@ -45,20 +45,13 @@ class Email(Channel):
         smtp_port = 465 if MAIL_163_SMTP_TLS else 25
         imap_port = 993 if MAIL_163_IMAP_TLS else 143
 
-        # SMTP client
+        # SMTP client - sender
         self.smtp_client = SMTP(
             login=self._email, password=password,
-            host=MAIL_163_SMTP_HOST, port=smtp_port)
+            host=MAIL_163_SMTP_HOST, port=smtp_port,
+            tls=True)
 
-        if MAIL_163_SMTP_TLS:
-            # Hack '_conn' for TLS connection
-            self.smtp_client._conn = smtplib.SMTP_SSL(
-                self.smtp_client._host, self.smtp_client._port)
-            # Avoid calling 'self._conn.starttls()'
-            self.smtp_client._tls = False
-            self.smtp_client._connect(replace_current=False)
-
-        # IMAP client
+        # IMAP client - receiver
         self.imap_client = IMAPAdapter(
             login=self._email, password=password,
             host=MAIL_163_IMAP_HOST, port=imap_port,

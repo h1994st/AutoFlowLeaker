@@ -97,8 +97,8 @@ def email_to_wordpress(rounds):
                 wordpress.delete_post(post['ID'])
                 print 'Done!'
         except Exception as e:
-            print 'Error, sleep 5 seconds'
-            print e
+            print 'Error: %r' % e
+            print 'Sleep 5 seconds'
             time.sleep(5)
             continue
         else:
