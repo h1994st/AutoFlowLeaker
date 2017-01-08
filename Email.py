@@ -34,17 +34,20 @@ class Email(Channel):
 
     Ref: http://help.163.com/09/1223/14/5R7P3QI100753VB8.html?servCode=6010377
     '''
-    def __init__(self):
+    def __init__(self,
+                 email=None,
+                 password=None):
         super(Email, self).__init__()
 
-        email = Config.Email('email')
-        password = Config.Email('password')
+        self._email = email or Config.Email('email1')
+        password = password or Config.Email('password')
+
         smtp_port = 465 if MAIL_163_SMTP_TLS else 25
         imap_port = 993 if MAIL_163_IMAP_TLS else 143
 
         # SMTP client
         self.smtp_client = SMTP(
-            login=email, password=password,
+            login=self._email, password=password,
             host=MAIL_163_SMTP_HOST, port=smtp_port)
 
         if MAIL_163_SMTP_TLS:
@@ -57,7 +60,7 @@ class Email(Channel):
 
         # IMAP client
         self.imap_client = IMAPAdapter(
-            login=email, password=password,
+            login=self._email, password=password,
             host=MAIL_163_IMAP_HOST, port=imap_port,
             ssl=MAIL_163_IMAP_TLS)
 
@@ -82,6 +85,26 @@ class Email(Channel):
         else:
             return res
 
+    def receive(self):
+        '''Retrieve the latest item from the channel
+
+        Return: {
+            'title': ...,
+            'content': ...,
+            'create_time': ... <unix epoch>,
+            'item_id': ...
+        }'''
+        items = [item for item in self.get_emails(limit=1)]
+
+        if len(items) == 0:
+            return None
+
+        return Post(
+            id=items[0].uid,
+            title=items[0].subject,
+            content=[items[0].plaintext(), items[0].html()],
+            create_time=items[0].date.replace(tzinfo=pytz.utc))
+
     def receive_all(self):
         def converter(email_meta):
             return Post(
@@ -100,7 +123,7 @@ class Email(Channel):
 
     @property
     def email(self):
-        return Config.Email('email')
+        return self._email
 
     # Write
     def send_email(self, subject=None,
@@ -135,11 +158,11 @@ class Email(Channel):
         msg.uid = uid
         return msg
 
-    def get_emails(self):
+    def get_emails(self, limit=100):
         '''
         Get all the emails
         '''
-        return self.imap_client.search()
+        return self.imap_client.search(limit=limit)
 
     # Delete
     def delete_email(self, uid):
@@ -154,7 +177,7 @@ class Email(Channel):
         Delete all the emails
         '''
         for email in self.get_emails():
-            print 'Delete %d' % email.uid
+            print 'Delete %s (%s)' % (email.subject, email.uid)
             self.delete_email(email.uid)
 
 
@@ -180,6 +203,17 @@ def test_email():
 
     # Read all
     pprint(e.receive_all())
+
+
+def test_delete_all_sent_emails():
+    e1 = Email()
+
+    print e1.imap_client.list()
+
+    e1.imap_client.select(e1.imap_client.get_sent_folder())
+    print e1.receive()
+
+    print e1.delete_all_emails()
 
 
 if __name__ == '__main__':
