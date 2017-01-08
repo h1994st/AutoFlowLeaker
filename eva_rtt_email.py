@@ -38,7 +38,8 @@ def email_to_wordpress(rounds):
     print 'Done!'
 
     # Loop
-    for i in xrange(rounds):
+    i = 0
+    while i < rounds:
         print 'Round %d' % i
 
         try:
@@ -96,9 +97,12 @@ def email_to_wordpress(rounds):
                 wordpress.delete_post(post['ID'])
                 print 'Done!'
         except Exception:
-            pass
+            print 'Error, sleep 5 seconds'
+            time.sleep(5)
+            continue
         else:
-            pass
+            # Next
+            i += 1
         finally:
             pass
 
