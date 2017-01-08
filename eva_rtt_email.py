@@ -72,7 +72,7 @@ def email_to_wordpress(rounds):
             while len(posts) == 0:
                 # no posts
                 print 'Sleep 2 seconds'
-                time.sleep(30)
+                time.sleep(2)
 
                 # Get posts
                 posts = wordpress.get_posts(fields='ID,date,title')
