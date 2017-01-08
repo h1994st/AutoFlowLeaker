@@ -20,14 +20,16 @@ class CombCoder(object):
         self.k = k
         print '  i=%d, k=%d' % (i, k)
 
-        self.capacity = OurSystem.capacity(i, k)
-        print '  capacity=%d bit' % self.capacity
+        self.capacity, count, t9, t5 = OurSystem.capacity(i, k)
+        print '  capacity=%d bit (%d)' % (self.capacity, count)
 
     def encode(self, data):
         '''
         Binary data -> post
         '''
         post, rK = OurSystem.unrank(self.i, self.k, data)
+
+        return post, rK
 
     def decode(self, post, rK):
         '''
@@ -38,7 +40,7 @@ class CombCoder(object):
 
 def test_comb_coder():
     comb_coder = CombCoder(3, 3)
-    comb_coder.encode(b'123123')
+    print comb_coder.encode(0)
 
 
 if __name__ == '__main__':
