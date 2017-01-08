@@ -5,6 +5,8 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+from .post import Post
+
 
 class Channel(object):
     '''
@@ -46,6 +48,9 @@ class Channel(object):
         if len(items) == 0:
             return None
 
+        assert isinstance(
+            items[0], Post), 'Wrong implementation of receive_all()'
+
         return items[0]
 
     def receive_all(self):
@@ -53,7 +58,7 @@ class Channel(object):
 
         Messages should be sorted in reverse chronological order.'''
         raise NotImplementedError(
-            'Class %s doesn\'t implement retrieve_all()' % (
+            'Class %s doesn\'t implement receive_all()' % (
                 self.__class__.__name__))
 
     def delete(self, item):

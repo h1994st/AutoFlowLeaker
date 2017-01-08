@@ -116,10 +116,16 @@ class Post(object):
             return 'PostMeta(id={!r}, title={!r}, create_time={!r})'.format(
                 self.id, self.title, self.create_time)
 
-        if len(self.content) > 16:
-            content = self.content[:16] + '...'
-        else:
-            content = self.content
+        content = self.content
+
+        if isinstance(content, list):
+            content = map(
+                lambda msg: msg[:16] + '...' if (
+                    msg is not None and len(msg) > 16) else msg,
+                content)
+
+        if len(content) > 16:
+            content = content[:16] + '...'
 
         return 'Post(id={!r}, title={!r}, create_time={!r}, content={!r})'.format(
             self.id, self.title, self.create_time, content)

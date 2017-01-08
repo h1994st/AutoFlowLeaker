@@ -1,11 +1,12 @@
 PyGitHub
 evernote
 facebook-sdk
-envelopes
-httplib2
 python-twitter
 dropbox
 pyeclib
 libarchive
 lxml
 cssselect
+envelopes
+git+https://github.com/h1994st/betterimap.git
+httplib2
