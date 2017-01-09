@@ -589,8 +589,9 @@ def unrank(aI, aK, aMsg):
 
 
 if __name__ == '__main__':
-    print capacity(3, 3)
+    print capacity(10, 3)
 
+    # cap, _, _, _ = capacity(3, 3)
     # for r in xrange(2 ** cap):
     #     arrangement, _ = unrank(3, 3, r)
     #     print r, arrangement
@@ -602,8 +603,8 @@ if __name__ == '__main__':
 
     print rank(arrangement, rK)
 
-    # for k in xrange(1, 11):
-    #     print 'K=%d' % k
-    #     for i in xrange(0, 101, 10):
-    #         print capacity(i, k)[0],
-    #     print ''
+    for k in xrange(1, 11):
+        print 'K=%d' % k
+        for i in xrange(0, 51, 5):
+            print capacity(i, k)[0],
+        print ''

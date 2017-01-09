@@ -10,3 +10,6 @@ cssselect
 envelopes
 git+https://github.com/h1994st/betterimap.git
 httplib2
+feedparser
+MySQL-python
+peewee

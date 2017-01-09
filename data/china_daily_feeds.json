@@ -1,0 +1,8 @@
+{
+  "china": "http://www.chinadaily.com.cn/rss/china_rss.xml",
+  "world": "http://www.chinadaily.com.cn/rss/world_rss.xml",
+  "business": "http://www.chinadaily.com.cn/rss/bizchina_rss.xml",
+  "life": "http://www.chinadaily.com.cn/rss/lifestyle_rss.xml",
+  "sports": "http://www.chinadaily.com.cn/rss/sports_rss.xml",
+  "opinion": "http://www.chinadaily.com.cn/rss/opinion_rss.xml"
+}

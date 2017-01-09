@@ -1,0 +1,43 @@
+{
+  "China": {
+    "Politics": "http://english.sina.com/news/china/politics.html",
+    "Society": "http://english.sina.com/news/china/society.html",
+    "Defense And Diplomacy": "http://english.sina.com/news/china/defense-and-diplomacy.html",
+    "Environment": "http://english.sina.com/news/china/environment.html"
+  },
+  "World": {
+    "Asia-Pacific": "http://english.sina.com/news/world/asia-pacific.html",
+    "Americas": "http://english.sina.com/news/world/americas.html",
+    "Europe": "http://english.sina.com/news/world/europe.html",
+    "Middle East": "http://english.sina.com/news/world/middleeast.html",
+    "Africa": "http://english.sina.com/news/world/africa.html"
+  },
+  "Buz & Tech": {
+    "Finance & Economy": "http://english.sina.com/news/biz-tech/economy.html",
+    "Business & Industry": "http://english.sina.com/news/biz-tech/business.html",
+    "Science & Tech": "http://english.sina.com/news/biz-tech/scitech.html",
+    "Markets": "http://english.sina.com/news/biz-tech/stocks.html"
+  },
+  "Entertainment": {
+    "Celebrity": "http://english.sina.com/news/entertainment/celebrity.html",
+    "Movie": "http://english.sina.com/news/entertainment/movie.html",
+    "Music": "http://english.sina.com/news/entertainment/music.html",
+    "TV": "http://english.sina.com/news/entertainment/tv.html",
+    "Others": "http://english.sina.com/news/entertainment/others.html"
+  },
+  "Sports": {
+    "Soccer": "http://english.sina.com/news/sports/soccer.html",
+    "Basketball": "http://english.sina.com/news/sports/basketball.html",
+    "Tennis & Golf": "http://english.sina.com/news/sports/tennis-golf.html",
+    "Others": "http://english.sina.com/news/sports/others.html",
+    "Sina Sports press release": "http://english.sina.com/news/sports/press-release.html"
+  },
+  "Life & Culture": {
+    "Heritage & Art": "http://english.sina.com/news/culture/heritage-art.html",
+    "Education": "http://english.sina.com/news/culture/education.html",
+    "Health": "http://english.sina.com/news/culture/health.html",
+    "History": "http://english.sina.com/news/culture/history.html",
+    "People-to-People": "http://english.sina.com/news/culture/people-to-people.html",
+    "Travel": "http://english.sina.com/news/culture/travel.html"
+  }
+}
