@@ -82,10 +82,11 @@ class Post(object):
         if not isinstance(val, datetime.datetime):
             raise AttributeError(
                 'attribute \'create_time\' type should be  \'datetime.datetime\'')
-        if val.tzinfo != pytz.UTC:
+        if val.tzinfo is None:
             raise AttributeError(
-                'attribute \'create_time\' time zone should be \'UTC\'')
-        self._create_time_value = val
+                'attribute \'create_time\' time zone should not be empty')
+
+        self._create_time_value = val.astimezone(pytz.UTC)
 
     @create_time.deleter
     def create_time(self):

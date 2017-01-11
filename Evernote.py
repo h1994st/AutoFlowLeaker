@@ -60,7 +60,7 @@ class Evernote(EvernoteClient, Channel):
         '''
         try:
             note = self.create_note(
-                (title or '%.6f.txt' % time.time()), content)
+                (title or '%.6f' % time.time()), content)
         except Exception:
             return None
         else:

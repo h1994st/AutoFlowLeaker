@@ -28,10 +28,15 @@ class AutoFlowSocket(object):
         ).format(self.sender, self.receiver)
 
     def send(self, post_content):
+        assert self.sender is not None, self.sender
+        assert isinstance(self.sender, Channel), self.sender
         assert isinstance(post_content, str), post_content
 
         return self.sender.send(post_content)
 
     def receive(self):
+        assert self.receiver is not None, self.receiver
+        assert isinstance(self.receiver, Channel), self.receiver
+
         # non-block version
         return self.receiver.receive_all()
