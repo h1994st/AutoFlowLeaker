@@ -51,7 +51,8 @@ class Evernote(EvernoteClient, Channel):
         print '  Default notebook: %s' % self.default_notebook.name
 
     def description(self):
-        return 'server_host={!r}, token={!r}, sandbox={!r}'.format(
+        return 'username={!r}, email={!r}, server_host={!r}, token={!r}, sandbox={!r}'.format(
+            Config.Evernote('username'), Config.Evernote('email'),
             Config.Evernote('host'), Config.Evernote('token'), False)
 
     def send(self, content, title=None):

@@ -23,6 +23,11 @@ class Yinxiang(Evernote):
 
         super(Yinxiang, self).__init__(**kwargs)
 
+    def description(self):
+        return 'username={!r}, email={!r}, server_host={!r}, token={!r}, sandbox={!r}'.format(
+            Config.Yinxiang('username'), Config.Yinxiang('email'),
+            Config.Yinxiang('host'), Config.Yinxiang('token'), False)
+
 
 def test_yinxiang():
     e = Yinxiang()
