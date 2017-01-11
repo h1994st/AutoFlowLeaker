@@ -5,6 +5,7 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+import re
 import time
 import pytz
 import binascii
@@ -73,10 +74,16 @@ class Evernote(EvernoteClient, Channel):
 
     def receive_all(self):
         def converter(note):
+            raw_content = self.get_note(note.guid).content
+            text_content = re.search(
+                '<en-note>(?P<content>.*)</en-note>',
+                raw_content, flags=re.DOTALL)
+            if text_content:
+                text_content = text_content.groups('content')[0]
             return Post(
                 id=note.guid,
                 title=note.title,
-                content=self.get_note(note.guid).content,
+                content=text_content,
                 create_time=datetime.datetime.fromtimestamp(
                     note.created / 1000, pytz.utc))
 
@@ -339,6 +346,7 @@ class Evernote(EvernoteClient, Channel):
 
 def test_evernote():
     e = Evernote()
+    print e
 
     # Read all
     pprint(e.receive_all())
@@ -359,6 +367,29 @@ def test_evernote():
     pprint(e.receive_all())
 
 
+def test_evernote_parser():
+    e = Evernote()
+    print e
+
+    # Read all
+    pprint(e.receive_all())
+
+    print 'Input file: ./data/eva_time_data_2.in'
+    with open('data/eva_time_data_2.in', 'r') as fp:
+        content = fp.read()
+        print e.send(content)
+
+    note = e.receive()
+    pprint(note)
+    print note.content
+
+    import re
+    res = re.search('<en-note>(?P<content>.*)</en-note>', note.content, flags=re.DOTALL)
+    print res.groups(), res.group('content')
+
+    # Delete all
+    e.delete_all()
+
+
 if __name__ == '__main__':
-    print Evernote()
-    # test_evernote()
+    test_evernote_parser()

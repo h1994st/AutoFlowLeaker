@@ -27,12 +27,12 @@ class AutoFlowSocket(object):
             'AutoFlowSocket(sender={!r}, receiver={!r})'
         ).format(self.sender, self.receiver)
 
-    def send(self, post_content):
+    def send(self, post_content, title=None):
         assert self.sender is not None, self.sender
-        assert isinstance(self.sender, Channel), self.sender
-        assert isinstance(post_content, str), post_content
+        assert isinstance(self.sender, Channel), type(self.sender)
+        assert isinstance(post_content, (str, unicode)), type(post_content)
 
-        return self.sender.send(post_content)
+        return self.sender.send(post_content, title=title)
 
     def receive(self):
         assert self.receiver is not None, self.receiver
@@ -40,3 +40,13 @@ class AutoFlowSocket(object):
 
         # non-block version
         return self.receiver.receive_all()
+
+    def clean(self):
+        self.clean_sender()
+        self.clean_receiver()
+
+    def clean_sender(self):
+        self.sender.delete_all()
+
+    def clean_receiver(self):
+        self.receiver.delete_all()

@@ -76,15 +76,23 @@ class Email(Channel):
 
         Note: when success, this function will not return a Post object
         '''
+        self.smtp_client._conn = smtplib.SMTP_SSL(
+            self.smtp_client._host, self.smtp_client._port)
+        self.smtp_client._tls = False
+        self.smtp_client._connect(replace_current=False)
         try:
             res = self.send_email(
-                subject=(title or '%.6f.txt' % time.time()),
+                subject=(title or '%.6f' % time.time()),
                 text_body=content)
         except Exception as e:
             print 'Error: %r' % e
+            raise e
             return None
         else:
             return res
+        finally:
+            print 'Close smtp connection'
+            self.smtp_client._conn.quit()
 
     def receive(self):
         '''Retrieve the latest item from the channel
