@@ -192,25 +192,35 @@ class Email(Channel):
 
 def test_email():
     e = Email()
-
-    # Read all
-    pprint(e)
-
-    # Write
-    print 'Input file: ./data/eva_time_data_2.in'
-    with open('data/eva_time_data_2.in', 'r') as fp:
-        e.send(fp.read())
-
-    # Read the latest one
-    email = e.receive()
+    print e
 
     # Read all
     pprint(e.receive_all())
 
-    # Delete
-    e.delete(email)
+    # Write
+    print 'Input file: ./data/eva_time_data_2.in'
+    with open('data/eva_time_data_2.in', 'r') as fp:
+        e.send_email(
+            subject='%.6f' % time.time(), text_body=fp.read())
+
+    time.sleep(4)
+
+    # Read the latest one
+    email = e.receive()
+
+    print email
 
     # Read all
+    pprint(e.get_emails())
+
+    # Delete
+    # e.delete(email)
+
+    # Read all
+    pprint(e.get_emails())
+    pprint(e.get_emails())
+    pprint(e.get_emails())
+    pprint(e.receive_all())
     pprint(e.receive_all())
 
 
