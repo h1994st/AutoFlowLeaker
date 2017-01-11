@@ -6,16 +6,21 @@
 # @Version : 1.0
 
 import json
+import time
+import dateutil.parser
+from pprint import pprint
 from urllib import urlencode
 
 import httplib2
 
 import Config
+from auto_flow_leaker.auto_flow.post import Post
+from auto_flow_leaker.auto_flow.channel import Channel
 
 TIMEOUT = int(Config.Global('timeout'))
 
 
-class Wordpress(object):
+class Wordpress(Channel):
     """
     Default user: covertsan (covert.san@gmail.com)
 
@@ -27,6 +32,41 @@ class Wordpress(object):
     def _api_url(self, path):
         API_BASE_URL = 'https://public-api.wordpress.com/rest/v1.1'
         return API_BASE_URL + path
+
+    def description(self):
+        return 'site={!r}, access_token={!r}'.format(
+            Config.Wordpress('site'), Config.Wordpress('access_token'))
+
+    def send(self, content, title=None):
+        '''
+        Default title: unix epoch
+        '''
+        try:
+            post = self.create_post(
+                (title or '%.6f' % time.time()), content)
+        except Exception:
+            return None
+        else:
+            return Post(
+                id=post['ID'],
+                title=post['title'],
+                create_time=dateutil.parser.parse(post['date']))
+
+    def receive_all(self):
+        def converter(post):
+            return Post(
+                id=post['ID'],
+                title=post['title'],
+                content=post['content'],
+                create_time=dateutil.parser.parse(post['date']))
+
+        return map(converter, self.get_posts(fields='ID,title,date,content'))
+
+    def delete(self, item):
+        self.delete_post(item.id)
+
+    def delete_all(self):
+        self.delete_all_posts()
 
     @property
     def posts(self):
@@ -209,3 +249,30 @@ class Wordpress(object):
             posts = self.get_posts(fields='ID,status', status='trash')
 
         print 'Done!'
+
+
+def test_wordpress():
+    w = Wordpress()
+    print w
+
+    # Read all
+    pprint(w.receive_all())
+
+    print 'Input file: ./data/eva_time_data_2.in'
+    with open('data/eva_time_data_2.in', 'r') as fp:
+        content = fp.read()
+        print w.send(content)
+
+    # time.sleep(3)
+
+    pprint(w.receive_all())
+
+    # Delete all
+    w.delete_all()
+
+    # Read all
+    pprint(w.receive_all())
+
+
+if __name__ == '__main__':
+    test_wordpress()
