@@ -13,31 +13,13 @@ import datetime
 import peewee
 import feedparser
 
-db = peewee.MySQLDatabase('AUTO_PUBLIC_POOL', user='root', passwd='hsthst')
-
-
-class CHINA_DAILY(peewee.Model):
-    ID = peewee.IntegerField()
-    SECTION = peewee.CharField()
-    SUB_SECTION = peewee.CharField()
-    AUTHOR = peewee.CharField()
-    TITLE = peewee.CharField()
-    DATE = peewee.DateTimeField()
-    URL = peewee.CharField()
-    PROFILE_DATE = peewee.DateTimeField()
-    URL_MD5 = peewee.CharField()
-    SUMMARY = peewee.CharField()
-
-    class Meta:
-        database = db
+from public_pool import CHINA_DAILY
 
 
 with open('../../data/china_daily_feeds.json') as fp:
     china_daily_feeds = json.load(fp)
 
 try:
-    db.connect()
-
     i = 0
     for section in china_daily_feeds:
         feed = feedparser.parse(china_daily_feeds[section])
@@ -103,4 +85,4 @@ try:
 except Exception as e:
     print 'Error: %r' % e
 finally:
-    db.close()
+    pass

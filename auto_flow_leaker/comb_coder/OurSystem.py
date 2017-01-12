@@ -589,7 +589,7 @@ def unrank(aI, aK, aMsg):
 
 
 if __name__ == '__main__':
-    print capacity(10, 3)
+    print capacity(2, 2)
 
     # cap, _, _, _ = capacity(3, 3)
     # for r in xrange(2 ** cap):

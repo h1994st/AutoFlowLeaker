@@ -38,5 +38,7 @@ Yinxiang = partial(_config.get, 'Yinxiang')
 
 IFTTT = partial(_config.get, 'IFTTT')
 
+Pool = partial(_config.get, 'Pool')
+
 
 del partial

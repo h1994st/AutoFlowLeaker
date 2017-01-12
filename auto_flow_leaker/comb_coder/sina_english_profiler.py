@@ -17,28 +17,9 @@ import peewee
 import requests
 from lxml import html
 
+from public_pool import SINA_EN
+
 html_parser = HTMLParser.HTMLParser()
-db = peewee.MySQLDatabase('AUTO_PUBLIC_POOL', user='root', passwd='hsthst')
-db.connect()
-
-
-class SINA_EN(peewee.Model):
-    ID = peewee.IntegerField()
-    SECTION = peewee.CharField()
-    SUB_SECTION = peewee.CharField()
-    AUTHOR = peewee.CharField()
-    TITLE = peewee.CharField()
-    DATE = peewee.DateTimeField()
-    URL = peewee.CharField()
-    PROFILE_DATE = peewee.DateTimeField()
-    URL_MD5 = peewee.CharField()
-    SUMMARY = peewee.CharField()
-
-    class Meta:
-        database = db
-
-
-# SINA_EN.create_table(fail_silently=True)
 
 
 def parse_and_save_news_page(url):
@@ -58,7 +39,8 @@ def parse_and_save_news_page(url):
         section_elem.text), html_parser.unescape(sub_section_elem.text)
 
 
-pattern = re.compile('<div class="r-info"><h4><a href="(?P<link>.*)" target="_blank">(?P<title>.*)</a></h4><p>(?P<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} GMT) \&nbsp;(?P<author>.*) \&nbsp;(?P<subsection>.*)</p><p class="content">(?P<content>.*) <a href=".*" target="_blank">Full Story</a></p></div>')
+pattern = re.compile(
+    '<div class="r-info"><h4><a href="(?P<link>.*)" target="_blank">(?P<title>.*)</a></h4><p>(?P<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} GMT) \&nbsp;(?P<author>.*) \&nbsp;(?P<subsection>.*)</p><p class="content">(?P<content>.*) <a href=".*" target="_blank">Full Story</a></p></div>')
 
 
 with open('../../data/sina_english_structure_meta.json') as fp:
@@ -126,7 +108,6 @@ try:
                 except Exception as e:
                     print 'Error: %r' % e
                     print section, sub_section, meta[0]
-                    db.close()
                     raise e
                 else:
                     i += 1
@@ -137,4 +118,4 @@ except Exception as e:
     print 'Error: %r' % e
     raise e
 finally:
-    db.close()
+    pass
