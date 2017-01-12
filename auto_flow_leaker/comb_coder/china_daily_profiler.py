@@ -41,12 +41,12 @@ try:
     i = 0
     for section in china_daily_feeds:
         feed = feedparser.parse(china_daily_feeds[section])
-        lastest_datetime = CHINA_DAILY.select(
-            peewee.fn.Max(
-                CHINA_DAILY.DATE)).where(
-                    CHINA_DAILY.SECTION == section).scalar()
-        if lastest_datetime is not None:
-            lastest_datetime = lastest_datetime.replace(tzinfo=pytz.utc)
+        # lastest_datetime = CHINA_DAILY.select(
+        #     peewee.fn.Max(
+        #         CHINA_DAILY.DATE)).where(
+        #             CHINA_DAILY.SECTION == section).scalar()
+        # if lastest_datetime is not None:
+        #     lastest_datetime = lastest_datetime.replace(tzinfo=pytz.utc)
 
         for news in feed.entries:
             # # section
@@ -74,10 +74,10 @@ try:
                 datetime.datetime.strptime(
                     news.published, '%Y-%m-%d %H:%M:%S')).astimezone(
                         pytz.UTC)
-            if (lastest_datetime is not None and
-                    news_datetime <= lastest_datetime):
-                print 'Exist!'
-                continue
+            # if (lastest_datetime is not None and
+            #         news_datetime <= lastest_datetime):
+            #     print 'Exist!'
+            #     continue
 
             try:
                 CHINA_DAILY.create(
@@ -88,8 +88,7 @@ try:
                     PROFILE_DATE=datetime.datetime.now(pytz.utc),
                     SUMMARY=news.summary)
             except peewee.IntegrityError as e:
-                print 'Error: %r' % e
-                print section, news.tags[0].term, news.link
+                print 'Exist: %r' % e, section, news.tags[0].term, news.link
                 continue
             except AttributeError as e:
                 print 'Error: %r' % e

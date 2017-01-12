@@ -96,6 +96,11 @@ def main():
     # Dropbox D
     print 'Dropbox', cal_rwd('data/rwd/hk/dropbox_rwd_time.txt')
 
+    # Email R
+    # Email W
+    # Email D
+    print 'Email', cal_rwd('data/rwd/hk/email_rwd_time.txt')
+
 
 if __name__ == '__main__':
     main()

@@ -78,7 +78,7 @@ try:
             # lastest_datetime = SINA_EN.select(
             #     peewee.fn.Max(
             #         SINA_EN.DATE)).where(
-            #             SINA_EN.SECTION == section).scalar()
+            #             SINA_EN.SUB_SECTION == sub_section).scalar()
             # if lastest_datetime is not None:
             #     lastest_datetime = lastest_datetime.replace(
             #         tzinfo=pytz.utc)
@@ -121,8 +121,7 @@ try:
                         PROFILE_DATE=datetime.datetime.now(pytz.utc),
                         SUMMARY=meta[5])
                 except peewee.IntegrityError as e:
-                    print 'Error: %r' % e
-                    print section, sub_section, meta[0]
+                    print 'Exist: %r' % e, section, sub_section, meta[0]
                     continue
                 except Exception as e:
                     print 'Error: %r' % e
