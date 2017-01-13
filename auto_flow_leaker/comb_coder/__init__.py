@@ -5,13 +5,11 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
-from post import Post
 from message import Message
 from comb_coder import CombCoder
 
-del post
 del message
 del comb_coder
 
 
-__all__ = ['Post', 'Message', 'CombCoder']
+__all__ = ['Message', 'CombCoder']

@@ -13,3 +13,4 @@ httplib2
 feedparser
 MySQL-python
 peewee
+jinja2
