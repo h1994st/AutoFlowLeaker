@@ -5,6 +5,7 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+import re
 import subprocess
 
 import peewee
@@ -42,6 +43,23 @@ def generate_random_post(num):
     return qr
 
 
+def generate_random_post2(num):
+    query = CHINA_DAILY.select(
+        CHINA_DAILY.TITLE,
+        CHINA_DAILY.SUMMARY,
+        CHINA_DAILY.URL).where(
+            CHINA_DAILY.SUMMARY != '').order_by(peewee.fn.Rand()).limit(num)
+    qr = query.execute()
+
+    return qr
+
+
+def cleanhtml(raw_html):
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', raw_html)
+    return cleantext
+
+
 def main(num_news_digest, num_testing_file):
     with open('data/nlp/testing/testing%d.csv' % num_testing_file, 'w') as fp:
         print fp.name
@@ -61,6 +79,27 @@ def main(num_news_digest, num_testing_file):
     print 'Done!'
 
 
+def main2(num_news_digest, num_testing_file):
+    with open('data/nlp/testing/testing-news-digest-%d.csv' % num_testing_file, 'w') as fp:
+        print fp.name
+
+        for i in xrange(num_news_digest):
+            print i
+            # generate news
+            qr = generate_random_post2(10)
+            for result in qr:
+                # fp.write(result.TITLE.encode('utf8'))
+                # fp.write('\n')
+                # fp.write(result.SUMMARY.encode('utf8'))
+                # fp.write('\n')
+                line = cleanhtml(result.SUMMARY.encode('utf8'))
+                if line[-1] != '.':
+                    line += '.'
+                fp.write(line)
+                fp.write('\n')
+                fp.flush()
+
+
 if __name__ == '__main__':
     for i in xrange(10):
-        main(1000, i)
+        main2(1000, i)

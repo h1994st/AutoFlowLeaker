@@ -8,6 +8,3 @@ clean: $(CLEANDIRS)
 
 $(CLEANDIRS):
 	$(MAKE) -C $(@:clean-%=%) clean
-
-clean-log:
-	rm -f *.log
