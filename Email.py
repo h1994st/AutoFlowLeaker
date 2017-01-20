@@ -137,14 +137,17 @@ class Email(Channel):
     # Write
     def send_email(self, subject=None,
                    text_body=None, html_body=None,
+                   to_addr=None,
                    attachments=[]):
         '''
         Send email to 'trigger@recipe.ifttt.com'
         '''
 
+        to_addr = to_addr or (Config.IFTTT('email_trigger'), 'IFTTT')
+
         envelope = Envelope(
             from_addr=(self.email, 'San Zhang'),
-            to_addr=(Config.IFTTT('email_trigger'), 'IFTTT'),
+            to_addr=to_addr,
             subject=subject,
             text_body=text_body,
             html_body=html_body

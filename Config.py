@@ -37,6 +37,7 @@ Yinxiang = partial(_config.get, 'Yinxiang')
 # TODO: messagebird, reddit, foursquare, onenote, pinterest
 
 IFTTT = partial(_config.get, 'IFTTT')
+Zapier = partial(_config.get, 'Zapier')
 
 Pool = partial(_config.get, 'Pool')
 

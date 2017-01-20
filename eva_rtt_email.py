@@ -12,6 +12,7 @@ import datetime
 import argparse
 import dateutil.parser
 
+import Config
 from Email import Email
 from Wordpress import Wordpress
 
@@ -47,7 +48,7 @@ def email_to_wordpress(rounds):
             title = 'Email to Wordpress: Evaluate Delay %d %f' % (
                 i, time.time())  # attach timestamp: send time
 
-            # Create note in notebook 'Github'
+            # Send new email
             print 'Sending a new post via Email...'
             email.send_email(title, 'body')
             print 'Done!'
@@ -74,6 +75,119 @@ def email_to_wordpress(rounds):
 
                 # Get posts
                 posts = wordpress.get_posts(fields='ID,date,title')
+            else:
+                # new post
+                assert len(posts) == 1, posts
+
+                print 'A new post is published on Wordpress'
+                post = posts[0]
+
+                # ISO 8601 datetime string to datetime object, then to unix epoch
+                # with time zone
+                timestamp = (
+                    dateutil.parser.parse(post['date']) - datetime.datetime(
+                        1970, 1, 1, 0, 0, 0, 0, pytz.UTC)).total_seconds()
+
+                timestamp_pair[1] = timestamp
+
+                print timestamp_pair[1] - timestamp_pair[0], timestamp_pair
+                ret.append(timestamp_pair)
+
+                # Close post
+                print 'Deleting this post...'
+                wordpress.delete_post(post['ID'])
+                print 'Done!'
+        except Exception as e:
+            print 'Error: %r' % e
+            print 'Sleep 5 seconds'
+            time.sleep(5)
+            continue
+        else:
+            # Next
+            i += 1
+        finally:
+            pass
+
+    # End
+    print 'End.'
+
+    # Clear
+    print 'Clearing...'
+    # Clear trigger channel
+    print 'Deleting all posts on Email %r...' % email
+    # Change to sent box
+    email_post = email.delete_all_emails()
+    print 'Done!'
+
+    # Clear action channel
+    print 'Deleting all posts on Wordpress...'
+    wordpress.delete_all_posts()
+    print 'Done!'
+    print 'Done!'
+
+    return ret
+
+
+def email_to_wordpress_zapier(rounds):
+    '''
+    Trigger Channel: Ghost
+    Action Channel: Wordpress
+
+    Description:
+    Email -> Wordpress (#Email): Zapier
+    '''
+    print 'Email -> Wordpress (#Email): Zapier'
+
+    # Init
+    ret = []
+    email = Email()  # Trigger
+    wordpress = Wordpress()  # Action
+
+    # Preparation
+    # Clear action channel
+    print 'Deleting all posts on Wordpress...'
+    wordpress.delete_all_posts()
+    print 'Done!'
+
+    # Loop
+    i = 0
+    while i < rounds:
+        print 'Round %d' % i
+
+        try:
+            timestamp_pair = [-1, -1]
+            title = 'Email to Wordpress: Evaluate Delay %d %f' % (
+                i, time.time())  # attach timestamp: send time
+
+            # Send new email
+            print 'Sending a new post via Email...'
+            email.send_email(
+                subject=title, text_body='body',
+                to_addr=(Config.Zapier('email_trigger'), 'Zapier'))
+            print 'Done!'
+
+            # Change to sent box
+            email_post = email.receive()
+
+            # ISO 8601 datetime string to datetime object, then to unix epoch
+            # time zone: UTC
+            # real creation time
+            timestamp_pair[0] = (
+                email_post.create_time - datetime.datetime(
+                    1970, 1, 1, 0, 0, 0, 0, pytz.UTC)).total_seconds()
+
+            # Check action
+            # 1. Get posts
+            posts = wordpress.get_posts(fields='ID,date,title', tag='Email')
+
+            # 2. Check
+            while len(posts) == 0:
+                # no posts
+                print 'Sleep 2 seconds'
+                time.sleep(2)
+
+                # Get posts
+                posts = wordpress.get_posts(fields='ID,date,title', tag='Email')
             else:
                 # new post
                 assert len(posts) == 1, posts
