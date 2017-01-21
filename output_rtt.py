@@ -154,11 +154,37 @@ def main():
         print 'Delay Std.:', np.std(delays)
         print 'Interval Avg.:', np.mean(intervals),
         print 'Interval Std.:', np.std(intervals)
+    with open('data/rtt/evernote_Zapier_github_1484952317.json') as fp:
+        data = json.load(fp)
+        delays = [x[1] - x[0] for x in data]
+        action_performed_at = [x[1] for x in data]
+        intervals = []
+        for i in xrange(len(action_performed_at) - 1):
+            intervals.append(
+                action_performed_at[i + 1] - action_performed_at[i])
+
+        print 'Delay Avg.:', np.mean(delays),
+        print 'Delay Std.:', np.std(delays)
+        print 'Interval Avg.:', np.mean(intervals),
+        print 'Interval Std.:', np.std(intervals)
     print ''
 
     # Ghost -> Wordpress via Microsoft Flow
-    print 'Ghost -> Wordpress via Micro'
+    print 'Ghost -> Wordpress via Flow'
     with open('data/rtt/ghost_Micro_wordpress_1480617920.json') as fp:
+        data = json.load(fp)
+        delays = [x[1] - x[0] for x in data]
+        action_performed_at = [x[1] for x in data]
+        intervals = []
+        for i in xrange(len(action_performed_at) - 1):
+            intervals.append(
+                action_performed_at[i + 1] - action_performed_at[i])
+
+        print 'Delay Avg.:', np.mean(delays),
+        print 'Delay Std.:', np.std(delays)
+        print 'Interval Avg.:', np.mean(intervals),
+        print 'Interval Std.:', np.std(intervals)
+    with open('data/rtt/ghost_flow_wordpress_1484940083.json') as fp:
         data = json.load(fp)
         delays = [x[1] - x[0] for x in data]
         action_performed_at = [x[1] for x in data]
