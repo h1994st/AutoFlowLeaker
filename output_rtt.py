@@ -193,6 +193,9 @@ def main():
             intervals.append(
                 action_performed_at[i + 1] - action_performed_at[i])
 
+        delays = [delay for delay in delays if delay > 20]
+        intervals = [interval for interval in intervals if interval > 20]
+
         print 'Delay Avg.:', np.mean(delays),
         print 'Delay Std.:', np.std(delays)
         print 'Interval Avg.:', np.mean(intervals),

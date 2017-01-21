@@ -29,9 +29,9 @@ def main():
         print 'Std.:', np.std(intervals)
     print ''
 
-    # Ghost -> Wordpress via IFTTT and Zapier, 2-level
-    print 'Ghost -(Zapier)-> Facebook -(IFTTT)-> Wordpress'
-    with open('data/rtt/ghost_Zapier_IFTTT_wordpress_1480445063.json') as fp:
+    # Evernote -> Github via IFTTT, 2-level
+    print 'Evernote -(IFTTT)-> Facebook -(IFTTT)-> Github'
+    with open('data/rtt/evernote_IFTTT_2_github_1480530846.json') as fp:
         data = json.load(fp)
         delays = [x[1] - x[0] for x in data]
         action_performed_at = [x[1] for x in data]
@@ -46,9 +46,9 @@ def main():
         print 'Std.:', np.std(intervals)
     print ''
 
-    # Evernote -> Github via IFTTT, 2-level
-    print 'Evernote -(IFTTT)-> Facebook -(IFTTT)-> Github'
-    with open('data/rtt/evernote_IFTTT_2_github_1480530846.json') as fp:
+    # Ghost -> Wordpress via IFTTT and Zapier, 2-level
+    print 'Ghost -(Zapier)-> Facebook -(IFTTT)-> Wordpress'
+    with open('data/rtt/ghost_Zapier_IFTTT_wordpress_1480445063.json') as fp:
         data = json.load(fp)
         delays = [x[1] - x[0] for x in data]
         action_performed_at = [x[1] for x in data]
@@ -115,10 +115,10 @@ def main():
         print 'Std.:', np.std(two_action_time_offset)
     print ''
 
-    # Ghost -> Wordpress via IFTTT and Zapier
-    print 'Ghost ---(IFTTT)--> Wordpress'
-    print '       |-(Zapier)-|'
-    with open('data/rtt/ghost_IFTTT_ZAPIER_wordpress_1480843547_para.json') as fp:
+    # Evernote -> Github via IFTTT
+    print 'Evernote ---(IFTTT)--> Github'
+    print '          |-(IFTTT)-|'
+    with open('data/rtt/evernote_IFTTT_IFTTT_github_1480790584_para.json') as fp:
         data = json.load(fp)
         delays = [max(x[2], x[3]) - min(x[0], x[1]) for x in data]
         action_performed_at_1 = [x[2] for x in data]
@@ -149,10 +149,10 @@ def main():
         print 'Std.:', np.std(two_action_time_offset)
     print ''
 
-    # Evernote -> Github via IFTTT
-    print 'Evernote ---(IFTTT)--> Github'
-    print '          |-(IFTTT)-|'
-    with open('data/rtt/evernote_IFTTT_IFTTT_github_1480790584_para.json') as fp:
+    # Ghost -> Wordpress via IFTTT and Zapier
+    print 'Ghost ---(IFTTT)--> Wordpress'
+    print '       |-(Zapier)-|'
+    with open('data/rtt/ghost_IFTTT_ZAPIER_wordpress_1480843547_para.json') as fp:
         data = json.load(fp)
         delays = [max(x[2], x[3]) - min(x[0], x[1]) for x in data]
         action_performed_at_1 = [x[2] for x in data]
