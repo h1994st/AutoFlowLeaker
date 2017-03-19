@@ -66,8 +66,9 @@ class Wordpress(Channel):
     def delete(self, item):
         self.delete_post(item.id)
 
-    def delete_all(self, permanent=True):
-        self.delete_all_posts(permanent=permanent)
+    def delete_all(self, permanent=True, category=None, tag=None):
+        self.delete_all_posts(
+            permanent=permanent, category=category, tag=tag)
 
     @property
     def posts(self):
@@ -241,11 +242,13 @@ class Wordpress(Channel):
 
         return res
 
-    def delete_all_posts(self, permanent=True):
+    def delete_all_posts(self, permanent=True, category=None, tag=None):
         '''
         Delete all the posts
         '''
-        posts = self.get_posts(fields='ID,status', status='publish')
+        posts = self.get_posts(
+            fields='ID,status', status='publish',
+            category=category, tag=tag)
         while len(posts) > 0:
             for post in posts:
                 print 'Delete %d (%s)' % (post['ID'], post['status'])
@@ -253,10 +256,14 @@ class Wordpress(Channel):
                     self.delete_post(post['ID'])
                 except Exception as e:
                     print '  Error:', e
-            posts = self.get_posts(fields='ID,status', status='publish')
+            posts = self.get_posts(
+                fields='ID,status', status='publish',
+                category=category, tag=tag)
 
         if permanent:
-            posts = self.get_posts(fields='ID,status', status='trash')
+            posts = self.get_posts(
+                fields='ID,status', status='trash',
+                category=category, tag=tag)
             while len(posts) > 0:
                 for post in posts:
                     print 'Delete %d (%s)' % (post['ID'], post['status'])
@@ -264,7 +271,9 @@ class Wordpress(Channel):
                         self.delete_post(post['ID'])
                     except Exception as e:
                         print '  Error:', e
-                posts = self.get_posts(fields='ID,status', status='trash')
+                posts = self.get_posts(
+                    fields='ID,status', status='publish',
+                    category=category, tag=tag)
 
         print 'Done!'
 

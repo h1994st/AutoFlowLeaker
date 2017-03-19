@@ -41,5 +41,7 @@ Zapier = partial(_config.get, 'Zapier')
 
 Pool = partial(_config.get, 'Pool')
 
+Pushbullet = partial(_config.get, 'Pushbullet')
+
 
 del partial

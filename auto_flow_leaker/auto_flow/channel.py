@@ -28,7 +28,7 @@ class Channel(object):
             'Class %s doesn\'t implement description()' % (
                 self.__class__.__name__))
 
-    def send(self, content, title=None):
+    def send(self, *args, **kwargs):
         '''Post a new item to the channel'''
         raise NotImplementedError(
             'Class %s doesn\'t implement send()' % (

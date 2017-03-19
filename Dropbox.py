@@ -253,4 +253,11 @@ def test_delete_file():
 
 
 if __name__ == '__main__':
-    test_delete_file()
+    # test_delete_file()
+    dbx = Dropbox(folder='/Zapier')
+    posts = dbx.receive_all()
+    print posts
+    dbx.delete(posts[0])
+    posts = dbx.receive_all()
+    print posts
+
