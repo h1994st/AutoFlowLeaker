@@ -45,7 +45,8 @@ class Wordpress(Channel):
             post = self.create_post(
                 (title or '%.6f' % time.time()), content,
                 fields='ID,title,date', **kwargs)
-        except Exception:
+        except Exception as e:
+            print 'Wordpress send error:', e
             return None
         else:
             return Post(

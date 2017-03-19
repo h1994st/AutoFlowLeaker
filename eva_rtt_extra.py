@@ -85,7 +85,7 @@ def wordpress_to_dropbox(auto_service_name, rounds):
                 posts = dropbox.receive_all()
             else:
                 # new post
-                assert len(posts) == 1, posts
+                assert len(posts) == 1, 'More than one post on action channel'
 
                 print 'Get a new post'
                 post = posts[0]
@@ -107,13 +107,25 @@ def wordpress_to_dropbox(auto_service_name, rounds):
 
                 # Delete this post on action channel
                 print 'Deleting this post...'
+                wordpress.delete(wordpress_post)
                 dropbox.delete(post)
                 print 'Done!'
         except Exception as e:
             print 'Error:', e
             Notification.get_device('Ines').push_note(
                 'eva_rtt: %s' % (auto_service_name), 'Error: %s' % e)
-            pass
+
+            print 'Clearing all contents before...'
+            # Clear trigger channel
+            print 'Clearing trigger channel...'
+            wordpress.delete_all(category=action_name, tag=auto_service_name)
+            print 'Done!'
+
+            # Clear action channel
+            print 'Clearing action channel...'
+            dropbox.delete_all()
+            print 'Done!'
+            print 'Done!'
         else:
             pass
         finally:

@@ -1,46 +1,62 @@
 IFTTT:
-Email -> Wordpress
-RSS(Ghost) -> Wordpress
-RSS(Ghost) -> Wordpress (Force check)
-Evernote -> Github
+    [Done]
+    Email -> Wordpress
+    RSS(Ghost) -> Wordpress
+    RSS(Ghost) -> Wordpress (Force check)
+    Evernote -> Github
 
-Wordpress (#IFTTT "Dropbox") -> Dropbox (/IFTTT)
-Dropbox (/IFTTT) -> Wordpress (#IFTTT "Dropbox")
-Facebook -> Twitter
-Twitter -> Facebook
-Wordpress (#IFTTT "Facebook") -> Facebook
-Facebook -> Wordpress (#IFTTT "Facebook")
+    [Running]
+    Wordpress (#IFTTT "Dropbox") -> Dropbox (/IFTTT)
+
+    [TODO]
+    Dropbox (/IFTTT) -> Wordpress (#IFTTT "Dropbox")
+    Facebook -> Twitter
+    Twitter -> Facebook
+    Wordpress (#IFTTT "Facebook") -> Facebook
+    Facebook -> Wordpress (#IFTTT "Facebook")
 
 Zapier:
-RSS(Ghost) -> Wordpress
-Evernote -> Github
+    [Done]
+    RSS(Ghost) -> Wordpress
+    Evernote -> Github
 
-Wordpress (#Zapier "Dropbox") -> Dropbox (/Zapier)
-Dropbox (/Zapier) -> Wordpress (#Zapier "Dropbox")
-Facebook -> Twitter
-Twitter -> Facebook
-Wordpress (#Zapier "Facebook") -> Facebook
-Facebook -> Wordpress (#Zapier "Facebook")
+    [Running]
+    Wordpress (#Zapier "Dropbox") -> Dropbox (/Zapier)
+
+    [TODO]
+    Dropbox (/Zapier) -> Wordpress (#Zapier "Dropbox")
+    Facebook -> Twitter
+    Twitter -> Facebook
+    Wordpress (#Zapier "Facebook") -> Facebook
+    Facebook -> Wordpress (#Zapier "Facebook")
 
 Flow:
-RSS(Ghost) -> Wordpress
+    [Done]
+    RSS(Ghost) -> Wordpress
 
-Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)
-Dropbox (/Flow) -> Wordpress (#Flow "Dropbox")
-Facebook -> Twitter
-Twitter -> Facebook
-Wordpress (#Flow "Facebook") -> Facebook
-Facebook -> Wordpress (#Flow "Facebook")
+    [Running]
+    Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)
+
+    [TODO]
+    Dropbox (/Flow) -> Wordpress (#Flow "Dropbox")
+    Facebook -> Twitter
+    Twitter -> Facebook
+    Wordpress (#Flow "Facebook") -> Facebook
+    Facebook -> Wordpress (#Flow "Facebook")
 
 Apiant:
-RSS(Ghost) -> Wordpress
+    [Done]
+    RSS(Ghost) -> Wordpress
 
-Wordpress (#Apiant "Dropbox") -> Dropbox (/Apiant)
-Dropbox (/Apiant) -> Wordpress (#Apiant "Dropbox")
-Facebook -> Twitter
-Twitter -> Facebook
-Wordpress (#Apiant "Facebook") -> Facebook
-Facebook -> Wordpress (#Apiant "Facebook")
+    [Running]
+    Wordpress (#Apiant "Dropbox") -> Dropbox (/Apiant)
+
+    [TODO]
+    Dropbox (/Apiant) -> Wordpress (#Apiant "Dropbox")
+    Facebook -> Twitter
+    Twitter -> Facebook
+    Wordpress (#Apiant "Facebook") -> Facebook
+    Facebook -> Wordpress (#Apiant "Facebook")
 
 
 实验顺序:
