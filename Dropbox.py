@@ -65,7 +65,7 @@ class Dropbox(Channel):
             key=lambda x: x.create_time, reverse=True)
 
     def delete(self, item):
-        self.delete_file(item.id)
+        self.delete_file(item.title)
 
     def delete_all(self):
         self.delete_all_files()
@@ -133,7 +133,7 @@ class Dropbox(Channel):
         Get the metadata of all files
         '''
         res = self._dbx.files_list_folder(
-            Config.Dropbox('root_dir'),
+            self.default_folder,
             recursive=False, include_deleted=False)
         return res.entries
 
@@ -225,6 +225,32 @@ def test_upload_files():
     pprint(dbx.files)
 
 
+def test_delete_file():
+    dbx = Dropbox()
+
+    # Delete all
+    dbx.delete_all()
+
+    # Read all
+    pprint(dbx.files)
+
+    print 'Input file: ./data/eva_time_data_2.in'
+    with open('data/eva_time_data_2.in', 'r') as fp:
+        content = fp.read()
+        post = dbx.send(content)
+    print post
+
+    time.sleep(3)
+
+    # Read all
+    pprint(dbx.receive_all())
+
+    # Delete all
+    dbx.delete(post)
+
+    # Read all
+    pprint(dbx.receive_all())
+
+
 if __name__ == '__main__':
-    print Dropbox()
-    # test_upload_files()
+    test_delete_file()

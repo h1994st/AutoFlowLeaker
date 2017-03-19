@@ -37,13 +37,14 @@ class Wordpress(Channel):
         return 'site={!r}, access_token={!r}'.format(
             Config.Wordpress('site'), Config.Wordpress('access_token'))
 
-    def send(self, content, title=None):
+    def send(self, content, title=None, **kwargs):
         '''
         Default title: unix epoch
         '''
         try:
             post = self.create_post(
-                (title or '%.6f' % time.time()), content)
+                (title or '%.6f' % time.time()), content,
+                fields='ID,title,date', **kwargs)
         except Exception:
             return None
         else:
@@ -73,13 +74,18 @@ class Wordpress(Channel):
         return self.get_posts(fields='ID,title')
 
     # Write
-    def create_post(self, title, body, fields=None):
+    def create_post(self, title, body, fields=None,
+                    categories=None, tags=None):
         '''
         POST /sites/$site/posts/new
         '''
         assert isinstance(title, (str, unicode)), title
         assert isinstance(body, (str, unicode)), body
         assert fields is None or isinstance(fields, (str, unicode)), fields
+        assert (categories is None or
+                isinstance(categories, (str, unicode))), categories
+        assert (tags is None or
+                isinstance(tags, (str, unicode))), tags
 
         h = httplib2.Http(timeout=TIMEOUT)
 
@@ -87,6 +93,11 @@ class Wordpress(Channel):
             'title': title,
             'content': body
         }
+        if categories is not None:
+            post_data['categories'] = categories
+        if tags is not None:
+            post_data['tags'] = tags
+
         headers = {
             'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'Authorization': '%s %s' % (
@@ -262,9 +273,9 @@ def test_wordpress():
     print 'Input file: ./data/eva_time_data_2.in'
     with open('data/eva_time_data_2.in', 'r') as fp:
         content = fp.read()
-        print w.send(content)
+        print w.send(content, categories='test', tags='tag_tata')
 
-    # time.sleep(3)
+    time.sleep(3)
 
     pprint(w.receive_all())
 
