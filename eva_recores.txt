@@ -1,0 +1,80 @@
+IFTTT:
+Email -> Wordpress
+RSS(Ghost) -> Wordpress
+RSS(Ghost) -> Wordpress (Force check)
+Evernote -> Github
+
+Wordpress (#IFTTT "Dropbox") -> Dropbox (/IFTTT)
+Dropbox (/IFTTT) -> Wordpress (#IFTTT "Dropbox")
+Facebook -> Twitter
+Twitter -> Facebook
+Wordpress (#IFTTT "Facebook") -> Facebook
+Facebook -> Wordpress (#IFTTT "Facebook")
+
+Zapier:
+RSS(Ghost) -> Wordpress
+Evernote -> Github
+
+Wordpress (#Zapier "Dropbox") -> Dropbox (/Zapier)
+Dropbox (/Zapier) -> Wordpress (#Zapier "Dropbox")
+Facebook -> Twitter
+Twitter -> Facebook
+Wordpress (#Zapier "Facebook") -> Facebook
+Facebook -> Wordpress (#Zapier "Facebook")
+
+Flow:
+RSS(Ghost) -> Wordpress
+
+Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)
+Dropbox (/Flow) -> Wordpress (#Flow "Dropbox")
+Facebook -> Twitter
+Twitter -> Facebook
+Wordpress (#Flow "Facebook") -> Facebook
+Facebook -> Wordpress (#Flow "Facebook")
+
+Apiant:
+RSS(Ghost) -> Wordpress
+
+Wordpress (#Apiant "Dropbox") -> Dropbox (/Apiant)
+Dropbox (/Apiant) -> Wordpress (#Apiant "Dropbox")
+Facebook -> Twitter
+Twitter -> Facebook
+Wordpress (#Apiant "Facebook") -> Facebook
+Facebook -> Wordpress (#Apiant "Facebook")
+
+
+实验顺序:
+1. IFTTT: Wordpress (#IFTTT "Dropbox") -> Dropbox (/IFTTT)
+1. Zapier: Wordpress (#Zapier "Dropbox") -> Dropbox (/Zapier)
+1. Flow: Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)
+1. Apiant: Wordpress (#Apiant "Dropbox") -> Dropbox (/Apiant)
+1. IFTTT:  Twitter -> Facebook
+2. IFTTT:  Wordpress (#IFTTT "Facebook") -> Facebook
+2. Zapier: Wordpress (#Zapier "Facebook") -> Facebook
+2. Flow: Wordpress (#Flow "Facebook") -> Facebook
+2. Apiant: Wordpress (#Apiant "Facebook") -> Facebook
+
+
+
+1. Flow不支持Evernote
+2. Apiant中Github要收费
+
+
+
+               IFTTT    Zapier    Flow     Apiant
+Dropbox        ok       ok        ok       ok
+Email          ok       ok        ok(act)  ok(act)
+Evernote       ok       ok        x        ok
+Facebook       ok       ok(act)   ok       x
+Github         ok       ok        ok       x
+Gmail          ok       ?         ok       ok
+RSS(Ghost)     ok       ok        ok       ok
+Twitter        ok       ok        ok       ok
+Wordpress      ok       ok        ok       ok
+Yinxiang       x        ?         x        x
+
+Google Drive   _ok      _ok       _ok(act) _ok
+IMAP           x        _ok(act)  x
+Medium         _ok      x         _ok      x
+SMTP           x        _ok(tri)  _ok
+Weibo          _ok      x         x        x
