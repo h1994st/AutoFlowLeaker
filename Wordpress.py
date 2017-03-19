@@ -66,8 +66,8 @@ class Wordpress(Channel):
     def delete(self, item):
         self.delete_post(item.id)
 
-    def delete_all(self):
-        self.delete_all_posts(permanent=False)
+    def delete_all(self, permanent=True):
+        self.delete_all_posts(permanent=permanent)
 
     @property
     def posts(self):
@@ -249,7 +249,10 @@ class Wordpress(Channel):
         while len(posts) > 0:
             for post in posts:
                 print 'Delete %d (%s)' % (post['ID'], post['status'])
-                self.delete_post(post['ID'])
+                try:
+                    self.delete_post(post['ID'])
+                except Exception as e:
+                    print '  Error:', e
             posts = self.get_posts(fields='ID,status', status='publish')
 
         if permanent:
@@ -257,7 +260,10 @@ class Wordpress(Channel):
             while len(posts) > 0:
                 for post in posts:
                     print 'Delete %d (%s)' % (post['ID'], post['status'])
-                    self.delete_post(post['ID'])
+                    try:
+                        self.delete_post(post['ID'])
+                    except Exception as e:
+                        print '  Error:', e
                 posts = self.get_posts(fields='ID,status', status='trash')
 
         print 'Done!'

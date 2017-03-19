@@ -142,7 +142,7 @@ class Dropbox(Channel):
         Delete a file
         '''
         fullpath = os.path.join(self.default_folder, filename)
-        return self._dbx.files_delete(fullpath)
+        self._dbx.files_delete(fullpath)
 
     def delete_all_files(self):
         '''
