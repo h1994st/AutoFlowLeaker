@@ -14,4 +14,4 @@ feedparser
 MySQL-python
 peewee
 jinja2
-pushbullet
+pushbullet.py
