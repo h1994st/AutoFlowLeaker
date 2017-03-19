@@ -15,3 +15,4 @@ MySQL-python
 peewee
 jinja2
 pushbullet.py
+requests
