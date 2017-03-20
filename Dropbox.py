@@ -132,10 +132,14 @@ class Dropbox(Channel):
         '''
         Get the metadata of all files
         '''
-        res = self._dbx.files_list_folder(
-            self.default_folder,
-            recursive=False, include_deleted=False)
-        return res.entries
+        try:
+            res = self._dbx.files_list_folder(
+                self.default_folder,
+                recursive=False, include_deleted=False)
+        except:
+            return []
+        else:
+            return res.entries
 
     def delete_file(self, filename):
         '''

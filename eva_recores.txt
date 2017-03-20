@@ -5,8 +5,9 @@ IFTTT:
     RSS(Ghost) -> Wordpress (Force check)
     Evernote -> Github
 
-    [Running]
     Wordpress (#IFTTT "Dropbox") -> Dropbox (/IFTTT)
+
+    [Running]
 
     [TODO]
     Dropbox (/IFTTT) -> Wordpress (#IFTTT "Dropbox")
@@ -20,8 +21,9 @@ Zapier:
     RSS(Ghost) -> Wordpress
     Evernote -> Github
 
-    [Running]
     Wordpress (#Zapier "Dropbox") -> Dropbox (/Zapier)
+
+    [Running]
 
     [TODO]
     Dropbox (/Zapier) -> Wordpress (#Zapier "Dropbox")
@@ -48,8 +50,9 @@ Apiant:
     [Done]
     RSS(Ghost) -> Wordpress
 
-    [Running]
     Wordpress (#Apiant "Dropbox") -> Dropbox (/Apiant)
+
+    [Running]
 
     [TODO]
     Dropbox (/Apiant) -> Wordpress (#Apiant "Dropbox")
@@ -60,10 +63,7 @@ Apiant:
 
 
 实验顺序:
-1. IFTTT: Wordpress (#IFTTT "Dropbox") -> Dropbox (/IFTTT)
-1. Zapier: Wordpress (#Zapier "Dropbox") -> Dropbox (/Zapier)
 1. Flow: Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)
-1. Apiant: Wordpress (#Apiant "Dropbox") -> Dropbox (/Apiant)
 1. IFTTT:  Twitter -> Facebook
 2. IFTTT:  Wordpress (#IFTTT "Facebook") -> Facebook
 2. Zapier: Wordpress (#Zapier "Facebook") -> Facebook

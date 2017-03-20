@@ -37,9 +37,9 @@ def wordpress_to_dropbox(auto_service_name, rounds):
     # Preparation
     print 'Clearing...'
     # Clear trigger channel
-    print 'Clearing trigger channel...'
-    wordpress.delete_all(category=action_name, tag=auto_service_name)
-    print 'Done!'
+    # print 'Clearing trigger channel...'
+    # wordpress.delete_all(category=action_name, tag=auto_service_name)
+    # print 'Done!'
 
     # Clear action channel
     print 'Clearing action channel...'
