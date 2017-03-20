@@ -129,7 +129,8 @@ def wordpress_to_dropbox(auto_service_name, rounds):
         else:
             pass
         finally:
-            pass
+            print 'Sleep 3 seconds'
+            time.sleep(3)
 
     # End
     print 'End.'
