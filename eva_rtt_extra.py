@@ -107,7 +107,7 @@ def wordpress_to_dropbox(auto_service_name, rounds):
 
                 # Delete this post on action channel
                 print 'Deleting this post...'
-                wordpress.delete(wordpress_post)
+                # wordpress.delete(wordpress_post)
                 dropbox.delete(post)
                 print 'Done!'
         except Exception as e:
@@ -117,9 +117,9 @@ def wordpress_to_dropbox(auto_service_name, rounds):
 
             print 'Clearing all contents before...'
             # Clear trigger channel
-            print 'Clearing trigger channel...'
-            wordpress.delete_all(category=action_name, tag=auto_service_name)
-            print 'Done!'
+            # print 'Clearing trigger channel...'
+            # wordpress.delete_all(category=action_name, tag=auto_service_name)
+            # print 'Done!'
 
             # Clear action channel
             print 'Clearing action channel...'
