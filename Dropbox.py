@@ -136,7 +136,7 @@ class Dropbox(Channel):
             res = self._dbx.files_list_folder(
                 self.default_folder,
                 recursive=False, include_deleted=False)
-        except:
+        except Exception:
             return []
         else:
             return res.entries
@@ -264,4 +264,3 @@ if __name__ == '__main__':
     dbx.delete(posts[0])
     posts = dbx.receive_all()
     print posts
-

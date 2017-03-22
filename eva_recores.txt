@@ -8,9 +8,9 @@ IFTTT:
     Wordpress (#IFTTT "Dropbox") -> Dropbox (/IFTTT)
 
     [Running]
+    Dropbox (/IFTTT) -> Wordpress (#IFTTT "Dropbox")
 
     [TODO]
-    Dropbox (/IFTTT) -> Wordpress (#IFTTT "Dropbox")
     Facebook -> Twitter
     Twitter -> Facebook
     Wordpress (#IFTTT "Facebook") -> Facebook
@@ -24,9 +24,9 @@ Zapier:
     Wordpress (#Zapier "Dropbox") -> Dropbox (/Zapier)
 
     [Running]
+    Dropbox (/Zapier) -> Wordpress (#Zapier "Dropbox")
 
     [TODO]
-    Dropbox (/Zapier) -> Wordpress (#Zapier "Dropbox")
     Facebook -> Twitter
     Twitter -> Facebook
     Wordpress (#Zapier "Facebook") -> Facebook
@@ -37,14 +37,16 @@ Flow:
     RSS(Ghost) -> Wordpress
 
     [Running]
-    Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)
+    Dropbox (/Flow) -> Wordpress (#Flow "Dropbox")
 
     [TODO]
-    Dropbox (/Flow) -> Wordpress (#Flow "Dropbox")
     Facebook -> Twitter
     Twitter -> Facebook
     Wordpress (#Flow "Facebook") -> Facebook
     Facebook -> Wordpress (#Flow "Facebook")
+
+    [Fail]
+    Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)
 
 Apiant:
     [Done]
@@ -53,9 +55,9 @@ Apiant:
     Wordpress (#Apiant "Dropbox") -> Dropbox (/Apiant)
 
     [Running]
+    Dropbox (/Apiant) -> Wordpress (#Apiant "Dropbox")
 
     [TODO]
-    Dropbox (/Apiant) -> Wordpress (#Apiant "Dropbox")
     Facebook -> Twitter
     Twitter -> Facebook
     Wordpress (#Apiant "Facebook") -> Facebook

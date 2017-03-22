@@ -54,7 +54,7 @@ class Wordpress(Channel):
                 title=post['title'],
                 create_time=dateutil.parser.parse(post['date']))
 
-    def receive_all(self):
+    def receive_all(self, **kwargs):
         def converter(post):
             return Post(
                 id=post['ID'],
@@ -62,7 +62,8 @@ class Wordpress(Channel):
                 content=post['content'],
                 create_time=dateutil.parser.parse(post['date']))
 
-        return map(converter, self.get_posts(fields='ID,title,date,content'))
+        return map(converter, self.get_posts(
+            fields='ID,title,date,content', **kwargs))
 
     def delete(self, item):
         self.delete_post(item.id)
@@ -276,8 +277,6 @@ class Wordpress(Channel):
                     fields='ID,status', status='publish',
                     category=category, tag=tag)
 
-        print 'Done!'
-
 
 def test_wordpress():
     w = Wordpress()
@@ -302,5 +301,9 @@ def test_wordpress():
     pprint(w.receive_all())
 
 
+def force_delete():
+    Wordpress().delete_all()
+
+
 if __name__ == '__main__':
-    test_wordpress()
+    force_delete()
