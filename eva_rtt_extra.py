@@ -537,5 +537,6 @@ if __name__ == '__main__':
         filename = '%s_%s_%s_%d.json' % (
             trigger, auto, action, int(time.time()))
         with open('data/rtt/%s' % filename, 'w') as fp:
+            print '  Dump results to file:', filename
             json.dump(ret, fp)
         print 'Done!'
