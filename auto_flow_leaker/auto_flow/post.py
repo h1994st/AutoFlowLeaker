@@ -47,6 +47,7 @@ class Post(object):
     @id.deleter
     def id(self):
         self._id_value = None
+        del self._id_value
 
     @property
     def content(self):
@@ -64,6 +65,7 @@ class Post(object):
     @content.deleter
     def content(self):
         self._content_value = None
+        del self._content_value
 
     @property
     def create_time(self):
@@ -91,6 +93,7 @@ class Post(object):
     @create_time.deleter
     def create_time(self):
         self._create_time_value = None
+        del self._create_time_value
 
     @property
     def title(self):
@@ -99,10 +102,11 @@ class Post(object):
 
         :rtype: str
         '''
-        if self._title_value is not None:
-            return self._title_value
-        else:
-            raise AttributeError('missing required field \'title\'')
+        # if self._title_value is not None:
+        #     return self._title_value
+        # else:
+        #     raise AttributeError('missing required field \'title\'')
+        return self._title_value
 
     @title.setter
     def title(self, val):
@@ -111,6 +115,7 @@ class Post(object):
     @title.deleter
     def title(self):
         self._title_value = None
+        del self._title_value
 
     def __repr__(self):
         if self.content is None:
@@ -128,5 +133,6 @@ class Post(object):
         if len(content) > 16:
             content = content[:16] + '...'
 
-        return 'Post(id={!r}, title={!r}, create_time={!r}, content={!r})'.format(
-            self.id, self.title, self.create_time, content)
+        return 'Post(id={!r}, title={!r}, ' \
+            'create_time={!r}, content={!r})'.format(
+                self.id, self.title, self.create_time, content)
