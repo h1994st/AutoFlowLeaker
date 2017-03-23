@@ -181,13 +181,8 @@ def test_twitter_channel():
     # Read all
     pprint(tw.receive_all())
 
-    # Delete all
-    tw.delete_all()
-
-    # Read all
-    pprint(tw.receive_all())
-
-    tw.send('test text')
+    tweet = tw.send('test text')
+    print tweet
 
     # Read all
     pprint(tw.receive_all())
