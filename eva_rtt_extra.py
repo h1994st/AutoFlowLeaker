@@ -56,11 +56,13 @@ def dropbox_to_wordpress(auto_service_name, rounds):
 
         try:
             timestamp_pair = [-1, -1]
-            title = '{trigger}_{auto}_{action}: Round {round} {timestamp}'.format(
-                trigger=trigger_name,
-                auto=auto_service_name,
-                action=action_name,
-                round=i, timestamp=time.time())  # attach timestamp: send time
+            title = '{trigger}_{auto}_{action}: ' \
+                'Round {round} {timestamp}'.format(
+                    trigger=trigger_name,
+                    auto=auto_service_name,
+                    action=action_name,
+                    round=i, timestamp=time.time())
+            # attach timestamp: send time |\
 
             # Publish a post on trigger channel
             print 'Publishing a new post on %s...' % trigger_name
@@ -378,8 +380,8 @@ if __name__ == '__main__':
     if ret is not None:
         # Saving results
         print 'Saving results...'
-        filename = 'wordpress_%s_dropbox_%d.json' % (
-            auto, int(time.time()))
+        filename = '%s_%s_%s_%d.json' % (
+            trigger, auto, action, int(time.time()))
         with open('data/rtt/%s' % filename, 'w') as fp:
             json.dump(ret, fp)
         print 'Done!'

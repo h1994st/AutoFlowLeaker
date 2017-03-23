@@ -6,13 +6,13 @@ IFTTT:
     Evernote -> Github
 
     Wordpress (#IFTTT "Dropbox") -> Dropbox (/IFTTT)
-
-    [Running]
     Dropbox (/IFTTT) -> Wordpress (#IFTTT "Dropbox")
 
+    [Running]
+
     [TODO]
-    Facebook -> Twitter
-    Twitter -> Facebook
+    Twitter -> Dropbox
+    Dropbox -> Twitter
     Wordpress (#IFTTT "Facebook") -> Facebook
     Facebook -> Wordpress (#IFTTT "Facebook")
 
@@ -22,13 +22,13 @@ Zapier:
     Evernote -> Github
 
     Wordpress (#Zapier "Dropbox") -> Dropbox (/Zapier)
-
-    [Running]
     Dropbox (/Zapier) -> Wordpress (#Zapier "Dropbox")
 
+    [Running]
+
     [TODO]
-    Facebook -> Twitter
-    Twitter -> Facebook
+    Twitter -> Dropbox
+    Dropbox -> Twitter
     Wordpress (#Zapier "Facebook") -> Facebook
     Facebook -> Wordpress (#Zapier "Facebook")
 
@@ -36,30 +36,31 @@ Flow:
     [Done]
     RSS(Ghost) -> Wordpress
 
-    [Running]
     Dropbox (/Flow) -> Wordpress (#Flow "Dropbox")
 
+    [Running]
+
     [TODO]
-    Facebook -> Twitter
-    Twitter -> Facebook
+    Twitter -> Dropbox
+    Dropbox -> Twitter
     Wordpress (#Flow "Facebook") -> Facebook
     Facebook -> Wordpress (#Flow "Facebook")
 
     [Fail]
-    Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)
+    Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)  # 大部分结果都是900秒左右
 
 Apiant:
     [Done]
     RSS(Ghost) -> Wordpress
 
     Wordpress (#Apiant "Dropbox") -> Dropbox (/Apiant)
-
-    [Running]
     Dropbox (/Apiant) -> Wordpress (#Apiant "Dropbox")
 
+    [Running]
+
     [TODO]
-    Facebook -> Twitter
-    Twitter -> Facebook
+    Twitter -> Dropbox
+    Dropbox -> Twitter
     Wordpress (#Apiant "Facebook") -> Facebook
     Facebook -> Wordpress (#Apiant "Facebook")
 
@@ -82,14 +83,14 @@ Apiant:
                IFTTT    Zapier    Flow     Apiant
 Dropbox        ok       ok        ok       ok
 Email          ok       ok        ok(act)  ok(act)
+RSS(Ghost)     ok       ok        ok       ok
+Twitter        ok       ok        ok       ok
+Wordpress      ok       ok        ok       ok
 Evernote       ok       ok        x        ok
 Facebook       ok       ok(act)   ok       x
 Github         ok       ok        ok       x
 Gmail          ok       ?         ok       ok
-RSS(Ghost)     ok       ok        ok       ok
-Twitter        ok       ok        ok       ok
-Wordpress      ok       ok        ok       ok
-Yinxiang       x        ?         x        x
+Yinxiang       x        x         x        x
 
 Google Drive   _ok      _ok       _ok(act) _ok
 IMAP           x        _ok(act)  x
