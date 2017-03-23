@@ -5,14 +5,19 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+import pytz
+import time
+import dateutil.parser
 from pprint import pprint
 
 import twitter
 
 import Config
+from auto_flow_leaker.auto_flow.post import Post
+from auto_flow_leaker.auto_flow.channel import Channel
 
 
-class Twitter(object):
+class Twitter(Channel):
     '''
     Default user: covert.san@gmail.com
     '''
@@ -24,6 +29,46 @@ class Twitter(object):
             consumer_secret=Config.Twitter('consumer_secret'),
             access_token_key=Config.Twitter('access_token_key'),
             access_token_secret=Config.Twitter('access_token_secret'))
+
+    def description(self):
+        return 'consumer_key={!r}, consumer_secret={!r}, ' \
+            'access_token_key={!r}, access_token_secret={!r}'.format(
+                Config.Twitter('consumer_key'),
+                Config.Twitter('consumer_secret'),
+                Config.Twitter('access_token_key'),
+                Config.Twitter('access_token_secret'))
+
+    def send(self, content=None):
+        '''
+        Default title: unix epoch
+        '''
+        try:
+            tweet = self.create_tweet(content or '%.6f' % time.time())
+        except Exception:
+            return None
+        else:
+            return Post(
+                id=tweet.id,
+                title=None,  # No title
+                create_time=dateutil.parser.parse(
+                    tweet.created_at).replace(tzinfo=pytz.utc))
+
+    def receive_all(self):
+        def converter(tweet):
+            return Post(
+                id=tweet.id,
+                title=None,
+                content=tweet.text,
+                create_time=dateutil.parser.parse(
+                    tweet.created_at).replace(tzinfo=pytz.utc))
+
+        return map(converter, self.get_tweets())
+
+    def delete(self, item):
+        self.delete_tweet(item.id)
+
+    def delete_all(self):
+        self.delete_all_tweets()
 
     @property
     def tweets(self):
@@ -129,5 +174,30 @@ def test_long_tweet():
         pprint(tw.tweets)
 
 
+def test_twitter_channel():
+    tw = Twitter()
+    print tw
+
+    # Read all
+    pprint(tw.receive_all())
+
+    # Delete all
+    tw.delete_all()
+
+    # Read all
+    pprint(tw.receive_all())
+
+    tw.send('test text')
+
+    # Read all
+    pprint(tw.receive_all())
+
+    # Delete all
+    tw.delete_all()
+
+    # Read all
+    pprint(tw.receive_all())
+
+
 if __name__ == '__main__':
-    test_long_tweet()
+    test_twitter_channel()
