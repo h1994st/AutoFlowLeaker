@@ -7,9 +7,9 @@ IFTTT:
 
     Wordpress (#IFTTT "Dropbox") -> Dropbox (/IFTTT)
     Dropbox (/IFTTT) -> Wordpress (#IFTTT "Dropbox")
+    Twitter -> Dropbox
 
     [Running]
-    Twitter -> Dropbox
 
     [TODO]
     Dropbox -> Twitter
@@ -23,9 +23,9 @@ Zapier:
 
     Wordpress (#Zapier "Dropbox") -> Dropbox (/Zapier)
     Dropbox (/Zapier) -> Wordpress (#Zapier "Dropbox")
+    Twitter -> Dropbox
 
     [Running]
-    Twitter -> Dropbox
 
     [TODO]
     Dropbox -> Twitter
@@ -39,7 +39,6 @@ Flow:
     Dropbox (/Flow) -> Wordpress (#Flow "Dropbox")
 
     [Running]
-    Twitter -> Dropbox
 
     [TODO]
     Dropbox -> Twitter
@@ -48,6 +47,7 @@ Flow:
 
     [Fail]
     Wordpress (#Flow "Dropbox") -> Dropbox (/Flow)  # 大部分结果都是900秒左右
+    Twitter -> Dropbox
 
 Apiant:
     [Done]
@@ -55,9 +55,9 @@ Apiant:
 
     Wordpress (#Apiant "Dropbox") -> Dropbox (/Apiant)
     Dropbox (/Apiant) -> Wordpress (#Apiant "Dropbox")
+    Twitter -> Dropbox
 
     [Running]
-    Twitter -> Dropbox
 
     [TODO]
     Dropbox -> Twitter
