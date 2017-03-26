@@ -195,4 +195,4 @@ def test_twitter_channel():
 
 
 if __name__ == '__main__':
-    test_twitter_channel()
+    test_tw_delete()

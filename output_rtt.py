@@ -156,7 +156,7 @@ def main():
         print 'Interval Avg.:', np.mean(intervals),
         print 'Interval Std.:', np.std(intervals)
     with open('data/rtt/dropbox_IFTTT_wordpress_1490282085.json') as fp:
-        data = json.load(fp)
+        data = json.load(fp)[18:]
         delays = [x[1] - x[0] for x in data]
         action_performed_at = [x[1] for x in data]
         intervals = []
@@ -322,19 +322,19 @@ def main():
 
     # Wordpress -> Dropbox via Microsoft Flow
     print 'Wordpress -> Dropbox via Microsoft Flow'
-    # with open('data/rtt/wordpress_IFTTT_dropbox_1489977895.json') as fp:
-    #     data = json.load(fp)
-    #     delays = [x[1] - x[0] for x in data]
-    #     action_performed_at = [x[1] for x in data]
-    #     intervals = []
-    #     for i in xrange(len(action_performed_at) - 1):
-    #         intervals.append(
-    #             action_performed_at[i + 1] - action_performed_at[i])
+    with open('data/rtt/wordpress_Flow_dropbox_1400000000.json') as fp:
+        data = json.load(fp)
+        delays = [x[1] - x[0] for x in data]
+        action_performed_at = [x[1] for x in data]
+        intervals = []
+        for i in xrange(len(action_performed_at) - 1):
+            intervals.append(
+                action_performed_at[i + 1] - action_performed_at[i])
 
-    #     print 'Delay Avg.:', np.mean(delays),
-    #     print 'Delay Std.:', np.std(delays)
-    #     print 'Interval Avg.:', np.mean(intervals),
-    #     print 'Interval Std.:', np.std(intervals)
+        print 'Delay Avg.:', np.mean(delays),
+        print 'Delay Std.:', np.std(delays)
+        print 'Interval Avg.:', np.mean(intervals),
+        print 'Interval Std.:', np.std(intervals)
     print ''
 
     # Dropbox -> Wordpress via Microsoft Flow
@@ -356,19 +356,19 @@ def main():
 
     # Twitter -> Dropbox via Microsoft Flow
     print 'Twitter -> Dropbox via Microsoft Flow'
-    # with open('data/rtt/twitter_Zapier_dropbox_1490346966.json') as fp:
-    #     data = json.load(fp)
-    #     delays = [x[1] - x[0] for x in data]
-    #     action_performed_at = [x[1] for x in data]
-    #     intervals = []
-    #     for i in xrange(len(action_performed_at) - 1):
-    #         intervals.append(
-    #             action_performed_at[i + 1] - action_performed_at[i])
+    with open('data/rtt/twitter_Flow_dropbox_1400000000.json') as fp:
+        data = json.load(fp)
+        delays = [x[1] - x[0] for x in data]
+        action_performed_at = [x[1] for x in data]
+        intervals = []
+        for i in xrange(len(action_performed_at) - 1):
+            intervals.append(
+                action_performed_at[i + 1] - action_performed_at[i])
 
-    #     print 'Delay Avg.:', np.mean(delays),
-    #     print 'Delay Std.:', np.std(delays)
-    #     print 'Interval Avg.:', np.mean(intervals),
-    #     print 'Interval Std.:', np.std(intervals)
+        print 'Delay Avg.:', np.mean(delays),
+        print 'Delay Std.:', np.std(delays)
+        print 'Interval Avg.:', np.mean(intervals),
+        print 'Interval Std.:', np.std(intervals)
     print ''
 
     print '[Apiant]'
