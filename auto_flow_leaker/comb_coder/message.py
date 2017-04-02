@@ -40,6 +40,7 @@ class Message(object):
 
         super(Message, self).__init__()
 
+        # all in bits
         self.m = m  # 8-bit number (0~255)
         self.r = r  # 8-bit number (0~255)
         self.total_chunk_len = total_chunk_len  # 16-bit number (0~65535)
@@ -66,7 +67,7 @@ class Message(object):
         the chunk.
         '''
         msg = self.data
-        self.msg_size = len(msg)
+        self.msg_size = len(msg) * 8
 
         header = _STRUCT_BBHHH.pack(
             self.m & 0xFF,
