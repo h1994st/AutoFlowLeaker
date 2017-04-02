@@ -46,7 +46,7 @@ class Message(object):
         self.total_chunk_len = total_chunk_len  # 16-bit number (0~65535)
         self.chunk_offset = chunk_offset  # 16-bit number (0~65535)
 
-        self.msg_size = len(data)  # 16-bit number (0~65535)
+        self.msg_size = len(data) * 8  # 16-bit number (0~65535)
         self.data = data
 
     def __repr__(self):

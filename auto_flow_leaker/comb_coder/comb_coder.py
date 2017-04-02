@@ -21,7 +21,7 @@ class CombCoder(object):
         print '  i=%d, k=%d' % (i, k)
 
         self.capacity, count, t9, t5 = OurSystem.capacity(i, k)
-        print '  capacity=%d bit (%d)' % (self.capacity, count)
+        print '  capacity=%d bit(s) (%d)' % (self.capacity, count)
 
     def encode(self, data):
         '''
