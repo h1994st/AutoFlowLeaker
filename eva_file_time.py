@@ -17,9 +17,11 @@ ec_coder = ECCoder(M, R)
 comb_coder = CombCoder(I, K)
 capacity = comb_coder.capacity  # in bits
 
+# EC coding
 with open('data/eva_time_data_3.in', 'r') as fp:
     chunks = ec_coder.encode(fp.read())
 
+# Fill messages
 total_chunk_len = len(chunks[0]) * len(chunks)  # in bytes
 all_chunk_data = b''.join(chunks)
 
@@ -38,12 +40,16 @@ while chunk_bit_offset < total_chunk_bits:
         total_chunk_bits, chunk_bit_offset,
         data=all_chunk_bitstring[begin:end].tobytes())
 
-    print begin, end
-    print all_chunk_bitstring[begin:end]
-    print all_chunk_bitstring[begin:end].tobytes()
-    print message
-    print ''
-
     chunk_bit_offset += msg_size
 
     messages.append(message)
+
+# Combination coding
+arrangements = []
+for message in messages:
+    msg_bin_data = message.serialize()
+    arrangement = comb_coder.encode(msg_bin_data[:capacity])
+
+    print arrangement
+
+    arrangements.append(arrangement)
