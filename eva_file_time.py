@@ -44,11 +44,13 @@ while chunk_bit_offset < total_chunk_bits:
 
     messages.append(message)
 
+print len(messages)
+
 # Combination coding
 arrangements = []
 for message in messages:
     msg_bin_data = message.serialize()
-    arrangement = comb_coder.encode(msg_bin_data[:capacity])
+    arrangement = comb_coder.encode(int(msg_bin_data[:capacity], 2))
 
     print arrangement
 
