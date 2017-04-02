@@ -237,7 +237,7 @@ def T5Inner(R, i):
 
 
 def enumSetPartition(m, n):
-    '''m <= n'''
+    '''n <= m'''
     assert n <= m, (m, n)
 
     S = [[0 for i in xrange(n + 1)] for j in xrange(m + 1)]
@@ -589,22 +589,26 @@ def unrank(aI, aK, aMsg):
 
 
 if __name__ == '__main__':
-    print capacity(2, 2)
+    print enumSetPartition(5, 5)
+    # print capacity(3, 2)
+    # arrangement, rK = unrank(3, 2, 238)
+    # print rK
+    # print arrangement
 
-    # cap, _, _, _ = capacity(3, 3)
-    # for r in xrange(2 ** cap):
-    #     arrangement, _ = unrank(3, 3, r)
-    #     print r, arrangement
+    # # cap, _, _, _ = capacity(3, 3)
+    # # for r in xrange(2 ** cap):
+    # #     arrangement, _ = unrank(3, 3, r)
+    # #     print r, arrangement
 
-    print 238, bin(238)
-    arrangement, rK = unrank(3, 3, 238)
-    print rK
-    print arrangement
+    # print 238, bin(238)
+    # arrangement, rK = unrank(3, 3, 238)
+    # print rK
+    # print arrangement
 
-    print rank(arrangement, rK)
+    # print rank(arrangement, rK)
 
-    for k in xrange(1, 11):
-        print 'K=%d' % k
-        for i in xrange(0, 51, 5):
-            print capacity(i, k)[0],
-        print ''
+    # for k in xrange(1, 11):
+    #     print 'K=%d' % k
+    #     for i in xrange(0, 51, 5):
+    #         print capacity(i, k)[0],
+    #     print ''
