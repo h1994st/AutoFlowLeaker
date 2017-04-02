@@ -38,9 +38,12 @@ while chunk_bit_offset < total_chunk_bits:
         total_chunk_bits, chunk_bit_offset,
         data=all_chunk_bitstring[begin:end].tobytes())
 
+    print begin, end
+    print all_chunk_bitstring[begin:end]
+    print all_chunk_bitstring[begin:end].tobytes()
+    print message
+    print ''
+
     chunk_bit_offset += msg_size
 
     messages.append(message)
-
-for message in messages:
-    print message
