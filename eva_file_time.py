@@ -20,7 +20,7 @@ capacity = comb_coder.capacity  # in bits
 with open('data/eva_time_data_3.in', 'r') as fp:
     chunks = ec_coder.encode(fp.read())
 
-total_chunk_len = len(chunks[0]) * len(chunk)  # in bytes
+total_chunk_len = len(chunks[0]) * len(chunks)  # in bytes
 all_chunk_data = b''.join(chunks)
 
 all_chunk_bitstring = bitstring.BitStream(bytearray(all_chunk_data))
