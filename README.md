@@ -28,6 +28,16 @@ AutoFlowLeaker
 
   1. Install `isa-l`, see <https://github.com/01org/isa-l#building-isa-l> for detail.
 
+    Ubuntu only
+    ```bash
+    $ git clone https://github.com/01org/isa-l.git
+    $ cd isa-l
+    $ ./autogen.sh
+    $ ./configure --prefix=/usr --libdir=/usr/lib
+    $ make
+    $ sudo make install
+    ```
+
     On Mac OS X:
     ```bash
     $ [sudo] brew install liberasurecode
