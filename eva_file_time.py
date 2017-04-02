@@ -28,7 +28,7 @@ all_chunk_bitstring = bitstring.BitStream(bytearray(all_chunk_data))
 messages = []
 total_chunk_bits = len(all_chunk_bitstring)
 chunk_bit_offset = 0
-msg_size = capacity  # in bits
+msg_size = capacity - 64  # in bits
 
 while chunk_bit_offset < total_chunk_bits:
     begin = chunk_bit_offset
@@ -38,6 +38,9 @@ while chunk_bit_offset < total_chunk_bits:
         total_chunk_bits, chunk_bit_offset,
         data=all_chunk_bitstring[begin:end].tobytes())
 
+    chunk_bit_offset += msg_size
+
     messages.append(message)
 
-print messages
+for message in messages:
+    print message
