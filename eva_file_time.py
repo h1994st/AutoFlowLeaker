@@ -15,7 +15,7 @@ from auto_flow_leaker.ec_coder import ECCoder
 from auto_flow_leaker.comb_coder import Message
 from auto_flow_leaker.comb_coder import CombCoder
 
-if len(sys.argv) != 5:
+if len(sys.argv) != 6:
     print 'Error'
     sys.exit(1)
 
@@ -27,24 +27,38 @@ ec_coder = ECCoder(M, R)
 comb_coder = CombCoder(I, K)
 capacity = comb_coder.capacity  # in bits
 
-# Compress
-input_files = ['data/eva_time_data_3.in']
-output_file = 'data/eva_time_data_3.in.7z'
-Archiver.compress(input_files, output_file)
+input_file = sys.argv[5]
+if not os.path.exists(input_file):
+    print 'File does not exist:', input_file
+    sys.exit(1)
+
+output_dir = 'data/chunks'
+if os.path.exists(output_dir):
+    os.rmdir(output_dir)
+os.makedirs(output_dir)
 
 # EC coding
-with open(output_file, 'r') as fp:
+with open(input_file, 'r') as fp:
     print 'File size:', os.stat(fp.name).st_size
-    chunks = ec_coder.encode(fp.read())
+    ec_coder.encode_file(fp, output_dir)
+
+# Compress
+input_files = [os.path.join(
+    output_dir, chunk_filename) for chunk_filename in os.listdir(output_dir)]
+output_file = '%s.7z' % input_file
+Archiver.compress(input_files, output_file)
+
+# Delete chunks
+os.rmdir(output_dir)
 
 # Fill messages
-print 'Number of chunks:', len(chunks)
-print 'Sizes of chunks:', [len(chunk) for chunk in chunks]
+# print 'Number of chunks:', len(chunks)
+# print 'Sizes of chunks:', [len(chunk) for chunk in chunks]
 
-total_chunk_len = len(chunks[0]) * len(chunks)  # in bytes
-all_chunk_data = b''.join(chunks)
-
-all_chunk_bitstring = bitstring.BitStream(bytearray(all_chunk_data))
+# total_chunk_len = len(chunks[0]) * len(chunks)  # in bytes
+# all_chunk_data = b''.join(chunks)
+with open(output_file, 'r') as fp:
+    all_chunk_bitstring = bitstring.BitStream(fp)
 
 messages = []
 total_chunk_bits = len(all_chunk_bitstring)
