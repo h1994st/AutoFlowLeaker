@@ -14,7 +14,7 @@ from auto_flow_leaker.ec_coder import ECCoder
 from auto_flow_leaker.comb_coder import Message
 from auto_flow_leaker.comb_coder import CombCoder
 
-M, R, I, K = 4, 2, 5, 2
+M, R, I, K = 4, 2, 10, 2
 
 # Init
 ec_coder = ECCoder(M, R)
@@ -41,6 +41,8 @@ messages = []
 total_chunk_bits = len(all_chunk_bitstring)
 chunk_bit_offset = 0
 msg_size = capacity - 64  # in bits
+
+print 'Total bits:', total_chunk_bits
 
 while chunk_bit_offset < total_chunk_bits:
     begin = chunk_bit_offset
