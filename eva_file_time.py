@@ -6,6 +6,7 @@
 # @Version : 1.0
 
 import os
+import sys
 
 import bitstring
 
@@ -14,7 +15,12 @@ from auto_flow_leaker.ec_coder import ECCoder
 from auto_flow_leaker.comb_coder import Message
 from auto_flow_leaker.comb_coder import CombCoder
 
-M, R, I, K = 4, 2, 10, 2
+if len(sys.argv) != 5:
+    print 'Error'
+    sys.exit(1)
+
+# M, R, I, K = 3, 1, 10, 2
+M, R, I, K = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 
 # Init
 ec_coder = ECCoder(M, R)
@@ -32,6 +38,9 @@ with open(output_file, 'r') as fp:
     chunks = ec_coder.encode(fp.read())
 
 # Fill messages
+print 'Number of chunks:', len(chunks)
+print 'Sizes of chunks:', [len(chunk) for chunk in chunks]
+
 total_chunk_len = len(chunks[0]) * len(chunks)  # in bytes
 all_chunk_data = b''.join(chunks)
 
