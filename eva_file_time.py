@@ -9,18 +9,25 @@ import os
 
 import bitstring
 
+import Archiver
 from auto_flow_leaker.ec_coder import ECCoder
 from auto_flow_leaker.comb_coder import Message
 from auto_flow_leaker.comb_coder import CombCoder
 
-M, R, I, K = 4, 2, 10, 3
+M, R, I, K = 4, 2, 5, 2
 
+# Init
 ec_coder = ECCoder(M, R)
 comb_coder = CombCoder(I, K)
 capacity = comb_coder.capacity  # in bits
 
+# Compress
+input_files = ['data/eva_time_data_3.in']
+output_file = 'data/eva_time_data_3.in.7z'
+Archiver.compress(input_files, output_file)
+
 # EC coding
-with open('data/eva_time_data_3.in', 'r') as fp:
+with open(output_file, 'r') as fp:
     print 'File size:', os.stat(fp.name).st_size
     chunks = ec_coder.encode(fp.read())
 
@@ -47,7 +54,7 @@ while chunk_bit_offset < total_chunk_bits:
 
     messages.append(message)
 
-print len(messages)
+print 'Number of messages:', len(messages)
 
 # Combination coding
 arrangements = []
@@ -55,7 +62,5 @@ for message in messages:
     msg_byte_data = message.serialize()
     msg_bin_data = bitstring.BitStream(bytearray(msg_byte_data))
     arrangement = comb_coder.encode(msg_bin_data.int)
-
-    print arrangement
 
     arrangements.append(arrangement)

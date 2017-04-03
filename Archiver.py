@@ -24,8 +24,8 @@ def compress(input_files, output_file):
     assert not os.path.islink(output_file), output_file
 
     print 'Compressing...'
-    print 'Input files: %s' % input_files
-    print 'Output file: %s' % output_file
+    print '  Input files: %s' % input_files
+    print '  Output file: %s' % output_file
 
     # Compress
     for entry in libarchive.public.create_file(
@@ -43,8 +43,8 @@ def decompress(input_file, output_dir):
     assert os.path.isdir(output_dir), output_dir
 
     print 'Decompressing...'
-    print 'Input file: %s' % input_file
-    print 'Ourput directory: %s' % output_dir
+    print '  Input file: %s' % input_file
+    print '  Ourput directory: %s' % output_dir
 
     # Decompress
     with libarchive.public.file_reader(input_file) as e:

@@ -114,16 +114,9 @@ class Message(object):
 
 
 def test_message():
-    message, msg_size = Message.parse_message_header(
-        b'\x04\x02\x02\x00\x03\x00\x01\x00')
-    print message, msg_size
-    message.parse_message(memoryview('A' * msg_size))
-
-    print message
-
-    print message.serialize()
-    print message.serialize()[:8]
-    print message.serialize()[:8] == b'\x04\x02\x02\x00\x03\x00\x01\x00'
+    message = Message(4, 2, 208, 175, data='')
+    print len(message.serialize())
+    print binascii.hexlify(message.serialize()).decode('ascii')
 
 
 if __name__ == '__main__':
