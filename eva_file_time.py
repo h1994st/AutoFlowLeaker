@@ -5,6 +5,8 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+import os
+
 import bitstring
 
 from auto_flow_leaker.ec_coder import ECCoder
@@ -19,6 +21,7 @@ capacity = comb_coder.capacity  # in bits
 
 # EC coding
 with open('data/eva_time_data_3.in', 'r') as fp:
+    print 'File size:', os.stat(fp.name).st_size
     chunks = ec_coder.encode(fp.read())
 
 # Fill messages
@@ -49,8 +52,9 @@ print len(messages)
 # Combination coding
 arrangements = []
 for message in messages:
-    msg_bin_data = message.serialize()
-    arrangement = comb_coder.encode(int(msg_bin_data[:capacity], 2))
+    msg_byte_data = message.serialize()
+    msg_bin_data = bitstring.BitStream(bytearray(msg_byte_data))
+    arrangement = comb_coder.encode(msg_bin_data.int)
 
     print arrangement
 
