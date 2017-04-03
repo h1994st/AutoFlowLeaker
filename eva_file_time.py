@@ -49,7 +49,11 @@ output_file = '%s.7z' % input_file
 Archiver.compress(input_files, output_file)
 
 # Delete chunks
+for chunk_file_path in input_files:
+    os.remove(chunk_file_path)
+    print 'Delete', chunk_file_path
 os.rmdir(output_dir)
+print 'Delete', output_dir
 
 # Fill messages
 # print 'Number of chunks:', len(chunks)
