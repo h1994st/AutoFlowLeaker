@@ -20,7 +20,7 @@ if len(sys.argv) != 5:
     sys.exit(1)
 
 # M, R, I, K = 3, 1, 10, 2
-M, R, I, K = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+M, R, I, K = [int(arg) for arg in sys.argv[1:5]]
 
 # Init
 ec_coder = ECCoder(M, R)
