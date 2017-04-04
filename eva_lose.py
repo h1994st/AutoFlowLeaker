@@ -86,5 +86,5 @@ recover_chunks = []
 for i in xrange(num_chunks):
     recover_chunks.append(
         recover_chunk_data[i * size_of_chunk:(i + 1) * size_of_chunk])
-print len(recover_chunk_data)
-print len(recover_chunk_data[0])
+print len(recover_chunks)
+print len(recover_chunks[0])
