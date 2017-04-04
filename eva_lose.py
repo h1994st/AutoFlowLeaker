@@ -6,19 +6,22 @@
 # @Version : 1.0
 
 import sys
+import math
+import random
 
 import bitstring
 
 from auto_flow_leaker.ec_coder import ECCoder
 from auto_flow_leaker.comb_coder import CombCoder
 
-if len(sys.argv) != 5:
+if len(sys.argv) != 6:
     print 'Error'
     sys.exit(1)
 
 # M, R, I, K = 3, 1, 10, 2
 M, R, I, K = [int(arg) for arg in sys.argv[1:5]]
 DATA = 'a'  # data to be sent
+LOSS_PROB = float(sys.argv[5])
 
 # Init
 ec_coder = ECCoder(M, R)
@@ -27,9 +30,11 @@ capacity = comb_coder.capacity  # in bits
 
 # EC coding
 chunks = ec_coder.encode(DATA)
+num_chunks = len(chunks)
+size_of_chunk = len(chunks[0])
 
-print 'Number of chunks:', len(chunks)
-print 'Chunk size:', len(chunks[0])
+print 'Number of chunks:', num_chunks
+print 'Chunk size:', size_of_chunk
 
 all_chunk_data = b''.join(chunks)
 all_chunk_bitstring = bitstring.BitStream(bytearray(all_chunk_data))
@@ -48,7 +53,8 @@ while cur_offset < total_chunk_bits:
 
     cur_offset += capacity
 
-print 'Number of messages:', len(message_integers)
+num_messages = len(message_integers)
+print 'Number of messages:', num_messages
 
 # Combination coding
 arrangements = []
@@ -56,3 +62,24 @@ for message_integer in message_integers:
     arrangement = comb_coder.encode(message_integer)
 
     arrangements.append(arrangement)
+
+# Random loss
+arrangement_indexs = range(num_messages)
+num_loss = int(math.floor(num_messages * LOSS_PROB))
+while num_loss > 0:
+    arrangement_indexs.remove(random.choice(arrangement_indexs))
+
+    num_loss -= 1
+
+recover_bitstring = bitstring.BitStream(total_chunk_bits)
+for index in arrangement_indexs:
+    arrangement = arrangements[index]
+    message_integer = comb_coder.decode(*arrangement)
+    begin = 0
+    end = min(begin + capacity, total_chunk_bits)
+
+    recover_bitstring[begin:end] = bitstring.BitStream(
+        'uint:%d=%d' % (end - begin, message_integer))
+
+print all_chunk_bitstring
+print recover_bitstring
