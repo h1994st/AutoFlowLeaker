@@ -71,20 +71,23 @@ while num_loss > 0:
 
     num_loss -= 1
 
-recover_bitstring = bitstring.BitStream(total_chunk_bits)
+recovered_bitstring = bitstring.BitStream(total_chunk_bits)
 for index in arrangement_indexs:
     arrangement = arrangements[index]
     message_integer = comb_coder.decode(*arrangement)
     begin = index * capacity
     end = min(begin + capacity, total_chunk_bits)
 
-    recover_bitstring[begin:end] = bitstring.BitStream(
+    recovered_bitstring[begin:end] = bitstring.BitStream(
         'uint:%d=%d' % (end - begin, message_integer))
 
-recover_chunk_data = recover_bitstring.bytes
-recover_chunks = []
+recovered_chunk_data = recovered_bitstring.bytes
+recovered_chunks = []
 for i in xrange(num_chunks):
-    recover_chunks.append(
-        recover_chunk_data[i * size_of_chunk:(i + 1) * size_of_chunk])
-print len(recover_chunks)
-print len(recover_chunks[0])
+    recovered_chunks.append(
+        recovered_chunk_data[i * size_of_chunk:(i + 1) * size_of_chunk])
+print len(recovered_chunks)
+print len(recovered_chunks[0])
+recovered_data = ec_coder.decode(recovered_chunks)
+print recovered_data
+print recovered_data == DATA
