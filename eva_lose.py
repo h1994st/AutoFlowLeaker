@@ -66,6 +66,7 @@ for message_integer in message_integers:
 # Random loss
 arrangement_indexs = range(num_messages)
 num_loss = int(math.floor(num_messages * LOSS_PROB))
+print 'Number of losed message:', num_loss
 while num_loss > 0:
     arrangement_indexs.remove(random.choice(arrangement_indexs))
 
