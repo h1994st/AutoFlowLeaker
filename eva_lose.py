@@ -85,8 +85,12 @@ for index in arrangement_indexs:
 recovered_chunk_data = recovered_bitstring.bytes
 recovered_chunks = []
 for i in xrange(num_chunks):
-    recovered_chunks.append(
-        recovered_chunk_data[i * size_of_chunk:(i + 1) * size_of_chunk])
+    begin = i * size_of_chunk
+    end = (i + 1) * size_of_chunk
+
+    if begin / 50 in arrangement_indexs and (end - 1) / 50 in arrangement_indexs:
+        recovered_chunks.append(recovered_chunk_data[begin:end])
+
 print len(recovered_chunks)
 print len(recovered_chunks[0])
 recovered_data = ec_coder.decode(recovered_chunks)
