@@ -34,7 +34,7 @@ num_chunks = len(chunks)
 size_of_chunk = len(chunks[0])
 
 print 'Number of chunks:', num_chunks
-print 'Chunk size:', size_of_chunk
+print 'Chunk size:', size_of_chunk, 'bytes'
 
 all_chunk_data = b''.join(chunks)
 all_chunk_bitstring = bitstring.BitStream(bytearray(all_chunk_data))
@@ -75,11 +75,16 @@ recover_bitstring = bitstring.BitStream(total_chunk_bits)
 for index in arrangement_indexs:
     arrangement = arrangements[index]
     message_integer = comb_coder.decode(*arrangement)
-    begin = 0
+    begin = index * capacity
     end = min(begin + capacity, total_chunk_bits)
 
     recover_bitstring[begin:end] = bitstring.BitStream(
         'uint:%d=%d' % (end - begin, message_integer))
 
-print all_chunk_bitstring
-print recover_bitstring
+recover_chunk_data = recover_bitstring.bytes
+recover_chunks = []
+for i in xrange(num_chunks):
+    recover_chunks.append(
+        recover_chunk_data[i * size_of_chunk:(i + 1) * size_of_chunk])
+print len(recover_chunk_data)
+print len(recover_chunk_data[0])
