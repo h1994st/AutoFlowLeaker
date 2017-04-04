@@ -48,7 +48,7 @@ input_files = [os.path.join(
 
 print 'Chunk sizes:'
 for chunk_file_path in input_files:
-    print ' ', os.stat(fp.name).st_size
+    print ' ', os.stat(chunk_file_path).st_size
 
 output_file = '%s.7z' % input_file
 Archiver.compress(input_files, output_file)
