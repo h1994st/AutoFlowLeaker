@@ -50,7 +50,7 @@ def unrankPermutation(n, aRank, aList=None):
     ret[n - 1], ret[aRank % n] = ret[aRank % n], ret[n - 1]
 
     # Recursive call
-    return unrankPermutation(n - 1, aRank // n, ret)
+    return unrankPermutation(n - 1, int(math.floor(aRank / n)), ret)
 
 
 def rankPermutation(n, aList1, aList2=None):
@@ -84,7 +84,7 @@ def unrankPermutation2(n, aRank, aList=None):
     if n <= 0:
         return ret
 
-    s = aRank // math.factorial(n - 1)
+    s = int(math.floor(aRank / math.factorial(n - 1)))
 
     # Swap
     ret[n - 1], ret[s] = ret[s], ret[n - 1]
@@ -171,7 +171,7 @@ def unrankSetPartition(m, n, aRank, aList=None):
         t = aRank - s
         j = t % n
         tempSP = unrankSetPartition(
-            m - 1, n, t // n, aList=ret[1:])
+            m - 1, n, int(math.floor(t / n)), aList=ret[1:])
         return [[ret[0]] + tempSP[j]] + tempSP[:j] + tempSP[j + 1:]
 
 
@@ -290,7 +290,7 @@ def unrank5(aMsg, aR):
 
     # split value
     U = Val % f(nI)
-    V = Val // f(nI)
+    V = int(math.floor(Val / f(nI)))
 
     # permutation of carrier
     pC = unrankPermutation(nI, U)
@@ -369,9 +369,9 @@ def unrank9(aMsg, aR):
 
     # split value
     U = Val % (f(aR) * f(nI))
-    V = Val // (f(aR) * f(nI))
+    V = int(math.floor(Val / (f(aR) * f(nI))))
     U1 = U % f(aR)
-    U2 = U // f(aR)
+    U2 = int(math.floor(U / f(aR)))
 
     # permutation of rider
     pR = unrankPermutation(aR, U1)
@@ -502,7 +502,7 @@ def unrank(aI, aK, aMsg):
     assert t9 * (t5 ** i) == count
 
     r = aMsg
-    rK = r // count  # for k
+    rK = int(math.floor(r / count))  # for k
     r %= count
 
     print 'k =', rK
@@ -513,7 +513,7 @@ def unrank(aI, aK, aMsg):
     # T5
     while i > rK:
         count /= t5
-        r5 = r // count  # for T5
+        r5 = int(math.floor(r / count))  # for T5
         r %= count
 
         print 'R5 =', r5
@@ -535,7 +535,7 @@ def unrank(aI, aK, aMsg):
 
     # T9
     count /= t9
-    r9 = r // count  # for T9
+    r9 = int(math.floor(r / count))  # for T9
     r %= count
 
     print 'R9 =', r9
@@ -562,7 +562,7 @@ def unrank(aI, aK, aMsg):
     # T5
     while i >= 0:
         count /= t5
-        r5 = r // count  # for T5
+        r5 = int(math.floor(r / count))  # for T5
         r %= count
 
         print 'R5 =', r5
