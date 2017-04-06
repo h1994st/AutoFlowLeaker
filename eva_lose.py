@@ -116,13 +116,17 @@ for i in xrange(num_chunks):
     end = (i + 1) * size_of_chunk
     recovered_chunks.append(recovered_chunk_data[begin:end])
 
-print 'Number of recovered chunks:', len(recovered_chunks)
-if len(recovered_chunks):
+num_recovered_chunk = len(recovered_chunks)
+print 'Number of recovered chunks:', num_recovered_chunk
+if num_recovered_chunk:
     print 'Recovered chunk size:', len(recovered_chunks[0])
 else:
     # Empty
     print 'No recovered chunk!'
 
+if num_recovered_chunk < M:
+    print 'Not enough fragments for decoding!'
+    sys.exit(1)
 
 recovered_data = ec_coder.decode(recovered_chunks)
 print recovered_data
