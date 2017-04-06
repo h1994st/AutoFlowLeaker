@@ -113,7 +113,11 @@ for i in xrange(num_chunks):
     recovered_chunks.append(recovered_chunk_data[begin:end])
 
 print 'Number of recovered chunks:', len(recovered_chunks)
-print 'Recovered chunk size:', len(recovered_chunks[0])
+if len(recovered_chunks):
+    print 'Recovered chunk size:', len(recovered_chunks[0])
+else:
+    # Empty
+    print 'No recovered chunk!'
 
 
 recovered_data = ec_coder.decode(recovered_chunks)
