@@ -81,7 +81,7 @@ for index in arrangement_indexs:
     arrangement = arrangements[index]
     message_integer = comb_coder.decode(*arrangement)
 
-    # [begin, end)
+    # [begin, end) bits
     begin = index * capacity
     end = min(begin + capacity, total_chunk_bits)
 
@@ -94,12 +94,12 @@ for i in xrange(num_messages):
     if i in arrangement_indexs:
         continue
 
-    # [broken_begin, broken_end)
+    # [broken_begin, broken_end) bits
     broken_begin = i * capacity
     broken_end = min(broken_begin + capacity, total_chunk_bits)
 
-    broken_chunk_indexs.add(broken_begin / size_of_chunk)
-    broken_chunk_indexs.add(broken_end / size_of_chunk)
+    broken_chunk_indexs.add(broken_begin / (size_of_chunk * 8))
+    broken_chunk_indexs.add(broken_end / (size_of_chunk * 8))
 
 print 'Broken chunks indexs:'
 print broken_chunk_indexs
@@ -111,6 +111,7 @@ for i in xrange(num_chunks):
     if i in broken_chunk_indexs:
         continue
 
+    # [begin, end) bytes
     begin = i * size_of_chunk
     end = (i + 1) * size_of_chunk
     recovered_chunks.append(recovered_chunk_data[begin:end])
