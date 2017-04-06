@@ -66,11 +66,14 @@ for message_integer in message_integers:
 # Random loss
 arrangement_indexs = range(num_messages)
 num_loss = int(math.floor(num_messages * LOSS_PROB))
-print 'Number of losed message:', num_loss
+print 'Number of lost message:', num_loss
 while num_loss > 0:
     arrangement_indexs.remove(random.choice(arrangement_indexs))
 
     num_loss -= 1
+
+print 'Rest message indexs:'
+print arrangement_indexs
 
 # Recovered bitstring, including broken part (set as 0, if broken)
 recovered_bitstring = bitstring.BitStream(total_chunk_bits)
