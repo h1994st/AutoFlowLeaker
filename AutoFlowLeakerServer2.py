@@ -19,8 +19,8 @@ receiver = Wordpress()
 print 'Run'
 
 print 'Clear all'
-sender.delete_all_posts()
-receiver.clean()
+sender.delete_all()
+receiver.delete_all()
 
 t = Twitter()
 print '-----------'
