@@ -27,7 +27,7 @@ print '-----------'
 
 
 while True:
-    results = receiver.receive_all(fields='ID,date,title')
+    results = receiver.receive_all()
 
     if len(results) > 0:
         query = results[0].content
