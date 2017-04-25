@@ -13,17 +13,22 @@ from Twitter import Twitter
 from Wordpress import Wordpress
 from auto_flow_leaker import AutoFlowSocket
 
+# Group 1
 # Email (covert_zhang@163.com) -> Evernote (ctom357)
 # Wordpress (covertsan.wordpress.com) <- Email (covert_tom@163.com)
 auto_flow_socket = AutoFlowSocket(
     Email(email='covert_zhang@163.com'),
     Wordpress())
+# Group 2
+# -> Evernote (ctom357)
+# Wordpress (covertsan.wordpress.com) <-
 print 'Run'
 print auto_flow_socket
 
 print 'Clear all'
 auto_flow_socket.clean()
 t = Twitter()
+print '-----------'
 
 while True:
     results = auto_flow_socket.receive()

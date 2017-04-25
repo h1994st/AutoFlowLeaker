@@ -19,13 +19,14 @@ auto_flow_socket = AutoFlowSocket(
     Email(),
     Evernote())
 # Group 2
-# d
-# d
+# -> Wordpress (covertsan.wordpress.com)
+# Evernote (ctom357) <-
 print 'Run'
 print auto_flow_socket
 
 print 'Clear all'
 auto_flow_socket.clean()
+print '-----------'
 
 query = 'basketball'
 
