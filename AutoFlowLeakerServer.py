@@ -48,7 +48,8 @@ while True:
         } for status in results]
 
         print 'Send response'
-        auto_flow_socket.send(json.dumps(res), title='Twitter Digest')
+        auto_flow_socket.send(
+            json.dumps(res), title='Twitter Digest %d' % int(time.time()))
 
         print 'Clear receiver'
         auto_flow_socket.clean_receiver()
