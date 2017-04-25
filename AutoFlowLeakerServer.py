@@ -21,6 +21,7 @@ auto_flow_socket = AutoFlowSocket(
 print 'Run'
 print auto_flow_socket
 
+print 'Clear all'
 auto_flow_socket.clean()
 t = Twitter()
 

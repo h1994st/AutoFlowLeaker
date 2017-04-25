@@ -12,14 +12,19 @@ from Email import Email
 from Evernote import Evernote
 from auto_flow_leaker import AutoFlowSocket
 
+# Group 1
 # Email (covert_tom@163.com) -> Wordpress (covertsan.wordpress.com)
 # Evernote (ctom357) <- Email (covert_zhang@163.com)
 auto_flow_socket = AutoFlowSocket(
     Email(),
     Evernote())
+# Group 2
+# d
+# d
 print 'Run'
 print auto_flow_socket
 
+print 'Clear all'
 auto_flow_socket.clean()
 
 query = 'basketball'
