@@ -5,6 +5,7 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+import json
 import time
 
 from Email import Email
@@ -21,23 +22,32 @@ print auto_flow_socket
 
 auto_flow_socket.clean()
 
-while True:
-    query = raw_input('Search tweets: ')
-    if query.strip() == '':
-        continue
+query = 'basketball'
 
+results = []
+
+# while True:
+for i in xrange(10):
+    print 'Round', i
     # Send
     auto_flow_socket.send(query)
     print 'Send:', query
+    start = time.time()
 
-    results = auto_flow_socket.receive()
+    res = auto_flow_socket.receive()
 
-    while len(results) == 0:
+    while len(res) == 0:
         # print 'Nothing, sleep 1 seconds'
         time.sleep(1)
-        results = auto_flow_socket.receive()
+        res = auto_flow_socket.receive()
 
-    print 'Receive:'
-    print results[0].content
+    end = time.time()
+
+    print 'Time:', end - start
+    results.append(end - start)
 
     auto_flow_socket.clean_receiver()
+
+filename = 'twitter_%d.json' % (int(time.time()))
+with open('data/%s' % filename) as fp:
+    json.dump(results, fp)

@@ -28,20 +28,22 @@ while True:
     results = auto_flow_socket.receive()
 
     if len(results) > 0:
-        print 'Receive:'
         query = results[0].content[3:-5]
-        print query
+        print 'Receive:', query
+
         results = t._api.GetSearch(
             raw_query='q={0}%20&result_type=recent&count=10'.format(query))
         print dir(results[0])
 
         res = [{
             'content': status.text,
-            'authors': '',
+            'authors': status.user,
             'time': ''
         } for status in results]
 
         auto_flow_socket.clean_receiver()
+
+        print 'Send response'
         auto_flow_socket.send(json.dumps(res), title='Twitter Digest')
     else:
         # print 'Nothing, sleep 1 seconds'
