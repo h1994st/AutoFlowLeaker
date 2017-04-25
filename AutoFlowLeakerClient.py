@@ -37,7 +37,8 @@ for i in xrange(10):
     res = auto_flow_socket.receive()
 
     while len(res) == 0:
-        # print 'Nothing, sleep 1 seconds'
+        # print 'Nothing, sleep 1 second'
+        print 'Sleep 1 second'
         time.sleep(1)
         res = auto_flow_socket.receive()
 

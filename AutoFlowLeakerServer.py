@@ -37,14 +37,15 @@ while True:
 
         res = [{
             'content': status.text,
-            'authors': status.user,
-            'time': ''
+            'authors': status.user.screen_name,
+            'time': status.created_at
         } for status in results]
-
-        auto_flow_socket.clean_receiver()
 
         print 'Send response'
         auto_flow_socket.send(json.dumps(res), title='Twitter Digest')
+
+        print 'Clear receiver'
+        auto_flow_socket.clean_receiver()
     else:
         # print 'Nothing, sleep 1 seconds'
         time.sleep(1)
