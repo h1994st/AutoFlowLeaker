@@ -21,17 +21,23 @@ print auto_flow_socket
 
 auto_flow_socket.clean()
 
-auto_flow_socket.send('swift')
-print 'Send: Trump'
-
 while True:
+    query = raw_input('Search tweets: ')
+    if query.strip() == '':
+        continue
+
+    # Send
+    auto_flow_socket.send(query)
+    print 'Send:', query
+
     results = auto_flow_socket.receive()
 
-    if len(results) > 0:
-        print 'Receive:'
-        print results[0].content
+    while len(results) == 0:
+        # print 'Nothing, sleep 1 seconds'
+        time.sleep(1)
+        results = auto_flow_socket.receive()
 
-        auto_flow_socket.clean_receiver()
-    else:
-        # print 'Nothing, sleep 3 seconds'
-        time.sleep(3)
+    print 'Receive:'
+    print results[0].content
+
+    auto_flow_socket.clean_receiver()

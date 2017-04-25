@@ -5,6 +5,7 @@
 # @Link    : http://h1994st.com
 # @Version : 1.0
 
+import json
 import time
 
 from Email import Email
@@ -12,7 +13,7 @@ from Twitter import Twitter
 from Wordpress import Wordpress
 from auto_flow_leaker import AutoFlowSocket
 
-# Email (covert_zhang@163.com) -> Yinxiang (covert_tom)
+# Email (covert_zhang@163.com) -> Evernote (ctom357)
 # Wordpress (covertsan.wordpress.com) <- Email (covert_tom@163.com)
 auto_flow_socket = AutoFlowSocket(
     Email(email='covert_zhang@163.com'),
@@ -31,14 +32,17 @@ while True:
         query = results[0].content[3:-5]
         print query
         results = t._api.GetSearch(
-            raw_query='q={0}%20&result_type=recent&count=20'.format(query))
-        print results
+            raw_query='q={0}%20&result_type=recent&count=10'.format(query))
+        print dir(results[0])
 
-        res = '\n'.join([status.text for status in results])
-        print res
+        res = [{
+            'content': status.text,
+            'authors': '',
+            'time': ''
+        } for status in results]
 
         auto_flow_socket.clean_receiver()
-        auto_flow_socket.send(res, title='Twitter Digest')
+        auto_flow_socket.send(json.dumps(res), title='Twitter Digest')
     else:
-        # print 'Nothing, sleep 3 seconds'
-        time.sleep(3)
+        # print 'Nothing, sleep 1 seconds'
+        time.sleep(1)
