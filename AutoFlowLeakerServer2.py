@@ -8,34 +8,29 @@
 import json
 import time
 
-# from Email import Email
-from Github import Github
 from Twitter import Twitter
+from Evernote import Evernote
 from Wordpress import Wordpress
-from auto_flow_leaker import AutoFlowSocket
 
-# Group 1
-# Email (covert_zhang@163.com) -> Evernote (ctom357)
-# Wordpress (covertsan.wordpress.com) <- Email (covert_tom@163.com)
-auto_flow_socket = AutoFlowSocket(
-    Github(),
-    Wordpress())
-# Group 2
-# Github () -> Evernote (ctom357)
-# Wordpress (covertsan.wordpress.com) <- Github (webmaster)
+# Evernote (ctom357) -> Github (covertsan)
+# Wordpress (covertsan.wordpress.com) <- Ghost ()
+sender = Evernote()
+receiver = Wordpress()
 print 'Run'
-print auto_flow_socket
 
 print 'Clear all'
-auto_flow_socket.clean()
+sender.delete_all_posts()
+receiver.clean()
+
 t = Twitter()
 print '-----------'
 
+
 while True:
-    results = auto_flow_socket.receive()
+    results = receiver.receive_all(fields='ID,date,title')
 
     if len(results) > 0:
-        query = results[0].content[3:-5]
+        query = results[0].content
         print 'Receive:', query
 
         results = t._api.GetSearch(
@@ -48,12 +43,14 @@ while True:
             'time': status.created_at
         } for status in results]
 
+        print res
+
         print 'Send response'
-        auto_flow_socket.send(
+        sender.send(
             json.dumps(res), title='Twitter Digest %d' % int(time.time()))
 
         print 'Clear receiver'
-        auto_flow_socket.clean_receiver()
+        receiver.delete_all()
     else:
         # print 'Nothing, sleep 1 seconds'
         time.sleep(1)

@@ -19,9 +19,11 @@ class Github(github.Github):
     Default user: covertsan (covert.san@gmail.com)
     '''
 
-    def __init__(self):
-        username = Config.Github('username')
-        password = Config.Github('password')
+    def __init__(self,
+                 username=Config.Github('username'),
+                 password=Config.Github('password')):
+        # username = Config.Github('username')
+        # password = Config.Github('password')
         repo = Config.Github('repo')
 
         super(Github, self).__init__(username, password)
