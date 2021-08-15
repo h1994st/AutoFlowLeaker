@@ -26,61 +26,65 @@ AutoFlowLeaker
 
 1. Install dependency libraries
 
-  1. Install `isa-l`, see <https://github.com/01org/isa-l#building-isa-l> for detail.
+    1. Install `isa-l`, see <https://github.com/01org/isa-l#building-isa-l> for detail.
 
-    Ubuntu only
-    ```bash
-    $ git clone https://github.com/01org/isa-l.git
-    $ cd isa-l
-    $ ./autogen.sh
-    $ ./configure --prefix=/usr --libdir=/usr/lib
-    $ make
-    $ sudo make install
-    ```
+        Ubuntu only
 
-    On Mac OS X:
-    ```bash
-    $ [sudo] brew install liberasurecode
-    ```
+        ```bash
+        $ git clone https://github.com/01org/isa-l.git
+        $ cd isa-l
+        $ ./autogen.sh
+        $ ./configure --prefix=/usr --libdir=/usr/lib
+        $ make
+        $ sudo make install
+        ```
 
-    On Ubuntu:
-    ```bash
-    $ sudo apt-get install liberasurecode-dev libjerasure-dev libarchive-dev
-    ```
+        On Mac OS X:
 
-  2. Install others:
+        ```bash
+        $ brew install liberasurecode
+        ```
 
-    On Ubuntu:
-    ```bash
-    $ sudo apt-get install libmysqlclient-dev
-    ```
+        On Ubuntu:
+
+        ```bash
+        $ sudo apt-get install liberasurecode-dev libjerasure-dev libarchive-dev
+        ```
+
+    2. Install others:
+
+        On Ubuntu:
+
+        ```bash
+        $ sudo apt-get install libmysqlclient-dev
+        ```
 
 2. Install dependency Python packages
 
-  On Mac OS X:
+    On Mac OS X:
 
-  ```bash
-  # install pip
-  $ sudo easy_install pip
-  $ sudo pip install --upgrade pip
+    ```bash
+    # install pip
+    $ sudo easy_install pip
+    $ sudo pip install --upgrade pip
 
-  $ sudo pip install -r requirements.txt
-  ```
+    $ sudo pip install -r requirements.txt
+    ```
 
-  On Ubuntu:
+    On Ubuntu:
 
-  ```bash
-  # install pip
-  # 1) for Ubuntu 10.10 Maverick and newer
-  $ sudo apt-get install python-pip
-  # 2) for older versions of Ubuntu
-  $ sudo apt-get install python-setuptools
-  $ sudo easy_install pip
+    ```bash
+    # install pip
+    # 1) for Ubuntu 10.10 Maverick and newer
+    $ sudo apt-get install python-pip
+    # 2) for older versions of Ubuntu
+    $ sudo apt-get install python-setuptools
+    $ sudo easy_install pip
 
-  $ sudo pip install --upgrade pip
-  $ sudo apt-get install python-dev build-essential autoconf automake libtool
-  $ sudo pip install -r requirements.txt
-  ```
+    $ sudo pip install --upgrade pip
+    $ sudo apt-get install python-dev build-essential autoconf automake libtool
+    $ sudo pip install -r requirements.txt
+    ```
 
 ## Web Services & Evaluation Status
 
